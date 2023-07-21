@@ -116,5 +116,12 @@ for (k1 in 1:3){
 SS1_ZINBSBM_N75_K3_obs_InitialProbObs0Missing0
 ```
 
+The reference probability of missing zero, $p$, is simply the initial setting:
+
+``` r
+# Set initial p
+SS1_ZINBSBM_N75_K3_obs_Initialp <- 0.15
+```
+
 
 
