@@ -21,7 +21,7 @@ The packages required in the applications are also included in such a file.
 We start from the simulation process of the artificial network we focus on in the paper.
 Recall here that we randomly generated a network from the ZINB-SBM with the settings: $N = 75$, $K = 3$, $p = 0.15$, $\boldsymbol{\Pi} = \left(0.35, 0.20, 0.45\right)$ and 
 
-$$\boldsymbol{R} = \begin{pmatrix}0.60 & 0.05 & 0.02 \\0.10 & 2.50 & 0.02 \\0.05 & 0.05 & 0.10 \end{pmatrix}, \boldsymbol{Q} = \begin{pmatrix}0.15 & 0.25 & 0.15 \\0.20 & 0.35 & 0.15 \\ 0.20 & 0.25 & 0.10\end{pmatrix}.$$
+$$\boldsymbol{R} = \begin{pmatrix}0.60 & 0.05 & 0.02 \\\0.10 & 2.50 & 0.02 \\\0.05 & 0.05 & 0.10 \end{pmatrix}, \boldsymbol{Q} = \begin{pmatrix}0.15 & 0.25 & 0.15 \\\0.20 & 0.35 & 0.15 \\\ 0.20 & 0.25 & 0.10\end{pmatrix}.$$
 
 
 
