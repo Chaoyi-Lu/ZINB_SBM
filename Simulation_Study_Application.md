@@ -92,7 +92,7 @@ SS1_ZINBSBM_N75_K3_obs_InitialQ <- res$Q[[1]]
 SS1_ZINBSBM_N75_K3_obs_InitialPi <- res$Pi[[1]]
 ```
 
-The label-switched latent parameters are now agree with the ones we illustrated in the paper: $\boldsymbol{\Pi} = \left(0.35, 0.20, 0.45\right)$ and 
+The label-switched latent parameters now agree with the ones we illustrated in the paper: $\boldsymbol{\Pi} = \left(0.35, 0.20, 0.45\right)$ and 
 
 $$\boldsymbol{R} = \begin{pmatrix}0.60 & 0.05 & 0.02 \\\0.10 & 2.50 & 0.02 \\\0.05 & 0.05 & 0.10 \end{pmatrix}, \boldsymbol{Q} = \begin{pmatrix}0.15 & 0.25 & 0.15 \\\0.20 & 0.35 & 0.15 \\\ 0.20 & 0.25 & 0.10\end{pmatrix}.$$
 
