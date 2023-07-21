@@ -103,5 +103,18 @@ SS1_ZINBSBM_N75_K3_obs_Initialmean <- SS1_ZINBSBM_N75_K3_obs_InitialR*(1-SS1_ZIN
 SS1_ZINBSBM_N75_K3_obs_Initialvar <- SS1_ZINBSBM_N75_K3_obs_InitialR*(1-SS1_ZINBSBM_N75_K3_obs_InitialQ)/SS1_ZINBSBM_N75_K3_obs_InitialQ^2
 ```
 
+We can also evaluate the initial $\boldsymbol{P_{m0}}$ (the probability of the zero interaction being missing zero) assumed for this network.
+
+``` r
+# Evaluate the initial P_m0
+SS1_ZINBSBM_N75_K3_obs_InitialProbObs0Missing0 <- matrix(0,3,3)
+for (k1 in 1:3){
+  for (k2 in 1:3){
+    SS1_ZINBSBM_N75_K3_obs_InitialProbObs0Missing0[k1,k2] <- SS1_ZINBSBM_N75_K3_obs_Initialp/(SS1_ZINBSBM_N75_K3_obs_Initialp + (1-SS1_ZINBSBM_N75_K3_obs_Initialp)*dnbinom(0,SS1_ZINBSBM_N75_K3_obs_InitialR[k1,k2],SS1_ZINBSBM_N75_K3_obs_InitialQ[k1,k2]))
+  }
+}
+SS1_ZINBSBM_N75_K3_obs_InitialProbObs0Missing0
+```
+
 
 
