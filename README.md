@@ -1,1 +1,1 @@
-# ZINB_SBM
+# Zero-Inflated Nagetive-Binomial Stochastic Block Model
