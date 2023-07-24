@@ -48,7 +48,7 @@ SS1_ZINBSBM_N75_K3 <-
 # write.csv(SS1_ZINBSBM_N75_K3$Z,"SS1_ZINBSBM_N75K3_obsZ.csv", row.names = FALSE)
 ```
 
-The artificial network data we focused on in the paper is included in the files within this repository and can be loaded by:
+The artificial network data we focus on in the paper is included in the files within this repository and can be loaded by:
 
 ``` r
 # # Load the simulation study 1 artificial dataset
