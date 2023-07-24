@@ -28,7 +28,7 @@ Such a label switching method can be described as: assigning the first node to t
 We applied the label switching on the simulated data to ensure the uniqueness of the clsutering.
 This also leads to the label-switching of the above clustering dependent parameters, $\boldsymbol{\Pi},\boldsymbol{R},\boldsymbol{Q}$, for the generation of the network.
 
-The simulation can be implemented via the code shown below:
+The simulation of the ZINB-SBM can be implemented via the function `Simulation_Directed_ZINBSBM()` included in the source code file [`Functions_for_ZINB_SBM.R`] and the code is shown below:
 
 ``` r
 # Simulation study 1 of ZINB-SBM N = 75, K = 3
@@ -64,6 +64,7 @@ colnames(SS1_ZINBSBM_N75_K3$Z) <- c()
 ```
 
 Then we apply label switching on the latent clustering $\boldsymbol{z}$ and those clustering dependent parameters, $\boldsymbol{\Pi},\boldsymbol{R},\boldsymbol{Q}$, of the simulated network. 
+The label switching methods for the ZINB-SBM can be implemented by the function `LabelSwitching_SG2003_ZINBSBM()` included in the [`Functions_for_ZINB_SBM.R`].
 Recall here that we treat the label-switched initial clustering and the clustering dependent parameters as the "true" references in the experiments.
 
 ``` r
@@ -143,7 +144,7 @@ par(mfrow=c(1,1),mai = c(1.02, 0.82, 0.82, 0.42),mgp=c(3,1,0))
 
 ### SS1 ZINB-SBM Implementations
 
-The implementations of applying partially collapsed Metropolis within Gibbs algorithm (PCMwG) for the ZINB-SBM on the network are based on the function `Directed_ZINBSBM_PCMwG()`.
+The implementations of applying partially collapsed Metropolis within Gibbs algorithm (PCMwG) for the ZINB-SBM on the network are based on the function `Directed_ZINBSBM_PCMwG()` included in the source code file [`Functions_for_ZINB_SBM.R`].
 Note that such a function will automatically label switch the initial clustering input to the function in order to ensure the uniqueness of the input clustering.
 Other steps are exactly the same as the Algorithm $2$ stated in the paper.
 
