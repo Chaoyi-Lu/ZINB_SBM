@@ -385,6 +385,43 @@ However, in the case of that the summarized clustering is not the same as the ma
 # # SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ <- cbind(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ,0)
 ```
 
+Once we obtained the summarized clustering $\tilde{\boldsymbol{z}}$, we can then obtain the summarized $\widetilde{\boldsymbol{P_{m0}}}$.
+We first summarize the posterior $\boldsymbol{\nu}$ chain by applying the posterior mean.
+
+``` r
+## Summarize nu
+SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Summarizednu <- matrix(0,nrow(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1$nu[[1]]),ncol(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1$nu[[1]]))
+for (t in 20001:40001){
+  SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Summarizednu <- SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Summarizednu +
+    SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1$nu[[t]]
+}
+SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Summarizednu <- SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Summarizednu/20001
+```
+
+Then, based on the summarized $\tilde{\boldsymbol{\nu}}$ and the clustering, we can obtain the summarized $\widetilde{\boldsymbol{P_{m0}}}$ by:
+
+``` r
+## Summarize the P_m0
+SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedProbObs0Missing0 <- matrix(0,3,3)
+for (k1 in 1:3){
+  for (k2 in 1:3){
+    SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedProbObs0Missing0[k1,k2] <- 
+      sum(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Summarizednu[
+        SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ%*%c(1:3)==k1,
+        SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ%*%c(1:3)==k2])/
+      (length(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Summarizednu[
+        SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ%*%c(1:3)==k1,
+        SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ%*%c(1:3)==k2][
+          SS1_ZINBSBM_N75_K3$Y[SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ%*%c(1:3)==k1,
+                               SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ%*%c(1:3)==k2]==0])-
+         sum((SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ%*%c(1:3)==k1)*
+               (SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ%*%c(1:3)==k2)))
+  }
+}
+SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedProbObs0Missing0
+```
+
+Before evaluating the approximate ICPCL model selection criterion, we first obtain the posterior mean of $\boldsymbol{R}$ which is used as the initial state of $\boldsymbol{R}$ in the greedy search
 
 
 
