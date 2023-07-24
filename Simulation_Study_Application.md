@@ -124,7 +124,7 @@ The reference probability of missing zero, $p$, is simply the initial setting:
 SS1_ZINBSBM_N75_K3_obs_Initialp <- 0.15
 ```
 
-The adjacency matrix $Y$ plot and the plots of $\boldsymbol{Y}|\boldsymbol{z}*$
+The adjacency matrix $Y$ plot and the plots of $\boldsymbol{Y}|\boldsymbol{z}^{*}$
 
 
 ### SS1 ZINB-SBM Implementations
