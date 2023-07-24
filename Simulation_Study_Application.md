@@ -152,9 +152,216 @@ The function `Directed_ZINBSBM_PCMwG_FixedZ()` aims to apply further inference c
 Recall here that, within such a function, the inference step of the clustering is removed and instead the clustering is fixed at the summarized clustering we obtained from the outputs of the function `Directed_ZINBSBM_PCMwG()`.
 
 The PCMwG algorithm for the ZINB-SBM is implemented for $40,000$ iterations for each fixed $K = 2,3,4,5$.
-The $p$ prior setting for the function `Directed_ZINBSBM_PCMwG()` is $p \sim Beta(1,9)$ which can be changed by inputting prior parameters.
-The prior settings of other parameters are set by default as we discussed in the paper, that is, $\boldsymbol{\Pi} \sim \text{Dirichlet}(\alpha, \dots, \alpha)$, $q_{gh} \sim \text{Beta}(\beta_{q1}, \beta_{q2})$ for $g,h=1,2,\dots,K$, and the prior distribution of $\boldsymbol{R}$ is simply positive uniform $\text{U}(0,\text{UpperBound})$ where the "UpperBound" here can be a big enough value so that the $\boldsymbol{R}$ prior term can be cancelled by the fraction in the acceptance ratio of the Metropolis-Hastings (M-H) step. Recall also here that the proprosal distrbution of $\boldsymbol{R}$ in the M-H step is $r'\_{gh} \sim \text{U}(\text{max}(0,r_{gh}^{(t-1)}-\epsilon),r_{gh}^{(t-1)}+\epsilon)$ for each pair of $g,h = 1,\dots,K$ where $r_{gh}^{(t-1)}$ is the current state of the $r_{gh}$ and the proposal epsilon $\epsilon$ here is tuned to be $0.175$.
-Such an epsilon will also be applied in the real data application.
+The $p$ prior setting for the function `Directed_ZINBSBM_PCMwG()` is $p \sim \text{Beta}(1,9)$ which can be changed by inputting prior parameters.
+The prior settings of other parameters are set by default as we discussed in the paper, that is, $\boldsymbol{\Pi} \sim \text{Dirichlet}(\alpha, \dots, \alpha)$, $q_{gh} \sim \text{Beta}(\beta_{q1}, \beta_{q2})$ for $g,h=1,2,\dots,K$, and the prior distribution of $\boldsymbol{R}$ is simply positive uniform $\text{U}(0,\text{UpperBound})$ where the "UpperBound" here can be a big enough value so that the $\boldsymbol{R}$ prior term can be cancelled by the fraction in the acceptance ratio of the Metropolis-Hastings (M-H) step. Recall also here that the proprosal distrbution of $\boldsymbol{R}$ in the M-H step is $r'\_{gh} \sim \text{U}(\text{max}(0,r_{gh}^{(t-1)}-\epsilon),r_{gh}^{(t-1)}+\epsilon)$ for each pair of $g,h = 1,\dots,K$ where $r_{gh}^{(t-1)}$ is the current state of the $r_{gh}$ and the proposal epsilon $\epsilon$ here is tuned to be $0.175$ where such an epsilon will also be applied in the real data application.
+The implementations are applied by the code shown below.
+
+``` r
+#--------------------------------------------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------------------------------------------------
+# Simulation study 1: apply the ZINB-SBM Metropolis within Gibbs algorithm for fixed K = 2, N = 75, T = 40000, Round 1 with p prior Beta(1,9)
+rm(list=ls())
+gc()
+source("Functions_for_ZINB_SBM.R")
+start.time <- Sys.time()
+SS1_ZINBSBM_N75_K3_Fixed_K2_T40000_1 <- Directed_ZINBSBM_PCMwG(Y = SS1_ZINBSBM_N75_K3$Y, K = 2, T = 40000, eps_R = 0.175,beta1 = 1, beta2 = 9)
+end.time <- Sys.time()
+SS1_ZINBSBM_N75_K3_Fixed_K2_T40000_1_time <- end.time - start.time
+SS1_ZINBSBM_N75_K3_Fixed_K2_T40000_1_time # Time difference of 1.868442 hours
+# save.image("SS1_ZINBSBM_N75_K3_Fixed_K2_T40000_1_prior_p_Beta_1_9.RData")
+
+#--------------------------------------------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------------------------------------------------
+# Simulation study 1: apply the ZINB-SBM Metropolis within Gibbs algorithm for fixed K = 3, N = 75, T = 40000, Round 1 with p prior Beta(1,9)
+rm(list=ls())
+gc()
+source("Functions_for_ZINB_SBM.R")
+start.time <- Sys.time()
+SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1 <- 
+  Directed_ZINBSBM_PCMwG(Y = SS1_ZINBSBM_N75_K3$Y, K = 3, T = 40000, eps_R = 0.175,beta1 = 1, beta2 = 9)
+end.time <- Sys.time()
+SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_time <- end.time - start.time
+SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_time # Time difference of 2.605677 hours
+# save.image("SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_prior_p_Beta_1_9.RData")
+
+#--------------------------------------------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------------------------------------------------
+# Simulation study 1: apply the ZINB-SBM Metropolis within Gibbs algorithm for fixed K = 4, N = 75, T = 40000, Round 1 with p prior Beta(1,9)
+rm(list=ls())
+gc()
+source("Functions_for_ZINB_SBM.R")
+start.time <- Sys.time()
+SS1_ZINBSBM_N75_K3_Fixed_K4_T40000_1 <- Directed_ZINBSBM_PCMwG(Y = SS1_ZINBSBM_N75_K3$Y, K = 4, T = 40000, eps_R = 0.175,beta1 = 1, beta2 = 9)
+end.time <- Sys.time()
+SS1_ZINBSBM_N75_K3_Fixed_K4_T40000_1_time <- end.time - start.time
+SS1_ZINBSBM_N75_K3_Fixed_K4_T40000_1_time # Time difference of 3.291847 hours
+# save.image("SS1_ZINBSBM_N75_K3_Fixed_K4_T40000_1_prior_p_Beta_1_9.RData")
+
+#--------------------------------------------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------------------------------------------------
+
+# Simulation study 1: apply the ZINB-SBM Metropolis within Gibbs algorithm for fixed K = 5, N = 75, T = 40000, Round 1 with p prior Beta(1,9)
+rm(list=ls())
+gc()
+source("Functions_for_ZINB_SBM.R")
+start.time <- Sys.time()
+SS1_ZINBSBM_N75_K3_Fixed_K5_T40000_1 <- Directed_ZINBSBM_PCMwG(Y = SS1_ZINBSBM_N75_K3$Y, K = 5, T = 40000, eps_R = 0.175,beta1 = 1, beta2 = 9)
+end.time <- Sys.time()
+SS1_ZINBSBM_N75_K3_Fixed_K5_T40000_1_time <- end.time - start.time
+SS1_ZINBSBM_N75_K3_Fixed_K5_T40000_1_time # Time difference of 4.01542 hours
+# save.image("SS1_ZINBSBM_N75_K3_Fixed_K5_T40000_1_prior_p_Beta_1_9.RData")
+```
+
+Once we obtained the outputs from each fixed $K$ case, we can apply label switching on the clustering and check the mixing performance of the clustering.
+We can first obtain the summarized missing zero probability $\tilde{p}$, and the summarized $\tilde{\boldsymbol{\nu}}$ the entry of which indicates the proportion of the times for the corresponding $y_{ij}$ being inferred as a missing zero.
+We can also obtain the summarized $\tilde{\boldsymbol{z}}$ and $\tilde{\boldsymbol{P_{m0}}}$ to evaluate the model selection criterion, integrated classification log-partially-collapsed-likelihood (ICPCL), by maximizing ICPCL with respect to $\boldsymbol{R}$ as we discussed in Section $3.2$ of the paper.
+Based on the model selection criterion values, we determine which $K$ case is the best one and apply further summary statistics for the analysis.
+
+As it's shown in the Section $4.1$ of the paper, the $K=3$ case is the best pick and we take this case as an example here.
+We start from the label switching process once we obatined the outputs `SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1` from the implementation.
+
+``` r
+# # Simulation study 1: apply the ZINB-SBM Metropolis within Gibbs algorithm for fixed K = 3, N = 75, T = 40000, Round 1 with p prior Beta(1,9)
+# rm(list=ls())
+# gc()
+# source("Functions_for_ZINB_SBM.R")
+# start.time <- Sys.time()
+# SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1 <- 
+#   Directed_ZINBSBM_PCMwG(Y = SS1_ZINBSBM_N75_K3$Y, K = 3, T = 40000, eps_R = 0.175,beta1 = 1, beta2 = 9)
+# end.time <- Sys.time()
+# SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_time <- end.time - start.time
+# SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_time # Time difference of 2.605677 hours
+# # save.image("SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_prior_p_Beta_1_9.RData")
+
+# Apply label switching
+SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS <-
+  LabelSwitching_SG2003_ZINBSBM(Z = SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1$Z,
+                                Pi = SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1$Pi,
+                                R = SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1$R,
+                                Q = SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1$Q,
+                                Acceptance_count_R = SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1$Acceptance_count_R)
+SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1$Z <- c() # delete the original data in order to save memory
+SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1$Pi <- c()
+SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1$R <- c()
+SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1$Q <- c()
+SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1$Acceptance_count_R <- c()
+gc() # Free unused R memory
+```
+
+After the label switching, we can check the mixing of the clustering posterior samples by evaluating the rand index between each iteration's $\boldsymbol{z}^{(t)}$ and the true clustering $\boldsymbol{z}^*$.
+
+``` r
+## check rand index for each iteration
+require("fossil")
+SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_RI <- c()
+for (t in 1:40001){
+  SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_RI <-
+    c(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_RI,
+      rand.index(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS$Z[[t]]%*%c(1:ncol(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS$Z[[t]])),
+                 SS1_ZINBSBM_N75_K3_LSZ%*%c(1:3))) # calculate and store the rand index between the t's clustering and the reference clustering
+}
+plot(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_RI,type = "l",xlab = "",ylab = "", main = "Rand Index",cex.axis = 0.8) # obtain the rand index plot 
+```
+
+Similar rand index plots can also be obtained for $K=2,4,5$ cases and also for the ZIP-SBM cases. 
+The code for the ZIP-SBM cases will follow in the next subsection of this file.
+The plots of the rand index mixing performance shown as Figure $2$ of the paper can be recovered by:
+
+``` r
+par(mfrow=c(2,2),mai = c(0.3, 0.3, 0.15, 0.05), mgp=c(0.9,0.2,0))
+plot(SS1_ZINBSBM_N75_K3_Fixed_K2_T40000_1_LSZ_RI,type = "l",xlab = "",ylab = "", main = "",cex.axis = 0.8, ylim = c(0.35,1),col = 2,lty = 1)
+lines(SS1_ZIPSBM_N75_K3_Fixed_K2_T40000_1_LSZ_RI,type = "l", col = 1,lty = 2)
+title(xlab = "Iteration",ylab = "RI", main = "K=2 Cases Rand Index", mgp=c(0.9,0.1,0),cex.main=0.8,cex.lab = 0.8)
+
+plot(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_RI,type = "l",xlab = "",ylab = "", main = "",cex.axis = 0.8, ylim = c(0.35,1),col = 2,lty = 1)
+lines(SS1_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LSZ_RI,type = "l", col = 1,lty = 2)
+title(xlab = "Iteration",ylab = "RI", main = "K=3 Cases Rand Index", mgp=c(0.9,0.1,0),cex.main=0.8,cex.lab = 0.8)
+
+plot(SS1_ZINBSBM_N75_K3_Fixed_K4_T40000_1_LSZ_RI,type = "l",xlab = "",ylab = "", main = "",cex.axis = 0.8, ylim = c(0.35,1),col = 2,lty = 1)
+lines(SS1_ZIPSBM_N75_K3_Fixed_K4_T40000_1_LSZ_RI,type = "l", col = 1,lty = 2)
+title(xlab = "Iteration",ylab = "RI", main = "K=4 Cases Rand Index", mgp=c(0.9,0.1,0),cex.main=0.8,cex.lab = 0.8)
+
+plot(SS1_ZINBSBM_N75_K3_Fixed_K5_T40000_1_LSZ_RI,type = "l",xlab = "",ylab = "", main = "",cex.axis = 0.8, ylim = c(0.35,1),col = 2,lty = 1)
+lines(SS1_ZIPSBM_N75_K3_Fixed_K5_T40000_1_LSZ_RI,type = "l", col = 1,lty = 2)
+title(xlab = "Iteration",ylab = "RI", main = "K=5 Cases Rand Index", mgp=c(0.9,0.1,0),cex.main=0.8,cex.lab = 0.8)
+legend("bottomright", legend=c("ZINB-SBM","ZIP-SBM"),
+       col=1:2, lty = 2:1, cex=0.6)
+par(mfrow=c(1,1),mai = c(1.02, 0.82, 0.82, 0.42),mgp=c(3,1,0))
+```
+
+Back to the SS1 ZINB-SBM $K=3$ case, we can also check some specific clustering states of the posterior chain:
+
+``` r
+# Check some specific clustering states
+table(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS$Z[[1]]%*%c(1:3),SS1_ZINBSBM_N75_K3_LSZ%*%c(1:3)) # initial state
+table(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS$Z[[2]]%*%c(1:3),SS1_ZINBSBM_N75_K3_LSZ%*%c(1:3)) # first state
+table(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS$Z[[3]]%*%c(1:3),SS1_ZINBSBM_N75_K3_LSZ%*%c(1:3)) # second state
+table(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS$Z[[40001]]%*%c(1:3),SS1_ZINBSBM_N75_K3_LSZ%*%c(1:3)) # end state
+```
+
+Note here it's possible that the asymptotic behavior we discussed in the paper might happen, so that, the posterior clustering chain would end up with the clustering state which has less number of clusters than the fixed $K$ input to the algorithm.
+Based on the reasons we provided in the paper, we propose here to rerun the code again and obtain another round of the outputs if this situation happens.
+This is the multiple implementation we might need to apply as we discussed in the paper.
+
+If the multiple implementations are not required, we can then obtain part of the summary statistics.
+We can summarize missing zero probability $p$ by simply evaluating the posterior mean of the samples and we can also check the mixing of the $p$ posterior chain by the trace plot.
+
+``` r
+## Summarize p
+plot(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1$p[1:40001],type = "l") # trace plot of posterior samples of p from iteration 0 to 40000
+plot(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1$p[20001:40001],type = "l") # trace plot of posterior samples of p from iteration 20000 to 40000
+hist(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1$p[20001:40001]) # histogram plot of posterior samples of p from iteration 20000 to 40000
+SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Summarizedp <-
+  mean(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1$p[20001:40001]) # obtain the summarized p by the posterior mean after burn-in
+SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Summarizedp
+```
+
+The acceptance rate of the $\boldsymbol{R}$ M-H step can be checked by:
+
+``` r
+## check acceptance rate
+Reduce(`+`, SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS$Acceptance_count_R[20001:40001])/20001
+```
+
+Then we aim to summarize the posterior clustering samples by minimizing an unbaised estimator of the expected posterior VI loss as we discussed in the section $3.2$ of the paper.
+We start from obtaining the marginal posterior mode which is used as the initial clustering state of the greedy algorithm for the minimization.
+
+``` r
+# Obtain the marginal posterior mode of the Z chain
+SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_States <- list() # initialize a list which will store different clustering states; the clustering states are labeled from 1,2,3... and are put at the 1st,2nd,3rd... element of the list, respectively
+SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_StatesIteration <- list() # store all the t's (iteration number) which provides the same cluster as the clustering state 1,2,3...
+SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_IterationLoop <- 20001:40001 # the "IterationLoop" which stores all the iteration t's which we focus on, that is, all the iteration t's after burn-in
+StatesLabelIndicator = 0 # initialize the label for the clustering states
+while (length(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_IterationLoop)!=0){ # if the "IterationLoop" is not empty
+  StatesLabelIndicator <- StatesLabelIndicator + 1 # assign the next label to the next clustering state
+  SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_FirstState <- SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS$Z[[SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_IterationLoop[1]]] # extract the first clustering state for the "IterationLoop"
+  SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_States[[StatesLabelIndicator]] <- SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_FirstState # store the first state within the "IterationLoop" with label "StatesLabelIndicator" in the list which will contain all different unique states
+  SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_StatesIteration_temp <- c() # create a vector to temporarily store all the iteration t's whose clustering is the same as the first clustering state within the "IterationLoop"
+  for (t in SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_IterationLoop){ # loop over all the current existing iterations in "IterationLoop"
+    if (sum(c(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS$Z[[t]]%*%1:ncol(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS$Z[[t]]))==
+            c(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_FirstState%*%1:ncol(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_FirstState)))==nrow(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_FirstState)){ # if the t's clustering is the same as the "FirstState"
+      SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_StatesIteration_temp <- c(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_StatesIteration_temp,t) # store the iteration t in the temporary vector
+    }
+  }
+  SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_StatesIteration[[StatesLabelIndicator]] <- SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_StatesIteration_temp # store all the t's as the list element
+  SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_IterationLoop <- (20001:40001)[-(unlist(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_StatesIteration)-20000)] # remove all the iterations we have stored and then move to the next clustering state
+}
+length(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_States) # check the number of different clustering states
+SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_StatesFrequency <- c() # check the number of times one clustering state occurs
+for (t in 1:length(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_States)){
+  SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_StatesFrequency <- 
+    c(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_StatesFrequency,
+      length(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_StatesIteration[[t]]))
+}
+which.max(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_StatesFrequency) # find the marginal posterior mode, i.e. the most frequent clustering state
+SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ <- SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_States[[which.max(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_StatesFrequency)]] # initialize the clustering state as the marginal posterior mode
+table(c(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ%*%1:ncol(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ)),SS1_ZINBSBM_N75_K3_LSZ%*%c(1:3),dnn = c("","")) # compare the marginal posterior mode with the true lcustering
+```
+
+
+
+
+
 
 
 
