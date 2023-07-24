@@ -24,8 +24,8 @@ We randomly generated a network from the ZINB-SBM with the settings: $N = 75$, $
 $$\boldsymbol{R} = \begin{pmatrix}0.10 & 0.05 & 0.05 \\\0.02 & 0.60 & 0.05 \\\0.02 & 0.10 & 2.50 \end{pmatrix}, \boldsymbol{Q} = \begin{pmatrix}0.10 & 0.20 & 0.25 \\\0.15 & 0.15 & 0.25 \\\ 0.15 & 0.20 & 0.35\end{pmatrix}.$$
 
 Note here that the label switching method we applied in the paper is the one introduced in [Rastelli and Friel (2018)](https://doi.org/10.1007/s11222-017-9786-y), so that, the uniqueness of each clustering state is assured. 
-Such a label switching method can be described as: assign the first node to the cluster $1$ and then iteratively assign the next node either to a new empty cluster or an existing cluster.
-We applied the label switching on the simulated data to ensure the uniqueness of the clsutering state.
+Such a label switching method can be described as: assigning the first node to the cluster $1$, and then iteratively assigning the next node either to a new empty cluster or an existing cluster.
+We applied the label switching on the simulated data to ensure the uniqueness of the clsutering.
 This also leads to the label-switching of the clustering dependent parameters, $\boldsymbol{\Pi},\boldsymbol{R},\boldsymbol{Q}$, which are used for generating the network shown above.
 This is the reason that the initial parameters are different from the ones we illustrated in the paper.
 The data we show in the paper is already label-switched.
