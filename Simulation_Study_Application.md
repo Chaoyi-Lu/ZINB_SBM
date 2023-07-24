@@ -64,8 +64,7 @@ colnames(SS1_ZINBSBM_N75_K3$Z) <- c()
 ```
 
 Then we apply label switching on the latent clustering $\boldsymbol{z}$ and those clustering dependent parameters, $\boldsymbol{\Pi},\boldsymbol{R},\boldsymbol{Q}$, of the simulated network. 
-The label switched results are the initial $\boldsymbol{z},\boldsymbol{\Pi},\boldsymbol{R},\boldsymbol{Q}$ we illustrated in the paper.
-Recall here that we treat the label-switched initial clustering and parameters as the "true" references in the experiments.
+Recall here that we treat the label-switched initial clustering and the clustering dependent parameters as the "true" references in the experiments.
 
 ``` r
 #--------------------------------------------------------------------------------------------------------------------------------------------
@@ -76,7 +75,7 @@ group_counts <- (as.numeric(table(SS1_ZINBSBM_N75_K3_LSZ%*%c(1:3))))
 abline(v = -1/(2*(nrow(SS1_ZINBSBM_N75_K3$Y)-1)) + cumsum(group_counts/sum(group_counts))*(1+2/(2*(nrow(SS1_ZINBSBM_N75_K3$Y)-1))))
 abline(h = 1-(-1/(2*(nrow(SS1_ZINBSBM_N75_K3$Y)-1)) + cumsum(group_counts/sum(group_counts))*(1+2/(2*(nrow(SS1_ZINBSBM_N75_K3$Y)-1)))))
 #--------------------------------------------------------------------------------------------------------------------------------------------
-# Label switch initial R,Q,Pi and evaluate the initial mean and variance
+# Label switch initial R,Q,Pi
 res <- LabelSwitching_SG2003_ZINBSBM(Z = list(SS1_ZINBSBM_N75_K3$Z),
                                      Pi = list(c(0.45,0.35,0.2)),
                                      R = list(matrix(c(0.1,0.02,0.02,
@@ -93,11 +92,14 @@ SS1_ZINBSBM_N75_K3_obs_InitialPi <- res$Pi[[1]]
 
 It can be checked that the label-switched latent parameters are now: $\boldsymbol{\Pi} = \left(0.35, 0.20, 0.45\right)$ and 
 
-$$\boldsymbol{R} = \begin{pmatrix}0.60 & 0.05 & 0.02 \\\0.10 & 2.50 & 0.02 \\\0.05 & 0.05 & 0.10 \end{pmatrix}, \boldsymbol{Q} = \begin{pmatrix}0.15 & 0.25 & 0.15 \\\0.20 & 0.35 & 0.15 \\\ 0.20 & 0.25 & 0.10\end{pmatrix}.$$
+$$\boldsymbol{R} = \begin{pmatrix}0.60 & 0.05 & 0.02 \\\0.10 & 2.50 & 0.02 \\\0.05 & 0.05 & 0.10 \end{pmatrix}, \boldsymbol{Q} = \begin{pmatrix}0.15 & 0.25 & 0.15 \\\0.20 & 0.35 & 0.15 \\\ 0.20 & 0.25 & 0.10\end{pmatrix},$$
 
-Once we obtained the label-switched latent clustering and parameters, we can evaluate the initial mean and variance of the distribution assumed for the non-missing weights.
+which argee with the ones we illustrated in the paper.
+
+Once we obtained the label-switched latent clustering and parameters, we can evaluate the initial mean and variance of the distribution assumed for the non-missing weights between each pair of clusters.
 
 ``` r
+#  Evaluate the initial mean and variance
 SS1_ZINBSBM_N75_K3_obs_Initialmean <- SS1_ZINBSBM_N75_K3_obs_InitialR*(1-SS1_ZINBSBM_N75_K3_obs_InitialQ)/SS1_ZINBSBM_N75_K3_obs_InitialQ
 SS1_ZINBSBM_N75_K3_obs_Initialvar <- SS1_ZINBSBM_N75_K3_obs_InitialR*(1-SS1_ZINBSBM_N75_K3_obs_InitialQ)/SS1_ZINBSBM_N75_K3_obs_InitialQ^2
 ```
