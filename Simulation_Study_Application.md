@@ -153,7 +153,7 @@ Recall here that, within such a function, the inference step of the clustering i
 
 The PCMwG algorithm for the ZINB-SBM is implemented for $40,000$ iterations for each fixed $K = 2,3,4,5$.
 The $p$ prior setting for the function `Directed_ZINBSBM_PCMwG()` is $p \sim \text{Beta}(1,9)$ which can be changed by inputting prior parameters.
-The prior settings of other parameters are set by default as we discussed in the paper, that is, $\boldsymbol{\Pi} \sim \text{Dirichlet}(\alpha, \dots, \alpha)$, $q_{gh} \sim \text{Beta}(\beta_{q1}, \beta_{q2})$ for $g,h=1,2,\dots,K$, and the prior distribution of $\boldsymbol{R}$ is simply positive uniform $\text{U}(0,\text{UpperBound})$ where the "UpperBound" here can be a big enough value so that the $\boldsymbol{R}$ prior term can be cancelled by the fraction in the acceptance ratio of the Metropolis-Hastings (M-H) step. Recall also here that the proprosal distrbution of $\boldsymbol{R}$ in the M-H step is $r'\_{gh} \sim \text{U}(\text{max}(0,r_{gh}^{(t-1)}-\epsilon),r_{gh}^{(t-1)}+\epsilon)$ for each pair of $g,h = 1,\dots,K$ where $r_{gh}^{(t-1)}$ is the current state of the $r_{gh}$ and the proposal epsilon $\epsilon$ here is tuned to be $0.175$ where such an epsilon will also be applied in the real data application.
+The prior settings of other parameters are set by default as we discussed in the paper, that is, $\boldsymbol{\Pi} \sim \text{Dirichlet}(1, \dots, 1)$, $q_{gh} \sim \text{Beta}(1, 1)$ for $g,h=1,2,\dots,K$, and the prior distribution of $\boldsymbol{R}$ is simply positive uniform $\text{U}(0,\text{UpperBound})$ where the "UpperBound" here can be a big enough value so that the $\boldsymbol{R}$ prior term can be cancelled by the fraction in the acceptance ratio of the Metropolis-Hastings (M-H) step. Recall also here that the proprosal distrbution of $\boldsymbol{R}$ in the M-H step is $r'\_{gh} \sim \text{U}(\text{max}(0,r_{gh}^{(t-1)}-\epsilon),r_{gh}^{(t-1)}+\epsilon)$ for each pair of $g,h = 1,\dots,K$ where $r_{gh}^{(t-1)}$ is the current state of the $r_{gh}$ and the proposal epsilon $\epsilon$ here is tuned to be $0.175$ where such an epsilon will also be applied in the real data application.
 The implementations are applied by the code shown below.
 
 ``` r
@@ -421,10 +421,102 @@ for (k1 in 1:3){
 SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedProbObs0Missing0
 ```
 
-Before evaluating the approximate ICPCL model selection criterion, we first obtain the posterior mean of $\boldsymbol{R}$ which is used as the initial state of $\boldsymbol{R}$ in the greedy search
+Once we obtained the summarized $\widetilde{\boldsymbol{P_{m0}}}$ and $\tilde{\boldsymbol{z}}$, we can approximate the ICPCL by the function `Directed_ZINBSBM_ApproximateICPCL_OptR` provided in the file [`Functions_for_ZINB_SBM.R`].
+Such a function applies a greedy algorithm to search for an optimized $\boldsymbol{R}$ which maximize each partially collapsed $\boldsymbol{Y}_{gh}$ term of the ICPCL criterion as we discussed in Section $3.2$ of the paper.
+The prior settings for the ICPCL are the same as those applied for the inference and the initial state of $\boldsymbol{R}$ for the greedy search is the posterior mean of $\boldsymbol{R}$ which can be obtained by:
 
+``` r
+# ## Obtain the initial R to be optimized for the ICPCL by the posterior mean of R
+SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanR <-
+  apply(array(unlist(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS$R),
+              dim = c(nrow(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS$R[[1]]),
+                      ncol(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS$R[[1]]),
+                      length(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS$R)))[,,20001:40001],1:2,mean)
+SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanR 
+```
 
+Then we can input all we need to the function and evaluate the ICPCL:
 
+``` r
+# Obtain the approximate ICPCL
+SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_ICPCLandOptR <- 
+  Directed_ZINBSBM_ApproximateICPCL_OptR(Y = SS1_ZINBSBM_N75_K3$Y,
+                                         ProbObs0Missing0 = SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedProbObs0Missing0,
+                                         Z = SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ,
+                                         R_0 = SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanR,
+                                         alpha=1, beta1=1,beta2=9, betaq1=1,betaq2=1)
+SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_ICPCLandOptR$value # -6449.478
+```
+
+We apply the same process for all the fixed $K = 2,3,4,5$ cases and obtain the ICPCL table shown as Table $1$ in Section $4.1$ of the paper.
+Since the code for other $K$ cases are similar as above, we propose not to provide more details here.
+
+Once we picked the best $K$ case, we can apply further inference conditional on the summarized clustering $\tilde{\boldsymbol{z}}$ in order to summarize those clustering dependent parameters, that is, $\boldsymbol{\Pi},\boldsymbol{R},\boldsymbol{Q}$.
+The further inference is also implemented for the same number of iterations as above, that is, $40,000$ iterations and all other settings are also the same.
+
+``` r
+# Further inference of R,Q,Pi conditional on summarized z
+SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s <-
+  Directed_ZINBSBM_PCMwG_FixedZ(Y = SS1_ZINBSBM_N75_K3$Y,
+                                K = 3, T = 40000, eps_R = 0.175,beta1 = 1, beta2 = 9,
+                                Z_0 = SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ)
+```
+
+According to the further inference outputs (after $20,000$-iteration burn-in), we can summarize the clustering dependent parameters as:
+
+``` r
+## Summarize Pi
+SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedPi <-
+  apply(array(unlist(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Pi),
+              dim = c(nrow(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Pi[[1]]),
+                      ncol(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Pi[[1]]),
+                      length(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Pi)))[,,20001:40001],1,mean)
+SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedPi
+
+## Summarize Q
+SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedQ <-
+  apply(array(unlist(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Q),
+              dim = c(nrow(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Q[[1]]),
+                      ncol(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Q[[1]]),
+                      length(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Q)))[,,20001:40001],1:2,mean)
+SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedQ
+```
+
+And also summarize $\boldsymbol{R}$ by:
+
+```r
+# ## Summarize R
+SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedR <-
+  apply(array(unlist(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$R),
+              dim = c(nrow(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$R[[1]]),
+                      ncol(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$R[[1]]),
+                      length(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$R)))[,,20001:40001],1:2,mean)
+SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedR
+# SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanR # Compare with posterior mean R
+# SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_ICPCLandOptR$R # Compare with the optimized R used for ICPCL
+# # acceptance rate for R in the further inference conditional on Z_s
+# Reduce(`+`, SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Acceptance_count_R[20001:40001])/20001
+```
+
+Note here that we can also compare the summarized $\tilde{\boldsymbol{R}}$ with the posterior mean of $\boldsymbol{R}$ and with the $\boldsymbol{R}$ which optimize the ICPCL as the commentted code above.
+It can be checked that all the three $\boldsymbol{R}$'s we obtained are all most the same as each other.
+This result can be expected because the posterior clustering chain was shown to be very stable for this experiment.
+We can also check the acceptance rate of the $\boldsymbol{R}$ M-H step for the further inference, and the acceptance rate is also shown to be similar as the one we obtained in the PCMwG implementation without fixing the clustering.
+
+Based on the summarized $\tilde{\boldsymbol{R}}$ and $\tilde{\boldsymbol{Q}}$, we can also obtain the summarized mean and variance of the distribution assumed for the edge weights:
+
+```r
+# Summarized mean 
+SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedR*
+  (1-SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedQ)/
+  SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedQ
+# Summarized var
+SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedR*
+  (1-SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedQ)/
+  SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedQ^2
+```
+
+which can be checked that they agree well with the reference ones provided at the beginning of this section.
 
 
 
