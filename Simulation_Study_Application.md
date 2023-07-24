@@ -145,10 +145,10 @@ par(mfrow=c(1,1),mai = c(1.02, 0.82, 0.82, 0.42),mgp=c(3,1,0))
 
 The implementations of applying partially collapsed Metropolis within Gibbs algorithm (PCMwG) for the ZINB-SBM on the network are based on the function `Directed_ZINBSBM_PCMwG()`.
 Note that such a function will automatically label switch the initial clustering input to the function in order to ensure the uniqueness of the input clustering.
-Other steps are exactly the same as described in the paper Algorithm $2$.
+Other steps are exactly the same as the Algorithm $2$ stated in the paper.
 
-The function `Directed_ZINBSBM_PCMwG_FixedZ()` aims to apply further inference conditional on fixed summarized clustering as we disucssed in the paper.
-Recall here that, within such a function, the inference step of the clustering is removed and instead the clustering is fixed at the summarized clustering we obtained from the outputs of the function `Directed_ZINBSBM_PCMwG()` in order for the further inference of the clustering dependent parameters conditional on the summarized clustering.
+The function `Directed_ZINBSBM_PCMwG_FixedZ()` aims to apply further inference conditional on the fixed summarized clustering as we disucssed in the paper.
+Recall here that, within such a function, the inference step of the clustering is removed and instead the clustering is fixed at the summarized clustering we obtained from the outputs of the function `Directed_ZINBSBM_PCMwG()`.
 
 
 
