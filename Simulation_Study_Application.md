@@ -63,7 +63,8 @@ colnames(SS1_ZINBSBM_N75_K3$nu) <- c()
 colnames(SS1_ZINBSBM_N75_K3$Z) <- c()
 ```
 
-Then we apply the label switching on the latent clustering $\boldsymbol{z}$ and those clustering dependent parameters, $\boldsymbol{\Pi},\boldsymbol{R},\boldsymbol{Q}$, of the simulated network, and obtain the initial $\boldsymbol{z},\boldsymbol{\Pi},\boldsymbol{R},\boldsymbol{Q}$.
+Then we apply label switching on the latent clustering $\boldsymbol{z}$ and those clustering dependent parameters, $\boldsymbol{\Pi},\boldsymbol{R},\boldsymbol{Q}$, of the simulated network. 
+The label switched results are the initial $\boldsymbol{z},\boldsymbol{\Pi},\boldsymbol{R},\boldsymbol{Q}$ we illustrated in the paper.
 Recall here that we treat the label-switched initial clustering and parameters as the "true" references in the experiments.
 
 ``` r
@@ -90,11 +91,9 @@ SS1_ZINBSBM_N75_K3_obs_InitialQ <- res$Q[[1]]
 SS1_ZINBSBM_N75_K3_obs_InitialPi <- res$Pi[[1]]
 ```
 
-The label-switched latent parameters now agree with the ones we illustrated in the paper: $\boldsymbol{\Pi} = \left(0.35, 0.20, 0.45\right)$ and 
+It can be checked that the label-switched latent parameters are now: $\boldsymbol{\Pi} = \left(0.35, 0.20, 0.45\right)$ and 
 
 $$\boldsymbol{R} = \begin{pmatrix}0.60 & 0.05 & 0.02 \\\0.10 & 2.50 & 0.02 \\\0.05 & 0.05 & 0.10 \end{pmatrix}, \boldsymbol{Q} = \begin{pmatrix}0.15 & 0.25 & 0.15 \\\0.20 & 0.35 & 0.15 \\\ 0.20 & 0.25 & 0.10\end{pmatrix}.$$
-
-In other words, the network data we illustrated in the paper is already label-switched.
 
 Once we obtained the label-switched latent clustering and parameters, we can evaluate the initial mean and variance of the distribution assumed for the non-missing weights.
 
