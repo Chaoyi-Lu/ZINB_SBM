@@ -153,7 +153,8 @@ Recall here that, within such a function, the inference step of the clustering i
 
 The PCMwG algorithm for the ZINB-SBM is implemented for $40,000$ iterations for each fixed $K = 2,3,4,5$.
 The $p$ prior setting for the function `Directed_ZINBSBM_PCMwG()` is $p \sim Beta(1,9)$ which can be changed by inputting prior parameters.
-The prior settings of other parameters are set by default as we discussed in the paper, that is, $\boldsymbol{\Pi} \sim \text{Dirichlet}(\alpha, \dots, \alpha)$, $q_{gh} \sim \text{Beta}(\beta_{q1}, \beta_{q2})$ for $g,h=1,2,\dots,K$, and the prior distribution of $\boldsymbol{R}$ is simply positive uniform $\text{U}(0,\text{UpperBound})$ where the "UpperBound" here can be a big enough value so that the $\boldsymbol{R}$ prior term can be cancelled by the fraction in the acceptance ratio of the Metropolis-Hastings step.
+The prior settings of other parameters are set by default as we discussed in the paper, that is, $\boldsymbol{\Pi} \sim \text{Dirichlet}(\alpha, \dots, \alpha)$, $q_{gh} \sim \text{Beta}(\beta_{q1}, \beta_{q2})$ for $g,h=1,2,\dots,K$, and the prior distribution of $\boldsymbol{R}$ is simply positive uniform $\text{U}(0,\text{UpperBound})$ where the "UpperBound" here can be a big enough value so that the $\boldsymbol{R}$ prior term can be cancelled by the fraction in the acceptance ratio of the Metropolis-Hastings (M-H) step. Recall also here that the proprosal distrbution of $\boldsymbol{R}$ in the M-H step is $r'\_{gh} \sim \text{U}(\text{max}(0,r_{gh}^{(t-1)}-\epsilon),r_{gh}^{(t-1)}+\epsilon)$ for each pair of $g,h = 1,\dots,K$ where $r_{gh}^{(t-1)}$ is the current state of the $r_{gh}$ and the proposal epsilon $\epsilon$ here is tuned to be $0.175$.
+Such an epsilon will also be applied in the real data application.
 
 
 
