@@ -358,6 +358,32 @@ SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ <- SS1_ZINBSBM_N75_K3_Fixed_K3_
 table(c(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ%*%1:ncol(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ)),SS1_ZINBSBM_N75_K3_LSZ%*%c(1:3),dnn = c("","")) # compare the marginal posterior mode with the true lcustering
 ```
 
+Then we can input the marginal posterior mode to the algorithm provided by [Rastelli and Friel (2018)](https://doi.org/10.1007/s11222-017-9786-y) in the R package `GreedyEPL` and obtain the summarized clustering.
+
+``` r
+require(GreedyEPL) # obtain the summarized Z by the greedy algorithm proposed by Rastelli and Friel (2018)
+Z_temp <- c()
+for (t in 20001:40001){ # transform Z matrices to z vectors and put all vectors together as a T X N matrix if T is the number of iterations here
+  Z_temp <- rbind(Z_temp,c(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS$Z[[t]]%*%1:ncol(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS$Z[[t]])))
+}
+output <- MinimiseEPL(Z_temp, list(Kup = 10, loss_type = "VI",
+                                   decision_init = c(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ%*%
+                                                       1:ncol(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ))))
+table(output$decision,SS1_ZINBSBM_N75_K3_LSZ%*%c(1:3),dnn = c("","")) # check whether the the output is the same as the marginal posterior mode
+output$EPL # check VI posterior loss: 0
+```
+
+In most of the cases, the summarized clustering is the same as the marginal posterior mode in our experiments.
+This makes sense because our ZINB-SBM is a high-dimensional complex model where the model parameters are the mixing of discrete and continuous cases, so that, the posterior clustering chain is usually stably concentrated around the end clustering state forming the stationary distribution of the posterior clustering.
+However, in the case of that the summarized clustering is not the same as the marginal posterior mode, we transform the output clustering, which is in vector form of the clustering, from the function `MinimiseEPL` above to the matrix form we focus on in the experiments.
+
+``` r
+# # if the clustering obtained by MinimiseEPL() is not the same as the marginal posterior mode, we treat such a clustering as the summarized clustering
+# SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ <- matrix(0,length(output$decision),max(output$decision)) # Save output as summarized Z
+# for (i in 1:length(output$decision)){SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ[i,output$decision[i]]<-1}
+# # # if the clustering obtained by MinimiseEPL() has smaller K than the fixed K, we add the zero column for the corresponding empty clusters
+# # SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ <- cbind(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ,0)
+```
 
 
 
