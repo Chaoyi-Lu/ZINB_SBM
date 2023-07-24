@@ -124,12 +124,31 @@ The reference probability of missing zero, $p$, is simply the initial setting:
 SS1_ZINBSBM_N75_K3_obs_Initialp <- 0.15
 ```
 
-The adjacency matrix $Y$ plot and the plots of $\boldsymbol{Y}|\boldsymbol{z}^{*}$
+The plots of the adjacency matrix $Y$, the adjacency matrix $Y$ conditional on true clustering $\boldsymbol{z}^{\*}$, i.e $\boldsymbol{Y}|\boldsymbol{z}^{*}$, and the indicator of whether $y_{ij}$ is non-zero (dark color) or not (light color) conditional on $\boldsymbol{z}^{\*}$ shown as Figure $1$ of the paper can be recovered by:
 
+``` r
+par(mfrow=c(1,3),mai = c(0.05, 0.05, 0.2, 0.05),mgp=c(0.1,0.1,0))
+image(t(SS1_ZINBSBM_N75_K3$Y),axes = FALSE,xlab = "",ylab = "",main = "Adjacency Matrix Y")
+image(t(SS1_ZINBSBM_N75_K3$Y)[order(SS1_ZINBSBM_N75_K3_LSZ%*%c(1:3)),rev(order(SS1_ZINBSBM_N75_K3_LSZ%*%c(1:3)))],axes = FALSE,xlab = "",ylab = "",main = TeX(r'($Y|$ True $z^*$)',bold = TRUE))
+group_counts <- (as.numeric(table(SS1_ZINBSBM_N75_K3_LSZ%*%c(1:3))))
+abline(v = -1/(2*(nrow(SS1_ZINBSBM_N75_K3$Y)-1)) + cumsum(group_counts/sum(group_counts))*(1+2/(2*(nrow(SS1_ZINBSBM_N75_K3$Y)-1))))
+abline(h = 1-(-1/(2*(nrow(SS1_ZINBSBM_N75_K3$Y)-1)) + cumsum(group_counts/sum(group_counts))*(1+2/(2*(nrow(SS1_ZINBSBM_N75_K3$Y)-1)))))
+
+image(t(1*(SS1_ZINBSBM_N75_K3$Y!=0))[order(SS1_ZINBSBM_N75_K3_LSZ%*%c(1:3)),rev(order(SS1_ZINBSBM_N75_K3_LSZ%*%c(1:3)))],axes = FALSE,xlab = "",ylab = "",main = TeX(r'($Y\neq 0|$ True $z^*$)',bold = TRUE))
+group_counts <- (as.numeric(table(SS1_ZINBSBM_N75_K3_LSZ%*%c(1:3))))
+abline(v = -1/(2*(nrow(SS1_ZINBSBM_N75_K3$Y)-1)) + cumsum(group_counts/sum(group_counts))*(1+2/(2*(nrow(SS1_ZINBSBM_N75_K3$Y)-1))))
+abline(h = 1-(-1/(2*(nrow(SS1_ZINBSBM_N75_K3$Y)-1)) + cumsum(group_counts/sum(group_counts))*(1+2/(2*(nrow(SS1_ZINBSBM_N75_K3$Y)-1)))))
+par(mfrow=c(1,1),mai = c(1.02, 0.82, 0.82, 0.42),mgp=c(3,1,0))
+```
 
 ### SS1 ZINB-SBM Implementations
 
+The implementations of applying partially collapsed Metropolis within Gibbs algorithm (PCMwG) for the ZINB-SBM on the network are based on the function `Directed_ZINBSBM_PCMwG()`.
+Note that such a function will automatically label switch the initial clustering input to the function in order to ensure the uniqueness of the input clustering.
+Other steps are exactly the same as described in the paper Algorithm $2$.
 
+The function `Directed_ZINBSBM_PCMwG_FixedZ()` aims to apply further inference conditional on fixed summarized clustering as we disucssed in the paper.
+Recall here that, within such a function, the inference step of the clustering is removed and instead the clustering is fixed at the summarized clustering we obtained from the outputs of the function `Directed_ZINBSBM_PCMwG()` in order for the further inference of the clustering dependent parameters conditional on the summarized clustering.
 
 
 
