@@ -902,4 +902,4 @@ Due to the fact that none of the ZIP-SBM cases fit well to the simulation study 
 
 The second simmulation study instead focuses on an artificial network randomly generated from the ZIP-SBM with the settings: $N = 75, K = 3, p = 0.15$ and 
 
-$$\boldsymbol{\Pi} = \left(0.3, 0.4, 0.3\right), \boldsymbol{\lambda} = \begin{pmatrix} 2.0 & 0.7 & 0.9\\0.1 & 2.0 & 0.3\\0.5 & 1.1 &2.5\end{pmatrix}$$
+$$\boldsymbol{\Pi} = \left(0.3, 0.4, 0.3\right), \boldsymbol{\lambda} = \begin{pmatrix} 2.0 & 0.7 & 0.9\\\0.1 & 2.0 & 0.3\\\0.5 & 1.1 &2.5\end{pmatrix}$$
