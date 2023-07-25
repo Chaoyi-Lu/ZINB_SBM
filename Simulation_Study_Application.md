@@ -452,12 +452,22 @@ The concaveness of the log $\boldsymbol{Y}_{gh}$ term of the ICPCL with respect 
 The concaveness plots Figure $3$ shown in Section $4.1$ of the paper can be recovered by:
 
 ``` r
-# Check concaveness for each Y_gh term of the ICPCL
+# Check the concaveness for each Y_gh term of the ICPCL w.r.t. r_gh
 res <- Directed_AZINBSBMRghQghp_ApproximatedICL_CheckConcave(Y = SS1_ZINBSBM_N75_K3$Y,
                                                              ProbObs0Missing0 = SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedProbObs0Missing0,
                                                              Z = SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ,
                                                              alpha=1, beta1=1,beta2=9, betaq1=1,betaq2=1,rUB = 6)
-
+par(mfrow=c(3,3),mai = c(0.25, 0.15, 0.15, 0.05),mgp = c(1,0.25,0))
+plot(seq(0.001,6,0.001),res[1,1,],type = "l", main = "g=1,h=1",xlab = TeX(r'($r_{11}$)'),ylab = "")
+plot(seq(0.001,6,0.001),res[1,2,],type = "l", main = "g=1,h=2",xlab = TeX(r'($r_{12}$)'),ylab = "")
+plot(seq(0.001,6,0.001),res[1,3,],type = "l", main = "g=1,h=3",xlab = TeX(r'($r_{13}$)'),ylab = "")
+plot(seq(0.001,6,0.001),res[2,1,],type = "l", main = "g=2,h=1",xlab = TeX(r'($r_{21}$)'),ylab = "")
+plot(seq(0.001,6,0.001),res[2,2,],type = "l", main = "g=2,h=2",xlab = TeX(r'($r_{22}$)'),ylab = "")
+plot(seq(0.001,6,0.001),res[2,3,],type = "l", main = "g=2,h=3",xlab = TeX(r'($r_{23}$)'),ylab = "")
+plot(seq(0.001,6,0.001),res[3,1,],type = "l", main = "g=3,h=1",xlab = TeX(r'($r_{31}$)'),ylab = "")
+plot(seq(0.001,6,0.001),res[3,2,],type = "l", main = "g=3,h=2",xlab = TeX(r'($r_{32}$)'),ylab = "")
+plot(seq(0.001,6,0.001),res[3,3,],type = "l", main = "g=3,h=3",xlab = TeX(r'($r_{33}$)'),ylab = "")
+par(mfrow=c(1,1),mai = c(1.02, 0.82, 0.82, 0.42))
 ```
 
 We apply the same process for all the fixed $K = 2,3,4,5$ cases and obtain the ICPCL table shown as Table $1$ in Section $4.1$ of the paper.
@@ -465,6 +475,7 @@ Since the code for other $K$ cases are similar as above, we propose not to provi
 
 Once we picked the best $K$ case, we can apply further inference conditional on the summarized clustering $\tilde{\boldsymbol{z}}$ in order to summarize those clustering dependent parameters, that is, $\boldsymbol{\Pi},\boldsymbol{R},\boldsymbol{Q}$.
 The further inference is also implemented for the same number of iterations as above, that is, $40,000$ iterations and all other settings are also the same.
+Note here that the `Z_s` in the code below denotes/means the summarized $\tilde{\boldsymbol{z}}$.
 
 ``` r
 # Further inference of R,Q,Pi conditional on summarized z
@@ -530,5 +541,65 @@ SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedR*
 
 which can be checked that they agree well with the reference ones provided at the beginning of this section.
 
+The posterior density plot of $p$ as well as the posterior density plot of $\boldsymbol{\Pi},\boldsymbol{R},\boldsymbol{Q}$ conditional on $\tilde{\boldsymbol{Qz}}$ shown as Figure $4$ of the paper can be recovered via the code below.
+
+```r
+# Transform the list to the array
+SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredR <-
+  array(unlist(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$R),
+        dim = c(nrow(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$R[[1]]),
+                ncol(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$R[[1]]),
+                length(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$R)))[,,20001:40001]
+SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredQ <-
+  array(unlist(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Q),
+        dim = c(nrow(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Q[[1]]),
+                ncol(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Q[[1]]),
+                length(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Q)))[,,20001:40001]
+# Make the 2 X 2 figure
+par(mfrow=c(2,2),mai = c(0.3, 0.25, 0.2, 0.05), mgp=c(1.25,0.5,0))
+# Histogram of the posterior p samples
+hist(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1$p[20001:40001],ylab = "",xlab="", main = TeX(r'(Posterior Density of $p$)'))
+abline(v=0.15,col = 2,lty=2)
+par(xpd=TRUE)
+text(0.14,1200, TeX(r'($p^*$)'), pos = 4,col=2)
+par(xpd=FALSE)
+# Posterior density plots of Pi conditional on Z_s
+plot(density(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredPi[1,],bw=0.01),col = 2, xlim=c(0,0.7),ylim=c(0,10), ylab = "",xlab="", main = TeX(r'(Posterior Density of $\pi_k$|\widetilde{\textbf{z}})'))
+lines(density(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredPi[2,],bw=0.01),col = 3)
+lines(density(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredPi[3,],bw=0.01),col = 4)
+abline(v=0.35,col = 2,ylim=c(0,9),lty=2)
+abline(v=0.2,col = 3,ylim=c(0,9),lty=2)
+abline(v=0.45,col = 4,ylim=c(0,9),lty=2)
+legend("topright", legend=c(TeX(r'($\pi_1$)'),TeX(r'($\pi_2$)'),TeX(r'($\pi_3$)')),
+       col=2:4, lty = 1, cex=0.6)
+# Posterior density plots of R conditional on Z_s
+plot(density(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredR[1,1,]),col = 1, xlim=c(0,0.9),ylim=c(0,60), ylab = "",xlab="", main = TeX(r'(Posterior Density of $r_{gh}$|\widetilde{\textbf{z}})'))
+lines(density(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredR[1,2,],bw=0.005),col = 2)
+lines(density(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredR[1,3,],bw=0.005),col = 3)
+lines(density(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredR[2,1,],bw=0.005),col = 4)
+lines(density(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredR[2,2,]),col = 5)
+lines(density(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredR[2,3,],bw=0.005),col = 6)
+lines(density(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredR[3,1,],bw=0.005),col = 7)
+lines(density(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredR[3,2,],bw=0.005),col = 8)
+lines(density(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredR[3,3,],bw=0.005),col = "rosybrown")
+legend("topright", legend=c("1,1","1,2","1,3", "2,1","2,2","2,3", "3,1","3,2","3,3"),
+       col=c(1:8,"rosybrown"), lty = 1, cex=0.6)
+# Posterior density plots of Q conditional on Z_s
+plot(density(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredQ[1,1,]),col = 1, xlim=c(0,0.5),ylim=c(0,35), ylab = "",xlab="", main = TeX(r'(Posterior Density of $q_{gh}$|\widetilde{\textbf{z}})'))
+lines(density(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredQ[1,2,]),col = 2)
+lines(density(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredQ[1,3,]),col = 3)
+lines(density(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredQ[2,1,]),col = 4)
+lines(density(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredQ[2,2,]),col = 5)
+lines(density(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredQ[2,3,]),col = 6)
+lines(density(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredQ[3,1,]),col = 7)
+lines(density(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredQ[3,2,]),col = 8)
+lines(density(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredQ[3,3,]),col = "rosybrown")
+legend("topright", legend=c("1,1","1,2","1,3", "2,1","2,2","2,3", "3,1","3,2","3,3"),
+       col=c(1:8,"rosybrown"), lty = 1, cex=0.6)
+# Add the extra posterior density plot of r_22 conditional on summarized z since it's scale is very different from others
+par(new=TRUE,mfcol=c(5,5), mfg=c(4,2),mai=c(0.1,0.1,0.1,0.1),mgp=c(1,0.5,0)) # Add the r_22 posterior density additionally
+plot(density(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredR[2,2,]),col = 5,main = "", ylab = "",xlab="")
+par(mfrow=c(1,1),mai = c(1.02, 0.82, 0.82, 0.42),mgp=c(3,1,0))
+```
 
 
