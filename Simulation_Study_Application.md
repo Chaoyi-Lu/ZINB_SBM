@@ -63,6 +63,20 @@ colnames(SS1_ZINBSBM_N75_K3$nu) <- c()
 colnames(SS1_ZINBSBM_N75_K3$Z) <- c()
 ```
 
+The number or proportion of true zeros/missing zeros/non zeros can be checked by:
+
+``` r
+# Number/proportion of true 0
+sum(SS1_ZINBSBM_N75_K3$nu[SS1_ZINBSBM_N75_K3$Y == 0]==0)-75
+(sum(SS1_ZINBSBM_N75_K3$nu[SS1_ZINBSBM_N75_K3$Y == 0]==0)-75)/(75*74)
+# Number/proportion  of missing 0
+sum(SS1_ZINBSBM_N75_K3$nu[SS1_ZINBSBM_N75_K3$Y == 0]==1)
+(sum(SS1_ZINBSBM_N75_K3$nu[SS1_ZINBSBM_N75_K3$Y == 0]==1))/(75*74)
+# Number/proportion  of non 0
+sum(SS1_ZINBSBM_N75_K3$nu[SS1_ZINBSBM_N75_K3$Y != 0]==0)
+(sum(SS1_ZINBSBM_N75_K3$nu[SS1_ZINBSBM_N75_K3$Y != 0]==0))/(75*74)
+```
+
 Then we apply label switching on the latent clustering $\boldsymbol{z}$ and those clustering dependent parameters, $\boldsymbol{\Pi},\boldsymbol{R},\boldsymbol{Q}$, of the simulated network. 
 The label switching methods for the ZINB-SBM can be implemented by the function `LabelSwitching_SG2003_ZINBSBM()` included in the [`Functions_for_ZINB_SBM.R`].
 Recall here that we treat the label-switched initial clustering and the clustering dependent parameters as the "true" references in the experiments.
@@ -903,3 +917,91 @@ Due to the fact that none of the ZIP-SBM cases fit well to the simulation study 
 The second simmulation study instead focuses on an artificial network randomly generated from the ZIP-SBM with the settings: $N = 75, K = 3, p = 0.15$ and 
 
 $$\boldsymbol{\Pi} = \left(0.3, 0.4, 0.3\right), \boldsymbol{\lambda} = \begin{pmatrix} 2.0 & 0.7 & 0.9\\\0.1 & 2.0 & 0.3\\\0.5 & 1.1 &2.5\end{pmatrix}$$
+
+```r
+rm(list=ls())
+gc()
+source("Functions_for_ZINB_SBM.R")
+# Simulation study 2 of AZIPSBMp N = 75, K = 3
+SS2_ZIPSBM_N75_K3 <- 
+  Simulation_Directed_ZIPSBM(N = 75 ,K = 3 ,Pi = c(0.3,0.4,0.3), p = 0.15,
+                             Lambda = matrix(c(2,0.1,0.5,
+                                               0.7,2.0,1.1,
+                                               0.9,0.3,2.5),3,3))
+# write.csv(SS2_ZIPSBM_N75_K3$Y,"SS2_ZIPSBM_N75K3_obsY.csv", row.names = FALSE)
+# write.csv(SS2_ZIPSBM_N75_K3$X,"SS2_ZIPSBM_N75K3_obsX.csv", row.names = FALSE)
+# write.csv(SS2_ZIPSBM_N75_K3$nu,"SS2_ZIPSBM_N75K3_obsnu.csv", row.names = FALSE)
+# write.csv(SS2_ZIPSBM_N75_K3$Z,"SS2_ZIPSBM_N75K3_obsZ.csv", row.names = FALSE)
+```
+
+The network data we used in the paper can be loaded by the code:
+
+```r
+SS2_ZIPSBM_N75_K3 <- 
+  list(Y = as.matrix(read.csv("SS2_ZIPSBM_N75K3_obsY.csv",header = TRUE)),
+       X = as.matrix(read.csv("SS2_ZIPSBM_N75K3_obsX.csv",header = TRUE)),
+       nu = as.matrix(read.csv("SS2_ZIPSBM_N75K3_obsnu.csv",header = TRUE)),
+       Z = as.matrix(read.csv("SS2_ZIPSBM_N75K3_obsZ.csv",header = TRUE)))
+colnames(SS2_ZIPSBM_N75_K3$Y) <- c()
+colnames(SS2_ZIPSBM_N75_K3$X) <- c()
+colnames(SS2_ZIPSBM_N75_K3$nu) <- c()
+colnames(SS2_ZIPSBM_N75_K3$Z) <- c()
+```
+
+And we can check the number or proportion of difference types of zeros via:
+
+```r
+# Number/proportion of true 0
+sum(SS2_ZIPSBM_N75_K3$nu[SS2_ZIPSBM_N75_K3$Y == 0]==0)-75
+(sum(SS2_ZIPSBM_N75_K3$nu[SS2_ZIPSBM_N75_K3$Y == 0]==0)-75)/(75*74)
+
+# Number/proportion of missing 0
+sum(SS2_ZIPSBM_N75_K3$nu[SS2_ZIPSBM_N75_K3$Y == 0]==1)
+(sum(SS2_ZIPSBM_N75_K3$nu[SS2_ZIPSBM_N75_K3$Y == 0]==1))/(75*74)
+
+# Number/proportion of non 0
+sum(SS2_ZIPSBM_N75_K3$nu[SS2_ZIPSBM_N75_K3$Y != 0]==0)
+(sum(SS2_ZIPSBM_N75_K3$nu[SS2_ZIPSBM_N75_K3$Y != 0]==0))/(75*74)
+```
+
+The label switching process follows:
+
+```r
+# Label switch Z
+SS2_ZIPSBM_N75_K3_LSZ <- LabelSwitching_SG2003_ZIPSBM(Z = list(SS2_ZIPSBM_N75_K3$Z))$Z[[1]]
+image(t(SS2_ZIPSBM_N75_K3$Y)[order(SS2_ZIPSBM_N75_K3_LSZ%*%c(1:3)),rev(order(SS2_ZIPSBM_N75_K3_LSZ%*%c(1:3)))])
+group_counts <- (as.numeric(table(SS2_ZIPSBM_N75_K3_LSZ%*%c(1:3))))
+abline(v = -1/(2*(nrow(SS2_ZIPSBM_N75_K3$Y)-1)) + cumsum(group_counts/sum(group_counts))*(1+2/(2*(nrow(SS2_ZIPSBM_N75_K3$Y)-1))))
+abline(h = 1-(-1/(2*(nrow(SS2_ZIPSBM_N75_K3$Y)-1)) + cumsum(group_counts/sum(group_counts))*(1+2/(2*(nrow(SS2_ZIPSBM_N75_K3$Y)-1)))))
+#--------------------------------------------------------------------------------------------------------------------------------------------
+# Label switch initial Lambda, Pi
+res <- LabelSwitching_SG2003_ZIPSBM(Z = list(SS2_ZIPSBM_N75_K3$Z),
+                                    Pi = list(c(0.3,0.4,0.3)),
+                                    Lambda = list(matrix(c(2,0.1,0.5,
+                                                           0.7,2.0,1.1,
+                                                           0.9,0.3,2.5),3,3)))
+SS2_ZIPSBM_N75_K3_obs_InitialLambda <- res$Lambda[[1]]
+SS2_ZIPSBM_N75_K3_obs_InitialPi <- res$Pi[[1]]
+```
+
+which brings the label switched initial $\boldsymbol{\Pi}$ and $\boldsymbol{z}$:
+
+$$\boldsymbol{\Pi} = \left(0.3, 0.3, 0.4\right), \boldsymbol{\lambda} = \begin{pmatrix} 2.5 & 0.5 & 1.1\\\0.9 & 2.0 & 0.7\\\0.3 & 0.1 &2.0\end{pmatrix}$$
+
+as shown in Section $4.2$ of the paper.
+
+The reference missing zero probability $p^*$ and the conditional missing zero probability $\boldsymbol{P_{m0}}^\*$ for SS2 network can be set or evaluated as:
+
+```r
+# Set initial p
+SS2_ZIPSBM_N75_K3_obs_Initialp <- 0.15
+
+# Evaluate the initial P_m0
+SS2_ZIPSBM_N75_K3_obs_InitialProbObs0Missing0 <- matrix(0,3,3)
+for (k1 in 1:3){
+  for (k2 in 1:3){
+    SS2_ZIPSBM_N75_K3_obs_InitialProbObs0Missing0[k1,k2] <- SS2_ZIPSBM_N75_K3_obs_Initialp/(SS2_ZIPSBM_N75_K3_obs_Initialp + (1-SS2_ZIPSBM_N75_K3_obs_Initialp)*dpois(0,SS2_ZIPSBM_N75_K3_obs_InitialLambda[k1,k2]))
+  }
+}
+SS2_ZIPSBM_N75_K3_obs_InitialProbObs0Missing0
+```
