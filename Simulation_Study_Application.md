@@ -541,7 +541,7 @@ SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedR*
 
 which can be checked that they agree well with the reference ones provided at the beginning of this section.
 
-The posterior density plot of $p$ as well as the posterior density plot of $\boldsymbol{\Pi},\boldsymbol{R},\boldsymbol{Q}$ conditional on $\tilde{\boldsymbol{Qz}}$ shown as Figure $4$ of the paper can be recovered via the code below.
+The posterior density plot of $p$ as well as the posterior density plot of $\boldsymbol{\Pi},\boldsymbol{R},\boldsymbol{Q}$ conditional on $\tilde{\boldsymbol{z}}$ shown as Figure $4$ of the paper can be recovered via the code below.
 
 ```r
 # Transform the list to the array
@@ -602,4 +602,37 @@ plot(density(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredR[2,2,]),col = 5,main 
 par(mfrow=c(1,1),mai = c(1.02, 0.82, 0.82, 0.42),mgp=c(3,1,0))
 ```
 
+Figure $5$ in the paper shows the summarized $\tilde{\boldsymbol{\nu}}$ plotted according to the summarized $\tilde{\boldsymbol{z}}$ as well as the comparison of the bar plot of the posterior missing weight samples and the Negative-Binomial distribution with summarized and reference parameters for the interaction from node $2$ to node $1$.
+The figure can be recovered by the code provided below.
 
+```r
+par(mfrow=c(1,2),mai = c(0.3, 0.15, 0.2, 0.15), mgp=c(1.25,0.5,0))
+layout(matrix(c(1,2,2), nrow = 1, ncol = 3, byrow = TRUE))
+## Summarized nu plot based on summarized z
+image(t(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Summarizednu)[order(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ%*%c(1:3)),
+                                                                     rev(order(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ%*%c(1:3)))],axes = FALSE,main = TeX(r'(Summarized $\widetilde{\nu}$)',bold=TRUE))
+group_counts <- (as.numeric(table(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ%*%c(1:3))))
+abline(v = -1/(2*(nrow(SS1_ZINBSBM_N75_K3$Y)-1)) + cumsum(group_counts/sum(group_counts))*(1+2/(2*(nrow(SS1_ZINBSBM_N75_K3$Y)-1))))
+abline(h = 1-(-1/(2*(nrow(SS1_ZINBSBM_N75_K3$Y)-1)) + cumsum(group_counts/sum(group_counts))*(1+2/(2*(nrow(SS1_ZINBSBM_N75_K3$Y)-1)))))
+## Compare posterior missing weights with NB distribution
+# Take entry 2,1 as an example to check X
+res_list <- c()
+for (t in 20001:40001){
+  if(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1$nu[[t]][2,1]==1){ # if the y_21=0 is inferred as a missing zero
+    res_list <- c(res_list,SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1$X[[t]][2,1]) # store the sampled missing weight
+  }
+}
+plot(table(res_list), main="Entry 2,1 Missing Weights Posterior Density Comparison with NB Distribution",xlab = "Weight",ylab = "frequency or density")
+lines(0:23,table(res_list)[1]*dnbinom(0:23,SS1_ZINBSBM_N75_K3_obs_InitialR[SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ[2,]%*%1:3,SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ[1,]%*%1:3],
+                                      SS1_ZINBSBM_N75_K3_obs_InitialQ[SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ[2,]%*%1:3,SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ[1,]%*%1:3])/
+        dnbinom(0,SS1_ZINBSBM_N75_K3_obs_InitialR[SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ[2,]%*%1:3,SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ[1,]%*%1:3],
+                SS1_ZINBSBM_N75_K3_obs_InitialQ[SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ[2,]%*%1:3,SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ[1,]%*%1:3]),col = 3)
+lines(0:23,table(res_list)[1]*dnbinom(0:23,SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedInferredR[SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ[2,]%*%1:3,SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ[1,]%*%1:3],
+                                      SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedInferredQ[SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ[2,]%*%1:3,SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ[1,]%*%1:3])/
+        dnbinom(0,SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedInferredR[SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ[2,]%*%1:3,SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ[1,]%*%1:3],
+                SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedInferredQ[SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ[2,]%*%1:3,SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ[1,]%*%1:3]),col = 2,lty=2)
+
+legend("topright", legend=c("Bar plot of missing weights", "NB distribution with summarized r,q", "NB distribution with reference r,q"),
+       col=1:3, lty=c(1,2,1), cex=1)
+par(mfrow=c(1,1), mar = c(5.1, 4.1, 4.1, 2.1))
+```
