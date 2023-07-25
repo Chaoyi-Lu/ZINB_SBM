@@ -16,7 +16,7 @@ source("Functions_for_ZINB_SBM.R") # load the functions
 
 The packages required in the applications are also included in such a file.
 
-## Simulation Study $1$
+## 1. Simulation Study $1$
 
 We start from the simulation process of the artificial network we focus on in the paper.
 We randomly generated a network from the ZINB-SBM with the settings: $N = 75$, $K = 3$, $p = 0.15$, $\boldsymbol{\Pi} = \left(0.45, 0.35, 0.2\right)$ and 
@@ -156,7 +156,7 @@ abline(h = 1-(-1/(2*(nrow(SS1_ZINBSBM_N75_K3$Y)-1)) + cumsum(group_counts/sum(gr
 par(mfrow=c(1,1),mai = c(1.02, 0.82, 0.82, 0.42),mgp=c(3,1,0))
 ```
 
-### SS1 ZINB-SBM Implementations
+### 1.1 SS1 ZINB-SBM Implementations
 
 The implementations of applying partially collapsed Metropolis within Gibbs algorithm (PCMwG) for the ZINB-SBM on the network are based on the function `Directed_ZINBSBM_PCMwG()` included in the source code file [`Functions_for_ZINB_SBM.R`].
 Note that such a function will automatically label switch the initial clustering input to the function in order to ensure the uniqueness of the input clustering.
@@ -729,7 +729,7 @@ SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedProbObs0Missing0
 
 All the well agreements shown above bring stronger confidence of the applications of the further inference conditional on the summarized clustering.
 
-### SS1 ZIP-SBM Implementations
+### 1.2 SS1 ZIP-SBM Implementations
 
 The implementations of the Gibbs sampler for ZIP-SBM is similar to those of the ZINB-SBM.
 Here we leverage the function `Directed_ZIPSBM_Gibbs()` provided in the source code file for the implementations and the function `Directed_ZIPSBM_Gibbs_FixedZ()` is the corresponding Gibbs sampler with the clustering fixed.
@@ -912,7 +912,7 @@ SS1_ZIPSBM_N75_K3_Fixed_K3_T40000_1_ICPCLandOptR$value # -7678.607
 Note here that the function `Directed_ZIPSBM_ExactICL()` above is applied for the evaluation of the exact integrated complete data log likelihood ($\text{ICL}_{\text{ex}}$).
 Due to the fact that none of the ZIP-SBM cases fit well to the simulation study $1$ artificial network, that is, none of the cases provide the summarized clustering which agrees with the true clustering and the summarized $\tilde{p},\widetilde{\boldsymbol{P\_{m0}}}$ are far away from the true references, we propose not to apply further implementations for these cases.
 
-## Simulation Study $2$
+## 2. Simulation Study $2$
 
 The second simmulation study instead focuses on an artificial network randomly generated from the ZIP-SBM with the settings: $N = 75, K = 3, p = 0.15$ and 
 
@@ -1007,7 +1007,7 @@ for (k1 in 1:3){
 SS2_ZIPSBM_N75_K3_obs_InitialProbObs0Missing0
 ```
 
-### SS2 ZINB-SBM Implementations
+### 2.1 SS2 ZINB-SBM Implementations
 
 The implementations as well as all the settings of SS2 ZINB-SBM cases are similar as those of SS1 cases:
 
@@ -1301,7 +1301,7 @@ SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanp_CondZ_s/
 SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedProbObs0Missing0
 ```
 
-### SS2 ZIP-SBM Implementations
+### 2.2 SS2 ZIP-SBM Implementations
 
 This subsection shows the code and applications of the Gibbs sampler for ZIP-SBM fit to the SS2 artificial network.
 
@@ -1542,4 +1542,200 @@ SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanp_CondZ_s/
      dpois(0,SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_SummarizedLambda))
 # and with summarized P_m0
 SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_SummarizedProbObs0Missing0
+```
+
+### 2.3 SS2 Figures Recovery
+
+In this section, we provide the code for the figures we illustrate in the paper.
+The Figure $6$ which shows the plots of the observed adjacency matrix $\boldsymbol{Y}$ in Section $4.2$ of the paper can be recovered by:
+
+``` r
+par(mfrow=c(1,3),mai = c(0.05, 0.05, 0.2, 0.05),mgp=c(0.1,0.1,0))
+image(t(SS_MDAZIPSBMp_N75_K3$Y),axes = FALSE,xlab = "",ylab = "",main = "Adjacency Matrix Y")
+image(t(SS_MDAZIPSBMp_N75_K3$Y)[order(SS_MDAZIPSBMp_N75_K3_LSZ%*%c(1:3)),rev(order(SS_MDAZIPSBMp_N75_K3_LSZ%*%c(1:3)))],axes = FALSE,xlab = "",ylab = "",main = TeX(r'($Y|$ True $z^*$)',bold = TRUE))
+group_counts <- (as.numeric(table(SS_MDAZIPSBMp_N75_K3_LSZ%*%c(1:3))))
+abline(v = -1/(2*(nrow(SS_MDAZIPSBMp_N75_K3$Y)-1)) + cumsum(group_counts/sum(group_counts))*(1+2/(2*(nrow(SS_MDAZIPSBMp_N75_K3$Y)-1))))
+abline(h = 1-(-1/(2*(nrow(SS_MDAZIPSBMp_N75_K3$Y)-1)) + cumsum(group_counts/sum(group_counts))*(1+2/(2*(nrow(SS_MDAZIPSBMp_N75_K3$Y)-1)))))
+
+image(t(1*(SS_MDAZIPSBMp_N75_K3$Y!=0))[order(SS_MDAZIPSBMp_N75_K3_LSZ%*%c(1:3)),rev(order(SS_MDAZIPSBMp_N75_K3_LSZ%*%c(1:3)))],axes = FALSE,xlab = "",ylab = "",main = TeX(r'($Y\neq 0|$ True $z^*$)',bold = TRUE))
+group_counts <- (as.numeric(table(SS_MDAZIPSBMp_N75_K3_LSZ%*%c(1:3))))
+abline(v = -1/(2*(nrow(SS_MDAZIPSBMp_N75_K3$Y)-1)) + cumsum(group_counts/sum(group_counts))*(1+2/(2*(nrow(SS_MDAZIPSBMp_N75_K3$Y)-1))))
+abline(h = 1-(-1/(2*(nrow(SS_MDAZIPSBMp_N75_K3$Y)-1)) + cumsum(group_counts/sum(group_counts))*(1+2/(2*(nrow(SS_MDAZIPSBMp_N75_K3$Y)-1)))))
+par(mfrow=c(1,1),mai = c(1.02, 0.82, 0.82, 0.42),mgp=c(3,1,0))
+```
+
+The rand index plots in Figure $7$ can be recovered by:
+
+``` r
+par(mfrow=c(2,2),mai = c(0.3, 0.3, 0.15, 0.05), mgp=c(0.9,0.2,0))
+plot(SS2_MDAZIPSBMpALLZ_N75_K3_Fixed_K2_T40000_1_LSZ_RI,type = "l",xlab = "",ylab = "", main = "",cex.axis = 0.8, ylim = c(0.45,1),col = 2,lty = 1)
+lines(SS2_MDAZINBSBMRghQghpALLZ_N75_K3_Fixed_K2_T40000_1_LSZ_RI,type = "l", col = 1,lty = 2)
+title(xlab = "Iteration",ylab = "RI", main = "K=2 Cases Rand Index", mgp=c(0.9,0.1,0),cex.main=0.8,cex.lab = 0.8)
+
+plot(SS2_MDAZIPSBMpALLZ_N75_K3_Fixed_K3_T40000_1_LSZ_RI,type = "l",xlab = "",ylab = "", main = "",cex.axis = 0.8, ylim = c(0.45,1),col = 2,lty = 1)
+lines(SS2_MDAZINBSBMRghQghpALLZ_N75_K3_Fixed_K3_T40000_1_LSZ_RI,type = "l", col = 1,lty = 2)
+title(xlab = "Iteration",ylab = "RI", main = "K=3 Cases Rand Index", mgp=c(0.9,0.1,0),cex.main=0.8,cex.lab = 0.8)
+
+plot(SS2_MDAZIPSBMpALLZ_N75_K3_Fixed_K4_T40000_1_LSZ_RI,type = "l",xlab = "",ylab = "", main = "",cex.axis = 0.8, ylim = c(0.45,1),col = 2,lty = 1)
+lines(SS2_MDAZINBSBMRghQghpALLZ_N75_K3_Fixed_K4_T40000_1_LSZ_RI,type = "l", col = 1,lty = 2)
+title(xlab = "Iteration",ylab = "RI", main = "K=4 Cases Rand Index", mgp=c(0.9,0.1,0),cex.main=0.8,cex.lab = 0.8)
+
+plot(SS2_MDAZIPSBMpALLZ_N75_K3_Fixed_K5_T40000_1_LSZ_RI,type = "l",xlab = "",ylab = "", main = "",cex.axis = 0.8, ylim = c(0.45,1),col = 2,lty = 1)
+lines(SS2_MDAZINBSBMRghQghpALLZ_N75_K3_Fixed_K5_T40000_1_LSZ_RI,type = "l", col = 1,lty = 2)
+title(xlab = "Iteration",ylab = "RI", main = "K=5 Cases Rand Index", mgp=c(0.9,0.1,0),cex.main=0.8,cex.lab = 0.8)
+legend("bottomright", legend=c("ZINB-SBM","ZIP-SBM"),
+       col=1:2, lty = 2:1, cex=0.6)
+par(mfrow=c(1,1),mai = c(1.02, 0.82, 0.82, 0.42),mgp=c(3,1,0))
+```
+
+The posterior density plots in Figure $8$ based on the code:
+
+``` r
+SS2_MDAZIPSBMpALLZ_N75_K3_Fixed_K3_T40000_1_InferredLambda <-
+  array(unlist(SS2_MDAZIPSBMpALLZ_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Lambda),
+        dim = c(nrow(SS2_MDAZIPSBMpALLZ_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Lambda[[1]]),
+                ncol(SS2_MDAZIPSBMpALLZ_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Lambda[[1]]),
+                length(SS2_MDAZIPSBMpALLZ_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Lambda)))[,,20001:40001]
+par(mfrow=c(2,2),mai = c(0.3, 0.25, 0.2, 0.05), mgp=c(1.25,0.5,0))
+plot(density(SS2_MDAZINBSBMRghQghpALLZ_N75_K3_Fixed_K3_T40000_1$p[20001:40001],bw=0.002),ylim=c(0,35),ylab = "",xlab="", main = TeX(r'(Posterior Density of $p$)'), col = 2, xlim=c(0.09,0.2))
+abline(v=0.15,col = 1,lty=2)
+lines(density(SS2_MDAZIPSBMpALLZ_N75_K3_Fixed_K3_T40000_1$p[20001:40001],bw=0.002), col = 3)
+par(xpd=TRUE)
+text(0.1425,10, TeX(r'($p^*$)'), pos = 4,col=1)
+par(xpd=FALSE)
+legend("topleft", legend=c("ZINB-SBM","ZIP-SBM"),
+       col=2:3, lty = 1, cex=0.6)
+
+plot(density(SS2_MDAZIPSBMpALLZ_N75_K3_Fixed_K3_T40000_1_InferredLambda[1,1,]),col = 1, xlim=c(0,2.65),ylim=c(0,30), ylab = "",xlab="", main = TeX(r'(Posterior Density of $\lambda_{gh}$|\widetilde{\textbf{z}})'))
+lines(density(SS2_MDAZIPSBMpALLZ_N75_K3_Fixed_K3_T40000_1_InferredLambda[1,2,]),col = 2)
+lines(density(SS2_MDAZIPSBMpALLZ_N75_K3_Fixed_K3_T40000_1_InferredLambda[1,3,]),col = 3)
+lines(density(SS2_MDAZIPSBMpALLZ_N75_K3_Fixed_K3_T40000_1_InferredLambda[2,1,]),col = 4)
+lines(density(SS2_MDAZIPSBMpALLZ_N75_K3_Fixed_K3_T40000_1_InferredLambda[2,2,]),col = 5)
+lines(density(SS2_MDAZIPSBMpALLZ_N75_K3_Fixed_K3_T40000_1_InferredLambda[2,3,]),col = 6)
+lines(density(SS2_MDAZIPSBMpALLZ_N75_K3_Fixed_K3_T40000_1_InferredLambda[3,1,]),col = 7)
+lines(density(SS2_MDAZIPSBMpALLZ_N75_K3_Fixed_K3_T40000_1_InferredLambda[3,2,]),col = 8)
+lines(density(SS2_MDAZIPSBMpALLZ_N75_K3_Fixed_K3_T40000_1_InferredLambda[3,3,]),col = "rosybrown")
+legend("topright", legend=c("1,1","1,2","1,3", "2,1","2,2","2,3", "3,1","3,2","3,3"),
+       col=c(1:8,"rosybrown"), lty = 1, cex=0.6)
+
+plot(density(SS2_MDAZINBSBMRghQghpALLZ_N75_K3_Fixed_K3_T40000_1_InferredR[1,1,],bw=1.75),col = 1, xlim=c(-3,41),ylim=c(0,0.175), ylab = "",xlab="", main = TeX(r'(Posterior Density of $r_{gh}$|\widetilde{\textbf{z}})'))
+lines(density(SS2_MDAZINBSBMRghQghpALLZ_N75_K3_Fixed_K3_T40000_1_InferredR[1,2,],bw=1.75),col = 2)
+lines(density(SS2_MDAZINBSBMRghQghpALLZ_N75_K3_Fixed_K3_T40000_1_InferredR[1,3,],bw=1.75),col = 3)
+lines(density(SS2_MDAZINBSBMRghQghpALLZ_N75_K3_Fixed_K3_T40000_1_InferredR[2,1,],bw=1.75),col = 4)
+lines(density(SS2_MDAZINBSBMRghQghpALLZ_N75_K3_Fixed_K3_T40000_1_InferredR[2,2,],bw=1.75),col = 5)
+lines(density(SS2_MDAZINBSBMRghQghpALLZ_N75_K3_Fixed_K3_T40000_1_InferredR[2,3,],bw=1.75),col = 6)
+lines(density(SS2_MDAZINBSBMRghQghpALLZ_N75_K3_Fixed_K3_T40000_1_InferredR[3,1,],bw=1.75),col = 7)
+lines(density(SS2_MDAZINBSBMRghQghpALLZ_N75_K3_Fixed_K3_T40000_1_InferredR[3,2,],bw=1.75),col = 8)
+lines(density(SS2_MDAZINBSBMRghQghpALLZ_N75_K3_Fixed_K3_T40000_1_InferredR[3,3,],bw=1.75),col = "rosybrown")
+legend("topright", legend=c("1,1","1,2","1,3", "2,1","2,2","2,3", "3,1","3,2","3,3"),
+       col=c(1:8,"rosybrown"), lty = 1, cex=0.6)
+
+plot(density(SS2_MDAZINBSBMRghQghpALLZ_N75_K3_Fixed_K3_T40000_1_InferredQ[1,1,],bw=0.01),col = 1, xlim=c(0.8,1.025),ylim=c(0,40), ylab = "",xlab="", main = TeX(r'(Posterior Density of $q_{gh}$|\widetilde{\textbf{z}})'))
+lines(density(SS2_MDAZINBSBMRghQghpALLZ_N75_K3_Fixed_K3_T40000_1_InferredQ[1,2,],bw=0.01),col = 2)
+lines(density(SS2_MDAZINBSBMRghQghpALLZ_N75_K3_Fixed_K3_T40000_1_InferredQ[1,3,],bw=0.01),col = 3)
+lines(density(SS2_MDAZINBSBMRghQghpALLZ_N75_K3_Fixed_K3_T40000_1_InferredQ[2,1,],bw=0.01),col = 4)
+lines(density(SS2_MDAZINBSBMRghQghpALLZ_N75_K3_Fixed_K3_T40000_1_InferredQ[2,2,],bw=0.01),col = 5)
+lines(density(SS2_MDAZINBSBMRghQghpALLZ_N75_K3_Fixed_K3_T40000_1_InferredQ[2,3,],bw=0.01),col = 6)
+lines(density(SS2_MDAZINBSBMRghQghpALLZ_N75_K3_Fixed_K3_T40000_1_InferredQ[3,1,],bw=0.01),col = 7)
+lines(density(SS2_MDAZINBSBMRghQghpALLZ_N75_K3_Fixed_K3_T40000_1_InferredQ[3,2,],bw=0.01),col = 8)
+lines(density(SS2_MDAZINBSBMRghQghpALLZ_N75_K3_Fixed_K3_T40000_1_InferredQ[3,3,],bw=0.01),col = "rosybrown")
+legend("topleft", legend=c("1,1","1,2","1,3", "2,1","2,2","2,3", "3,1","3,2","3,3"),
+       col=c(1:8,"rosybrown"), lty = 1, cex=0.6)
+par(mfrow=c(1,1),mai = c(1.02, 0.82, 0.82, 0.42),mgp=c(3,1,0))
+```
+
+The comparison of the Poisson distribution with summarized or reference parameters and the Negative-Binomial distribution with summarized parameters shown in Figure $9$ can be recovered by:
+
+``` r
+par(mfrow=c(3,3),mai = c(0.2, 0.2, 0.2, 0.1),mgp=c(0.75,0.25,0))
+plot(0:10,dpois(0:10,SS_MDAZIPSBMp_N75_K3_obs_InitialLambda[1,1]),xlab = "",ylab = "", type = "b", lty = 1, pch = 16, col = 1)
+lines(0:10,dnbinom(0:10,SS2_MDAZINBSBMRghQghpALLZ_N75_K3_Fixed_K3_T40000_1_SummarizedInferredR[1,1],
+                   SS2_MDAZINBSBMRghQghpALLZ_N75_K3_Fixed_K3_T40000_1_SummarizedInferredQ[1,1]),col = 2, type = "b", lty = 2, pch = 17)
+lines(0:10,dpois(0:10,SS2_MDAZIPSBMpALLZ_N75_K3_Fixed_K3_T40000_1_SummarizedInferredLambda[1,1]),xlab = "",ylab = "", type = "b", lty = 3, pch = 18,col = 3)
+title(xlab = "",ylab = "", main = "g=1,h=1", mgp=c(1,1.1,0),cex.main=0.8,cex.lab = 0.8)
+legend("topright", legend=c("True Reference",TeX(r'($NB(\widetilde{r}_{gh},\widetilde{q}_{gh})$)'),TeX(r'($Pois(\widetilde{\lambda}_{gh})$)')),
+       col=1:3, lty = 1:3, cex=0.6)
+
+plot(0:10,dpois(0:10,SS_MDAZIPSBMp_N75_K3_obs_InitialLambda[1,2]),xlab = "",ylab = "", type = "b", lty = 1, pch = 16, col = 1)
+lines(0:10,dnbinom(0:10,SS2_MDAZINBSBMRghQghpALLZ_N75_K3_Fixed_K3_T40000_1_SummarizedInferredR[1,2],
+                   SS2_MDAZINBSBMRghQghpALLZ_N75_K3_Fixed_K3_T40000_1_SummarizedInferredQ[1,2]),col = 2, type = "b", lty = 2, pch = 17)
+lines(0:10,dpois(0:10,SS2_MDAZIPSBMpALLZ_N75_K3_Fixed_K3_T40000_1_SummarizedInferredLambda[1,2]),xlab = "",ylab = "", type = "b", lty = 3, pch = 18,col = 3)
+title(xlab = "",ylab = "", main = "g=1,h=1", mgp=c(1,1.1,0),cex.main=0.8,cex.lab = 0.8)
+
+plot(0:10,dpois(0:10,SS_MDAZIPSBMp_N75_K3_obs_InitialLambda[1,3]),xlab = "",ylab = "", type = "b", lty = 1, pch = 16, col = 1)
+lines(0:10,dnbinom(0:10,SS2_MDAZINBSBMRghQghpALLZ_N75_K3_Fixed_K3_T40000_1_SummarizedInferredR[1,3],
+                   SS2_MDAZINBSBMRghQghpALLZ_N75_K3_Fixed_K3_T40000_1_SummarizedInferredQ[1,3]),col = 2, type = "b", lty = 2, pch = 17)
+lines(0:10,dpois(0:10,SS2_MDAZIPSBMpALLZ_N75_K3_Fixed_K3_T40000_1_SummarizedInferredLambda[1,3]),xlab = "",ylab = "", type = "b", lty = 3, pch = 18,col = 3)
+title(xlab = "",ylab = "", main = "g=1,h=1", mgp=c(1,1.1,0),cex.main=0.8,cex.lab = 0.8)
+
+plot(0:10,dpois(0:10,SS_MDAZIPSBMp_N75_K3_obs_InitialLambda[2,1]),xlab = "",ylab = "", type = "b", lty = 1, pch = 16, col = 1)
+lines(0:10,dnbinom(0:10,SS2_MDAZINBSBMRghQghpALLZ_N75_K3_Fixed_K3_T40000_1_SummarizedInferredR[2,1],
+                   SS2_MDAZINBSBMRghQghpALLZ_N75_K3_Fixed_K3_T40000_1_SummarizedInferredQ[2,1]),col = 2, type = "b", lty = 2, pch = 17)
+lines(0:10,dpois(0:10,SS2_MDAZIPSBMpALLZ_N75_K3_Fixed_K3_T40000_1_SummarizedInferredLambda[2,1]),xlab = "",ylab = "", type = "b", lty = 3, pch = 18,col = 3)
+title(xlab = "",ylab = "", main = "g=1,h=1", mgp=c(1,1.1,0),cex.main=0.8,cex.lab = 0.8)
+
+plot(0:10,dpois(0:10,SS_MDAZIPSBMp_N75_K3_obs_InitialLambda[2,2]),xlab = "",ylab = "", type = "b", lty = 1, pch = 16, col = 1)
+lines(0:10,dnbinom(0:10,SS2_MDAZINBSBMRghQghpALLZ_N75_K3_Fixed_K3_T40000_1_SummarizedInferredR[2,2],
+                   SS2_MDAZINBSBMRghQghpALLZ_N75_K3_Fixed_K3_T40000_1_SummarizedInferredQ[2,2]),col = 2, type = "b", lty = 2, pch = 17)
+lines(0:10,dpois(0:10,SS2_MDAZIPSBMpALLZ_N75_K3_Fixed_K3_T40000_1_SummarizedInferredLambda[2,2]),xlab = "",ylab = "", type = "b", lty = 3, pch = 18,col = 3)
+title(xlab = "",ylab = "", main = "g=1,h=1", mgp=c(1,1.1,0),cex.main=0.8,cex.lab = 0.8)
+
+plot(0:10,dpois(0:10,SS_MDAZIPSBMp_N75_K3_obs_InitialLambda[2,3]),xlab = "",ylab = "", type = "b", lty = 1, pch = 16, col = 1)
+lines(0:10,dnbinom(0:10,SS2_MDAZINBSBMRghQghpALLZ_N75_K3_Fixed_K3_T40000_1_SummarizedInferredR[2,3],
+                   SS2_MDAZINBSBMRghQghpALLZ_N75_K3_Fixed_K3_T40000_1_SummarizedInferredQ[2,3]),col = 2, type = "b", lty = 2, pch = 17)
+lines(0:10,dpois(0:10,SS2_MDAZIPSBMpALLZ_N75_K3_Fixed_K3_T40000_1_SummarizedInferredLambda[2,3]),xlab = "",ylab = "", type = "b", lty = 3, pch = 18,col = 3)
+title(xlab = "",ylab = "", main = "g=1,h=1", mgp=c(1,1.1,0),cex.main=0.8,cex.lab = 0.8)
+
+plot(0:10,dpois(0:10,SS_MDAZIPSBMp_N75_K3_obs_InitialLambda[3,1]),xlab = "",ylab = "", type = "b", lty = 1, pch = 16, col = 1)
+lines(0:10,dnbinom(0:10,SS2_MDAZINBSBMRghQghpALLZ_N75_K3_Fixed_K3_T40000_1_SummarizedInferredR[3,1],
+                   SS2_MDAZINBSBMRghQghpALLZ_N75_K3_Fixed_K3_T40000_1_SummarizedInferredQ[3,1]),col = 2, type = "b", lty = 2, pch = 17)
+lines(0:10,dpois(0:10,SS2_MDAZIPSBMpALLZ_N75_K3_Fixed_K3_T40000_1_SummarizedInferredLambda[3,1]),xlab = "",ylab = "", type = "b", lty = 3, pch = 18,col = 3)
+title(xlab = "",ylab = "", main = "g=1,h=1", mgp=c(1,1.1,0),cex.main=0.8,cex.lab = 0.8)
+
+plot(0:10,dpois(0:10,SS_MDAZIPSBMp_N75_K3_obs_InitialLambda[3,2]),xlab = "",ylab = "", type = "b", lty = 1, pch = 16, col = 1)
+lines(0:10,dnbinom(0:10,SS2_MDAZINBSBMRghQghpALLZ_N75_K3_Fixed_K3_T40000_1_SummarizedInferredR[3,2],
+                   SS2_MDAZINBSBMRghQghpALLZ_N75_K3_Fixed_K3_T40000_1_SummarizedInferredQ[3,2]),col = 2, type = "b", lty = 2, pch = 17)
+lines(0:10,dpois(0:10,SS2_MDAZIPSBMpALLZ_N75_K3_Fixed_K3_T40000_1_SummarizedInferredLambda[3,2]),xlab = "",ylab = "", type = "b", lty = 3, pch = 18,col = 3)
+title(xlab = "",ylab = "", main = "g=1,h=1", mgp=c(1,1.1,0),cex.main=0.8,cex.lab = 0.8)
+
+plot(0:10,dpois(0:10,SS_MDAZIPSBMp_N75_K3_obs_InitialLambda[3,3]),xlab = "",ylab = "", type = "b", lty = 1, pch = 16, col = 1)
+lines(0:10,dnbinom(0:10,SS2_MDAZINBSBMRghQghpALLZ_N75_K3_Fixed_K3_T40000_1_SummarizedInferredR[3,3],
+                   SS2_MDAZINBSBMRghQghpALLZ_N75_K3_Fixed_K3_T40000_1_SummarizedInferredQ[3,3]),col = 2, type = "b", lty = 2, pch = 17)
+lines(0:10,dpois(0:10,SS2_MDAZIPSBMpALLZ_N75_K3_Fixed_K3_T40000_1_SummarizedInferredLambda[3,3]),xlab = "",ylab = "", type = "b", lty = 3, pch = 18,col = 3)
+title(xlab = "",ylab = "", main = "g=1,h=1", mgp=c(1,1.1,0),cex.main=0.8,cex.lab = 0.8)
+par(mfrow=c(1,1),mai = c(1.02, 0.82, 0.82, 0.42),mgp=c(3,1,0))
+```
+
+The extra posterior density plots of $\boldsymbol{\Pi}$ conditional on the summarized clustering for the ZINB-SBM and ZIP-SBM $K=3$ cases can be checked by the code below, respectively.
+
+``` r
+# SS2 ZINB-SBM posterior density plots of Pi conditional on Z_s
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredPi <- 
+  array(unlist(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Pi),
+        dim = c(nrow(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Pi[[1]]),
+                ncol(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Pi[[1]]),
+                length(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Pi)))[,,20001:40001]
+plot(density(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredPi[1,],bw=0.01),col = 2, xlim=c(0,0.7),ylim=c(0,10), ylab = "",xlab="", main = TeX(r'(Posterior Density of $\pi_k$|\widetilde{\textbf{z}})'))
+lines(density(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredPi[2,],bw=0.01),col = 3)
+lines(density(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredPi[3,],bw=0.01),col = 4)
+abline(v=0.3,col = 2,ylim=c(0,9),lty=2)
+abline(v=0.3,col = 3,ylim=c(0,9),lty=3)
+abline(v=0.4,col = 4,ylim=c(0,9),lty=2)
+legend("topright", legend=c(TeX(r'($\pi_1$)'),TeX(r'($\pi_2$)'),TeX(r'($\pi_3$)')),
+       col=2:4, lty = 1, cex=0.6)
+
+# SS2 ZIP-SBM posterior density plots of Pi conditional on Z_s
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_InferredPi <- 
+  array(unlist(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Pi),
+        dim = c(nrow(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Pi[[1]]),
+                ncol(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Pi[[1]]),
+                length(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Pi)))[,,20001:40001]
+plot(density(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_InferredPi[1,],bw=0.01),col = 2, xlim=c(0,0.7),ylim=c(0,10), ylab = "",xlab="", main = TeX(r'(Posterior Density of $\pi_k$|\widetilde{\textbf{z}})'))
+lines(density(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_InferredPi[2,],bw=0.01),col = 3)
+lines(density(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_InferredPi[3,],bw=0.01),col = 4)
+abline(v=0.3,col = 2,ylim=c(0,9),lty=2)
+abline(v=0.3,col = 3,ylim=c(0,9),lty=3)
+abline(v=0.4,col = 4,ylim=c(0,9),lty=2)
+legend("topright", legend=c(TeX(r'($\pi_1$)'),TeX(r'($\pi_2$)'),TeX(r'($\pi_3$)')),
+       col=2:4, lty = 1, cex=0.6)
 ```
