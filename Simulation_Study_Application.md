@@ -934,6 +934,7 @@ SS2_ZIPSBM_N75_K3 <-
 # write.csv(SS2_ZIPSBM_N75_K3$Z,"SS2_ZIPSBM_N75K3_obsZ.csv", row.names = FALSE)
 ```
 
+where the function `Simulation_Directed_ZIPSBM()` simulates one sample from the ZIP-SBM.
 The network data we used in the paper can be loaded by the code:
 
 ```r
@@ -1004,4 +1005,541 @@ for (k1 in 1:3){
   }
 }
 SS2_ZIPSBM_N75_K3_obs_InitialProbObs0Missing0
+```
+
+### SS2 ZINB-SBM Implementations
+
+The implementations as well as all the settings of SS2 ZINB-SBM cases are similar as those of SS1 cases:
+
+```r
+# Simulation study 2: apply the ZINB-SBM Metropolis within Gibbs algorithm for fixed K = 2, N = 75, T = 40000, Round 1 with p prior Beta(1,9)
+rm(list=ls())
+gc()
+source("Functions_for_ZINB_SBM.R")
+start.time <- Sys.time()
+SS2_ZINBSBM_N75_K3_Fixed_K2_T40000_1 <- 
+  Directed_ZINBSBM_PCMwG(Y = SS2_ZIPSBM_N75_K3$Y, K = 2, T = 40000, eps_R = 0.175,beta1 = 1, beta2 = 9)
+end.time <- Sys.time()
+SS2_ZINBSBM_N75_K3_Fixed_K2_T40000_1_time <- end.time - start.time
+SS2_ZINBSBM_N75_K3_Fixed_K2_T40000_1_time # Time difference of 1.71906 hours
+# save.image("SS2_ZINBSBM_N75_K3_Fixed_K2_T40000_1_prior_p_Beta_1_9.RData")
+#--------------------------------------------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------------------------------------------------
+# Simulation study 2: apply the ZINB-SBM Metropolis within Gibbs algorithm for fixed K = 4, N = 75, T = 40000, Round 1 with p prior Beta(1,9)
+rm(list=ls())
+gc()
+source("Functions_for_ZINB_SBM.R")
+start.time <- Sys.time()
+SS2_ZINBSBM_N75_K3_Fixed_K4_T40000_1 <- 
+  Directed_ZINBSBM_PCMwG(Y = SS2_ZIPSBM_N75_K3$Y, K = 4, T = 40000, eps_R = 0.175,beta1 = 1, beta2 = 9)
+end.time <- Sys.time()
+SS2_ZINBSBM_N75_K3_Fixed_K4_T40000_1_time <- end.time - start.time
+SS2_ZINBSBM_N75_K3_Fixed_K4_T40000_1_time # Time difference of 3.013449 hours
+# save.image("SS2_ZINBSBM_N75_K3_Fixed_K4_T40000_1_prior_p_Beta_1_9.RData")
+#--------------------------------------------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------------------------------------------------
+# Simulation study 2: apply the ZINB-SBM Metropolis within Gibbs algorithm for fixed K = 5, N = 75, T = 40000, Round 1 with p prior Beta(1,9)
+rm(list=ls())
+gc()
+source("Functions_for_ZINB_SBM.R")
+start.time <- Sys.time()
+SS2_ZINBSBM_N75_K3_Fixed_K5_T40000_1 <- 
+  Directed_ZINBSBM_PCMwG(Y = SS2_ZIPSBM_N75_K3$Y, K = 5, T = 40000, eps_R = 0.175,beta1 = 1, beta2 = 9)
+end.time <- Sys.time()
+SS2_ZINBSBM_N75_K3_Fixed_K5_T40000_1_time <- end.time - start.time
+SS2_ZINBSBM_N75_K3_Fixed_K5_T40000_1_time # Time difference of 3.713538 hours
+# save.image("SS2_ZINBSBM_N75_K3_Fixed_K5_T40000_1_prior_p_Beta_1_9.RData")
+```
+
+And the $K=3$ case as well as the example summarizing processes are also similar, so we plan not to provide more explanations for the code below.
+The code illustrated here just aims to make everything more convenient for the reader to recover the work.
+
+``` r
+# Simulation study 2: apply the ZINB-SBM Metropolis within Gibbs algorithm for fixed K = 3, N = 75, T = 40000, Round 1 with p prior Beta(1,9)
+rm(list=ls())
+gc()
+source("Functions_for_ZINB_SBM.R")
+start.time <- Sys.time()
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1 <- 
+  Directed_ZINBSBM_PCMwG(Y = SS2_ZIPSBM_N75_K3$Y, K = 3, T = 40000, eps_R = 0.175,beta1 = 1, beta2 = 9)
+end.time <- Sys.time()
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_time <- end.time - start.time
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_time # Time difference of 2.442501 hours
+# save.image("SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_prior_p_Beta_1_9.RData")
+
+# # Summarize the outputs
+# Apply label switching
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS <-
+  LabelSwitching_SG2003_ZINBSBM(Z = SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1$Z,
+                                Pi = SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1$Pi,
+                                R = SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1$R,
+                                Q = SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1$Q,
+                                Acceptance_count_R = SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1$Acceptance_count_R)
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1$Z <- c()
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1$Pi <- c()
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1$R <- c()
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1$Q <- c()
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1$Acceptance_count_R <- c()
+gc()
+
+## check rand index for each iteration
+require("fossil")
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_RI <- c()
+for (t in 1:40001){
+  SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_RI <-
+    c(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_RI,
+      rand.index(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS$Z[[t]]%*%c(1:ncol(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS$Z[[t]])),
+                 SS2_ZIPSBM_N75_K3_LSZ%*%c(1:3)))
+}
+plot(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_RI,type = "l",xlab = "",ylab = "", main = "Rand Index",cex.axis = 0.8)
+# Check some specific clustering states
+table(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS$Z[[1]]%*%c(1:3),SS2_ZIPSBM_N75_K3_LSZ%*%c(1:3)) # initial state
+table(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS$Z[[2]]%*%c(1:3),SS2_ZIPSBM_N75_K3_LSZ%*%c(1:3)) # first state
+table(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS$Z[[3]]%*%c(1:3),SS2_ZIPSBM_N75_K3_LSZ%*%c(1:3)) # second state
+table(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS$Z[[40001]]%*%c(1:3),SS2_ZIPSBM_N75_K3_LSZ%*%c(1:3)) # end state
+
+## Summarize p
+plot(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1$p[1:40001],type = "l")
+hist(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1$p[20001:40001])
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Summarizedp <-
+  mean(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1$p[20001:40001])
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Summarizedp
+
+# Obtain the marginal posterior mode of the Z chain
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_States <- list()
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_StatesIteration <- list()
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_IterationLoop <- 20001:40001
+StatesLabelIndicator = 0
+while (length(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_IterationLoop)!=0){
+  StatesLabelIndicator <- StatesLabelIndicator + 1
+  SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_FirstState <- SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS$Z[[SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_IterationLoop[1]]]
+  SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_States[[StatesLabelIndicator]] <- SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_FirstState
+  SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_StatesIteration_temp <- c()
+  for (t in SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_IterationLoop){
+    if (sum(c(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS$Z[[t]]%*%1:ncol(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS$Z[[t]]))==
+            c(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_FirstState%*%1:ncol(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_FirstState)))==nrow(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_FirstState)){
+      SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_StatesIteration_temp <- c(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_StatesIteration_temp,t)
+    }
+  }
+  SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_StatesIteration[[StatesLabelIndicator]] <- SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_StatesIteration_temp
+  SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_IterationLoop <- (20001:40001)[-(unlist(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_StatesIteration)-20000)]
+}
+length(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_States)
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_StatesFrequency <- c()
+for (t in 1:length(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_States)){
+  SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_StatesFrequency <- c(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_StatesFrequency,
+                                                                length(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_StatesIteration[[t]]))
+}
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_StatesFrequency
+which.max(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_StatesFrequency)
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ <- SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_States[[which.max(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LSZ_StatesFrequency)]]
+table(c(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ%*%1:ncol(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ)),SS2_ZIPSBM_N75_K3_LSZ%*%c(1:3),dnn = c("",""))
+require(GreedyEPL) # obtain the summarized Z by the greedy algorithm proposed by Rastelli and Friel (2018)
+Z_temp <- c()
+for (t in 20001:40001){
+  Z_temp <- rbind(Z_temp,c(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS$Z[[t]]%*%1:ncol(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS$Z[[t]])))
+}
+output <- MinimiseEPL(Z_temp, list(Kup = 10, loss_type = "VI",
+                                   decision_init = c(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ%*%
+                                                       1:ncol(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ))))
+table(output$decision,SS2_ZIPSBM_N75_K3_LSZ%*%c(1:3),dnn = c("",""))
+output$EPL # check VI posterior loss: 0
+
+## Check R M-H step acceptance rate
+Reduce(`+`, SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS$Acceptance_count_R[20001:40001])/20001
+
+## Summarize nu
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Summarizednu <- matrix(0,nrow(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1$nu[[1]]),ncol(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1$nu[[1]]))
+for (t in 20001:40001){
+  SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Summarizednu <- SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Summarizednu +
+    SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1$nu[[t]]
+}
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Summarizednu <- SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Summarizednu/20001
+
+## Summarize the P_m0
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedProbObs0Missing0 <- matrix(0,3,3)
+for (k1 in 1:3){
+  for (k2 in 1:3){
+    SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedProbObs0Missing0[k1,k2] <- 
+      sum(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Summarizednu[SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ%*%c(1:3)==k1,
+                                                            SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ%*%c(1:3)==k2])/
+      (length(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Summarizednu[SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ%*%c(1:3)==k1,
+                                                                SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ%*%c(1:3)==k2][
+                                                                  SS2_ZIPSBM_N75_K3$Y[SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ%*%c(1:3)==k1,
+                                                                                      SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ%*%c(1:3)==k2]==0])-
+         sum((SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ%*%c(1:3)==k1)*(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ%*%c(1:3)==k2)))
+  }
+}
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedProbObs0Missing0
+
+
+# ## Obtain the initial R to be optimized for the ICPCL by the posterior mean of R
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanR <-
+  apply(array(unlist(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS$R),
+              dim = c(nrow(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS$R[[1]]),
+                      ncol(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS$R[[1]]),
+                      length(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS$R)))[,,20001:40001],1:2,mean)
+
+# Obtain the approximate ICPCL
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_ICPCLandOptR <- 
+  Directed_ZINBSBM_ApproximateICPCL_OptR(Y = SS2_ZIPSBM_N75_K3$Y,
+                                         ProbObs0Missing0 = SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedProbObs0Missing0,
+                                         Z = SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ,
+                                         R_0 = SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanR,
+                                         alpha=1, beta1=1,beta2=9, betaq1=1,betaq2=1)
+# -8098.871
+
+# Further inference of R,Q,Pi conditional on summarized z
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s <-
+  Directed_ZINBSBM_PCMwG_FixedZ(Y = SS2_ZIPSBM_N75_K3$Y,
+                                             K = 3, T = 40000, eps_R = 0.175,beta1 = 1, beta2 = 9,
+                                             Z_0 = SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ)
+# Summarize Pi
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedPi <-
+  apply(array(unlist(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Pi),
+              dim = c(nrow(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Pi[[1]]),
+                      ncol(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Pi[[1]]),
+                      length(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Pi)))[,,20001:40001],1,mean)
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedPi
+
+# Pi density plots
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredPi <- 
+  array(unlist(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Pi),
+        dim = c(nrow(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Pi[[1]]),
+                ncol(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Pi[[1]]),
+                length(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Pi)))[,,20001:40001]
+plot(density(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredPi[1,]),col = 2, xlim=c(0.1,0.6),ylim=c(0,10), ylab = "",xlab="", main = TeX(r'($\pi_k$ Posterior Density)'))
+lines(density(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredPi[2,]),col = 3)
+lines(density(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredPi[3,]),col = 4)
+legend("topright", legend=c(TeX(r'($\pi_1$)'),TeX(r'($\pi_2$)'),TeX(r'($\pi_3$)')),
+       col=2:4, lty = 1, cex=0.7)
+
+# ## Summarize R
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedR <-
+  apply(array(unlist(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$R),
+              dim = c(nrow(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$R[[1]]),
+                      ncol(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$R[[1]]),
+                      length(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$R)))[,,20001:40001],1:2,mean)
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedR
+# SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanR # Compare with posterior mean of R
+# SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_ICPCLandOptR$R # Compare with the optimized R used for ICPCL
+# # acceptance rate for R in the further inference conditional on Z_s
+# Reduce(`+`, SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Acceptance_count_R[20001:40001])/20001
+
+## Summarize Q
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedQ <-
+  apply(array(unlist(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Q),
+              dim = c(nrow(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Q[[1]]),
+                      ncol(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Q[[1]]),
+                      length(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Q)))[,,20001:40001],1:2,mean)
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedQ
+
+# Summarized mean
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedR*
+  (1-SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedQ)/
+  SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedQ
+# Summarized var
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedR*
+  (1-SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedQ)/
+  SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedQ^2
+```
+
+Similar extra summary statistics as we mentioned in SS1 can also be checked here:
+
+``` r
+## Posterior mean Pi
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanPi <-
+  apply(array(unlist(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS$Pi),
+              dim = c(nrow(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS$Pi[[1]]),
+                      ncol(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS$Pi[[1]]),
+                      length(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS$Pi)))[,,20001:40001],1,mean)
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanPi
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedPi # Compare with summarized posterior samples
+
+## Posterior mean Q
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanQ <-
+  apply(array(unlist(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS$Q),
+              dim = c(nrow(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS$Q[[1]]),
+                      ncol(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS$Q[[1]]),
+                      length(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS$Q)))[,,20001:40001],1:2,mean)
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanQ
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedQ # Compare with summarized posterior samples
+
+# Check distribution mean based on PosteriorMeanR and PosteriorMeanQ
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanR*
+  (1-SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanQ)/
+  SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanQ
+# Check distribution var based on PosteriorMeanR and PosteriorMeanQ
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanR*
+  (1-SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanQ)/
+  SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanQ^2
+
+# p Posterior mean conditional on Z_s
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanp_CondZ_s <-
+  mean(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$p[20001:40001])
+hist(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$p[20001:40001])
+plot(density(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$p[20001:40001]))
+plot(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$p[20001:40001], type = "l")
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanp_CondZ_s
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Summarizedp # Compare with summarized posterior samples
+
+# Compare P_m0 evaluated by posterior mean
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Summarizedp/
+  (SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Summarizedp+
+     (1-SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Summarizedp)*
+     dnbinom(0,SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanR,
+             SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanQ))
+# with P_m0 evaluated by posterior mean conditional on Z_s
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanp_CondZ_s/
+  (SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanp_CondZ_s+
+     (1-SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanp_CondZ_s)*
+     dnbinom(0,SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedR,
+             SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedQ))
+# and with summarized P_m0
+SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedProbObs0Missing0
+```
+
+### SS2 ZIP-SBM Implementations
+
+This subsection shows the code and applications of the Gibbs sampler for ZIP-SBM fit to the SS2 artificial network.
+
+``` r
+# Simulation study 2: apply the ZIP-SBM Gibbs sampler for fixed K = 2, N = 75, T = 40000, Round 1 with p prior Beta(1,9)
+rm(list=ls())
+gc()
+source("Functions_for_ZINB_SBM.R")
+start.time <- Sys.time()
+SS2_ZIPSBM_N75_K3_Fixed_K2_T40000_1 <- 
+  Directed_ZIPSBM_Gibbs(Y = SS2_ZIPSBM_N75_K3$Y, K = 2, T = 40000, 
+                        alpha=1, beta1 = 1,beta2 = 9, alpha1=1,alpha2=1, Z_0=NA)
+end.time <- Sys.time()
+SS2_ZIPSBM_N75_K3_Fixed_K2_T40000_1_time <- end.time - start.time
+SS2_ZIPSBM_N75_K3_Fixed_K2_T40000_1_time # Time difference of 1.023112 hours
+# save.image("SS2_ZIPSBM_N75_K3_Fixed_K2_T40000_1_prior_p_Beta_1_9.RData")
+#--------------------------------------------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------------------------------------------------
+# Simulation study 2: apply the ZIP-SBM Gibbs sampler for fixed K = 4, N = 75, T = 40000, Round 1 with p prior Beta(1,9)
+rm(list=ls())
+gc()
+source("Functions_for_ZINB_SBM.R")
+start.time <- Sys.time()
+SS2_ZIPSBM_N75_K3_Fixed_K4_T40000_1 <- 
+  Directed_ZIPSBM_Gibbs(Y = SS2_ZIPSBM_N75_K3$Y, K = 4, T = 40000, 
+                        alpha=1, beta1 = 1,beta2 = 9, alpha1=1,alpha2=1, Z_0=NA)
+end.time <- Sys.time()
+SS2_ZIPSBM_N75_K3_Fixed_K4_T40000_1_time <- end.time - start.time
+SS2_ZIPSBM_N75_K3_Fixed_K4_T40000_1_time # Time difference of 1.730288 hours
+# save.image("SS2_ZIPSBM_N75_K3_Fixed_K4_T40000_1_prior_p_Beta_1_9.RData")
+#--------------------------------------------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------------------------------------------------
+# Simulation study 2: apply the ZIP-SBM Gibbs sampler for fixed K = 5, N = 75, T = 40000, Round 1 with p prior Beta(1,9)
+rm(list=ls())
+gc()
+source("Functions_for_ZINB_SBM.R")
+start.time <- Sys.time()
+SS2_ZIPSBM_N75_K3_Fixed_K5_T40000_1 <- 
+  Directed_ZIPSBM_Gibbs(Y = SS2_ZIPSBM_N75_K3$Y, K = 5, T = 40000, 
+                        alpha=1, beta1 = 1,beta2 = 9, alpha1=1,alpha2=1, Z_0=NA)
+end.time <- Sys.time()
+SS2_ZIPSBM_N75_K3_Fixed_K5_T40000_1_time <- end.time - start.time
+SS2_ZIPSBM_N75_K3_Fixed_K5_T40000_1_time # Time difference of 2.157126 hours
+# save.image("SS2_ZIPSBM_N75_K3_Fixed_K5_T40000_1_prior_p_Beta_1_9.RData")
+```
+
+The $K=3$ case with the summarizing process can be applied by the code:
+
+``` r
+# Simulation study 2: apply the ZIP-SBM Gibbs sampler for fixed K = 3, N = 75, T = 40000, Round 1 with p prior Beta(1,9)
+rm(list=ls())
+gc()
+source("Functions_for_ZINB_SBM.R")
+start.time <- Sys.time()
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1 <- 
+  Directed_ZIPSBM_Gibbs(Y = SS2_ZIPSBM_N75_K3$Y, K = 3, T = 40000, 
+                        alpha=1, beta1 = 1,beta2 = 9, alpha1=1,alpha2=1, Z_0=NA)
+end.time <- Sys.time()
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_time <- end.time - start.time
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_time # Time difference of 1.437432 hours
+# save.image("SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_prior_p_Beta_1_9.RData")
+
+# # Summarize the outputs
+# Apply label switching
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LS <-
+  LabelSwitching_SG2003_ZIPSBM(Z = SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1$Z,
+                               Pi = SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1$Pi,
+                               Lambda = SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1$Lambda)
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1$Z <- c()#in order to save memory
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1$Pi <- c()
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1$Lambda <- c()
+gc()
+
+## check rand index for each iteration
+require("fossil")
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LSZ_RI <- c()
+for (t in 1:40001){
+  SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LSZ_RI <-
+    c(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LSZ_RI,
+      rand.index(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LS$Z[[t]]%*%c(1:ncol(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LS$Z[[t]])),
+                 SS2_ZIPSBM_N75_K3_LSZ%*%c(1:3)))
+}
+plot(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LSZ_RI,type = "l",xlab = "",ylab = "", main = "Rand Index",cex.axis = 0.8)
+# Check some specific clustering states
+table(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LS$Z[[1]]%*%c(1:3),SS2_ZIPSBM_N75_K3_LSZ%*%c(1:3)) # initial state
+table(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LS$Z[[2]]%*%c(1:3),SS2_ZIPSBM_N75_K3_LSZ%*%c(1:3)) # first state
+table(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LS$Z[[3]]%*%c(1:3),SS2_ZIPSBM_N75_K3_LSZ%*%c(1:3)) # second stat
+table(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LS$Z[[40001]]%*%c(1:3),SS2_ZIPSBM_N75_K3_LSZ%*%c(1:3)) # end state
+
+## Summarize p
+plot(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1$p[1:40001],type = "l")
+hist(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1$p[20001:40001])
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_Summarizedp <-
+  mean(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1$p[20001:40001])
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_Summarizedp
+
+# Obtain the marginal posterior mode of the Z chain
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LSZ_States <- list()
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LSZ_StatesIteration <- list()
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LSZ_IterationLoop <- 20001:40001
+StatesLabelIndicator = 0
+while (length(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LSZ_IterationLoop)!=0){
+  StatesLabelIndicator <- StatesLabelIndicator + 1
+  SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LSZ_FirstState <- SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LS$Z[[SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LSZ_IterationLoop[1]]]
+  SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LSZ_States[[StatesLabelIndicator]] <- SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LSZ_FirstState
+  SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LSZ_StatesIteration_temp <- c()
+  for (t in SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LSZ_IterationLoop){
+    if (sum(c(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LS$Z[[t]]%*%1:ncol(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LS$Z[[t]]))==
+            c(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LSZ_FirstState%*%1:ncol(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LSZ_FirstState)))==nrow(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LSZ_FirstState)){
+      SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LSZ_StatesIteration_temp <- c(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LSZ_StatesIteration_temp,t)
+    }
+  }
+  SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LSZ_StatesIteration[[StatesLabelIndicator]] <- SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LSZ_StatesIteration_temp
+  SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LSZ_IterationLoop <- (20001:40001)[-(unlist(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LSZ_StatesIteration)-20000)]
+}
+length(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LSZ_States)
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LSZ_StatesFrequency <- c()
+for (t in 1:length(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LSZ_States)){
+  SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LSZ_StatesFrequency <- c(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LSZ_StatesFrequency,
+                                                               length(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LSZ_StatesIteration[[t]]))
+}
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LSZ_StatesFrequency
+which.max(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LSZ_StatesFrequency)
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ <- SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LSZ_States[[which.max(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LSZ_StatesFrequency)]]
+table(c(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ%*%1:ncol(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ)),SS2_ZIPSBM_N75_K3_LSZ%*%c(1:3),dnn = c("",""))
+
+require(GreedyEPL) # obtain the summarized Z by the greedy algorithm proposed by Rastelli and Friel (2018)
+Z_temp <- c()
+for (t in 20001:40001){
+  Z_temp <- rbind(Z_temp,c(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LS$Z[[t]]%*%1:ncol(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LS$Z[[t]])))
+}
+output <- MinimiseEPL(Z_temp, list(Kup = 10, loss_type = "VI",
+                                   decision_init = c(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ%*%
+                                                       1:ncol(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ))))
+table(output$decision,SS2_ZIPSBM_N75_K3_LSZ%*%c(1:3),dnn = c("",""))
+output$EPL # VI posterior loss: 0
+
+## Summarize p
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_Summarizedp <-
+  mean(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1$p[20001:40001])
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_Summarizedp
+plot(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1$p[20001:40001],type = "l")
+hist(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1$p[20001:40001])
+
+## Summarize nu
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_Summarizednu <- matrix(0,nrow(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1$nu[[1]]),ncol(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1$nu[[1]]))
+for (t in 20001:40001){
+  SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_Summarizednu <- SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_Summarizednu +
+    SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1$nu[[t]]
+}
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_Summarizednu <- SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_Summarizednu/20001
+
+## Summarize the P_m0
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_SummarizedProbObs0Missing0 <- matrix(0,3,3)
+for (k1 in 1:3){
+  for (k2 in 1:3){
+    SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_SummarizedProbObs0Missing0[k1,k2] <-
+      sum(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_Summarizednu[SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ%*%c(1:3)==k1,SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ%*%c(1:3)==k2])/
+      (length(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_Summarizednu[SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ%*%c(1:3)==k1,SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ%*%c(1:3)==k2][
+        SS2_ZIPSBM_N75_K3$Y[SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ%*%c(1:3)==k1,SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ%*%c(1:3)==k2]==0])-
+         sum((SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ%*%c(1:3)==k1)*(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ%*%c(1:3)==k2)))
+  }
+}
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_SummarizedProbObs0Missing0
+
+# Check ExactICL with summarized Z and nu
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_ICPCLandOptR <-
+  Directed_ZIPSBM_ExactICL(Y = SS2_ZIPSBM_N75_K3$Y,
+                           ProbObs0Missing0 = SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_SummarizedProbObs0Missing0,
+                           Z = SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ,
+                           alpha1=1,alpha2=1, beta1=1,beta2=9, alpha=1)
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_ICPCLandOptR$value # -8120.121
+
+
+# Further inference of Lambda,Pi conditional on summarized z
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s <-
+  Directed_ZIPSBM_Gibbs_FixedZ(Y = SS2_ZIPSBM_N75_K3$Y,
+                                      K = 3, T = 40000,beta1 = 1, beta2 = 9,
+                                      Z_0 = SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ)
+# Summarize Inferred Pi
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_SummarizedPi <-
+  apply(array(unlist(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Pi),
+              dim = c(nrow(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Pi[[1]]),
+                      ncol(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Pi[[1]]),
+                      length(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Pi)))[,,20001:40001],1,mean)
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_SummarizedPi
+
+# ## Summarize Lambda
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_SummarizedLambda <-
+  apply(array(unlist(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Lambda),
+              dim = c(nrow(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Lambda[[1]]),
+                      ncol(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Lambda[[1]]),
+                      length(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Lambda)))[,,20001:40001],1:2,mean)
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_SummarizedLambda
+```
+
+Note here that, different from SS1 ZIP-SBM cases, the SS2 ZIP-SBM cases fit well to the network data and thus further inference conditional on the summarized clustering is implemented in this experiment.
+
+Some extra summary statistics follow:
+
+``` r
+## Posterior mean Pi
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanPi <-
+  apply(array(unlist(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LS$Pi),
+              dim = c(nrow(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LS$Pi[[1]]),
+                      ncol(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LS$Pi[[1]]),
+                      length(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LS$Pi)))[,,20001:40001],1,mean)
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanPi
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_SummarizedPi # Compare with summarized posterior samples
+
+##  Posterior mean Lambda
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanLambda <-
+  apply(array(unlist(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LS$Lambda),
+              dim = c(nrow(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LS$Lambda[[1]]),
+                      ncol(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LS$Lambda[[1]]),
+                      length(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_LS$Lambda)))[,,20001:40001],1:2,mean)
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanLambda 
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_SummarizedLambda # Compare with summarized posterior samples
+
+# p Posterior mean conditional on Z_s
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanp_CondZ_s <-
+  mean(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$p[20001:40001])
+hist(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$p[20001:40001])
+plot(density(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$p[20001:40001]))
+plot(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$p[20001:40001], type = "l")
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanp_CondZ_s
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_Summarizedp # Compare with summarized posterior samples
+
+# Compare P_m0 evaluated by posterior mean
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_Summarizedp/
+  (SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_Summarizedp+
+     (1-SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_Summarizedp)*
+     dpois(0,SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanLambda))
+# with P_m0 evaluated by posterior mean conditional on Z_s
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanp_CondZ_s/
+  (SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanp_CondZ_s+
+     (1-SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanp_CondZ_s)*
+     dpois(0,SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_SummarizedLambda))
+# and with summarized P_m0
+SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_SummarizedProbObs0Missing0
 ```
