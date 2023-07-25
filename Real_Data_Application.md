@@ -1255,8 +1255,8 @@ end.time <- Sys.time()
 RDA_UKfaculty_ZINBSBM_Fixed_K8_Prior_p_Beta_20_180_T20000_10_time <- end.time - start.time
 RDA_UKfaculty_ZINBSBM_Fixed_K8_Prior_p_Beta_20_180_T20000_10_time # Time difference of 3.800605 hours
 # save.image("RDA_UKfaculty_ZINBSBM_Fixed_K8_Prior_p_Beta_20_180_T20000_R10.RData")
-
 ```
 
-
+We know that it seems to be not very brilliant to apply the implementations and then store and delete the data to move to the next.
+However, our laptop memory only allows us to load few cases once and this doesn't include the further inference data.
 
