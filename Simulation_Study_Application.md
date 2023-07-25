@@ -448,6 +448,18 @@ SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_ICPCLandOptR <-
 SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_ICPCLandOptR$value # -6449.478
 ```
 
+The concaveness of the log $\boldsymbol{Y}_{gh}$ term of the ICPCL with respect to the $r_{gh}$ can be checked by the function `Directed_AZINBSBMRghQghp_ApproximatedICL_CheckConcave()` provided in [`Functions_for_ZINB_SBM.R`].
+The concaveness plots Figure $3$ shown in Section $4.1$ of the paper can be recovered by:
+
+``` r
+# Check concaveness for each Y_gh term of the ICPCL
+res <- Directed_AZINBSBMRghQghp_ApproximatedICL_CheckConcave(Y = SS1_ZINBSBM_N75_K3$Y,
+                                                             ProbObs0Missing0 = SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedProbObs0Missing0,
+                                                             Z = SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ,
+                                                             alpha=1, beta1=1,beta2=9, betaq1=1,betaq2=1,rUB = 6)
+
+```
+
 We apply the same process for all the fixed $K = 2,3,4,5$ cases and obtain the ICPCL table shown as Table $1$ in Section $4.1$ of the paper.
 Since the code for other $K$ cases are similar as above, we propose not to provide more details here.
 
@@ -503,7 +515,7 @@ It can be checked that all the three $\boldsymbol{R}$'s we obtained are all most
 This result can be expected because the posterior clustering chain was shown to be very stable for this experiment.
 We can also check the acceptance rate of the $\boldsymbol{R}$ M-H step for the further inference, and the acceptance rate is also shown to be similar as the one we obtained in the PCMwG implementation without fixing the clustering.
 
-Based on the summarized $\tilde{\boldsymbol{R}}$ and $\tilde{\boldsymbol{Q}}$, we can also obtain the summarized mean and variance of the distribution assumed for the edge weights:
+Based on the summarized $\tilde{\boldsymbol{R}}$ and $\tilde{\boldsymbol{Q}}$, we can also obtain the summarized mean and variance of the distribution assumed for the edge weights between each pair of summarized clusters:
 
 ```r
 # Summarized mean 
