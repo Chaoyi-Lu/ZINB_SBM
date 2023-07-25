@@ -623,14 +623,14 @@ for (t in 20001:40001){
   }
 }
 plot(table(res_list), main="Entry 2,1 Missing Weights Posterior Density Comparison with NB Distribution",xlab = "Weight",ylab = "frequency or density")
+lines(0:23,table(res_list)[1]*dnbinom(0:23,SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedR[SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ[2,]%*%1:3,SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ[1,]%*%1:3],
+                                      SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedQ[SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ[2,]%*%1:3,SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ[1,]%*%1:3])/
+        dnbinom(0,SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedR[SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ[2,]%*%1:3,SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ[1,]%*%1:3],
+                SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedQ[SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ[2,]%*%1:3,SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ[1,]%*%1:3]),col = 2,lty=2)
 lines(0:23,table(res_list)[1]*dnbinom(0:23,SS1_ZINBSBM_N75_K3_obs_InitialR[SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ[2,]%*%1:3,SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ[1,]%*%1:3],
                                       SS1_ZINBSBM_N75_K3_obs_InitialQ[SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ[2,]%*%1:3,SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ[1,]%*%1:3])/
         dnbinom(0,SS1_ZINBSBM_N75_K3_obs_InitialR[SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ[2,]%*%1:3,SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ[1,]%*%1:3],
                 SS1_ZINBSBM_N75_K3_obs_InitialQ[SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ[2,]%*%1:3,SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ[1,]%*%1:3]),col = 3)
-lines(0:23,table(res_list)[1]*dnbinom(0:23,SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedInferredR[SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ[2,]%*%1:3,SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ[1,]%*%1:3],
-                                      SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedInferredQ[SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ[2,]%*%1:3,SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ[1,]%*%1:3])/
-        dnbinom(0,SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedInferredR[SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ[2,]%*%1:3,SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ[1,]%*%1:3],
-                SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedInferredQ[SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ[2,]%*%1:3,SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ[1,]%*%1:3]),col = 2,lty=2)
 legend("topright", legend=c("Bar plot of missing weights", "NB distribution with summarized r,q", "NB distribution with reference r,q"),
        col=1:3, lty=c(1,2,1), cex=1)
 par(mfrow=c(1,1), mar = c(5.1, 4.1, 4.1, 2.1))
