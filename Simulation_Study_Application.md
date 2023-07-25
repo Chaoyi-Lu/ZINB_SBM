@@ -897,3 +897,9 @@ SS1_ZIPSBM_N75_K3_Fixed_K3_T40000_1_ICPCLandOptR$value # -7678.607
 
 Note here that the function `Directed_ZIPSBM_ExactICL()` above is applied for the evaluation of the exact integrated complete data log likelihood ($\text{ICL}_{\text{ex}}$).
 Due to the fact that none of the ZIP-SBM cases fit well to the simulation study $1$ artificial network, that is, none of the cases provide the summarized clustering which agrees with the true clustering and the summarized $\tilde{p},\widetilde{\boldsymbol{P\_{m0}}}$ are far away from the true references, we propose not to apply further implementations for these cases.
+
+## Simulation Study $2$
+
+The second simmulation study instead focuses on an artificial network randomly generated from the ZIP-SBM with the settings: $N = 75, K = 3, p = 0.15$ and 
+
+$$\boldsymbol{\Pi} = \left(0.3, 0.4, 0.3\right), \boldsymbol{\lambda} = \begin{pmatrix} 2.0 & 0.7 & 0.9\\0.1 & 2.0 & 0.3\\0.5 & 1.1 &2.5\end{pmatrix}$$
