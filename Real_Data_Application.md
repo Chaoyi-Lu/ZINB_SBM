@@ -1624,3 +1624,109 @@ plot(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4$p[10001:20001],
 hist(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4$p[10001:20001],ylab = "",xlab="", main = "Posterior Density of p", font.main = 1)
 par(mfrow=c(1,1),mai = c(1.02, 0.82, 0.82, 0.42),mgp=c(3,1,0))
 ```
+
+## Extra Summary Statistics and Plots
+
+Similar as we illustrated in simulation studies, we can also obtain some further summary statistics which are not included in the paper and compare them with the ones we provided in the paper.
+Based on the posterior samples, we can obtain the posterior mean of $\boldsymbol{\Pi}, \boldsymbol{Q}$ and compare them with summarized $\tilde{\boldsymbol{\Pi}}, \tilde{\boldsymbol{Q}}$:
+
+``` r
+## Posterior mean Pi
+RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_PosteriorMeanPi <-
+  apply(array(unlist(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS$Pi),
+              dim = c(nrow(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS$Pi[[1]]),
+                      ncol(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS$Pi[[1]]),
+                      length(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS$Pi)))[,,10001:20001],1,mean)
+RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_PosteriorMeanPi
+RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_SummarizedPi # Compare with summarized Pi
+## Posterior mean Q
+RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_PosteriorMeanQ <-
+  apply(array(unlist(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS$Q),
+              dim = c(nrow(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS$Q[[1]]),
+                      ncol(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS$Q[[1]]),
+                      length(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS$Q)))[,,10001:20001],1:2,mean)
+RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_PosteriorMeanQ
+RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_SummarizedQ # Compare with summarized Q
+```
+
+We can also obtain the posterior mean of $p|\tilde{\boldsymbol{z}}$ and compare with the summarized $\tilde{p}$:
+
+``` r
+# p Posterior mean conditional on Z_s
+RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_PosteriorMeanp_CondZ_s <-
+  mean(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Further20000InferCondZ_s$p[10001:20001])
+hist(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Further20000InferCondZ_s$p[10001:20001])
+plot(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Further20000InferCondZ_s$p[10001:20001]))
+plot(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Further20000InferCondZ_s$p[10001:20001], type = "l")
+RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_PosteriorMeanp_CondZ_s
+RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Summarizedp # Compare with summarized p
+```
+
+Based on posterior mean of $\boldsymbol{R}$ and $\boldsymbol{Q}$, we can also approximate the mean and variance of the Negative-Binomial distribution assumed for the edge weights shown as below.
+If we compare with the mean and variance approximated by the summarized parameters, we can observe that they are close to each other.
+
+``` r
+# Check distribution mean based on PosteriorMeanR and PosteriorMeanQ
+RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_PosteriorMeanR*
+  (1-RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_PosteriorMeanQ)/
+  RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_PosteriorMeanQ
+# Check distribution var based on PosteriorMeanR and PosteriorMeanQ
+RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_PosteriorMeanR*
+  (1-RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_PosteriorMeanQ)/
+  RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_PosteriorMeanQ^2
+```
+
+The summary statistic $\boldsymbol{P_{m0}}$ can also be approximated by several ways for comparison and they are all close to each other as expected:
+
+``` r
+# Compare P_m0 evaluated by posterior mean
+RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Summarizedp/
+  (RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Summarizedp+
+     (1-RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Summarizedp)*
+     dnbinom(0,RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_PosteriorMeanR,
+             RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_PosteriorMeanQ))
+# with P_m0 evaluated by posterior mean conditional on Z_s
+RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_PosteriorMeanp_CondZ_s/
+  (RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_PosteriorMeanp_CondZ_s+
+     (1-RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_PosteriorMeanp_CondZ_s)*
+     dnbinom(0,RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_SummarizedR,
+             RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_SummarizedQ))
+# and with summarized P_m0
+RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_SummarizedProbObs0Missing0
+```
+
+The concaveness plot for the $K=5$ round $4$ case can be checked by the code below and the performance is similar to
+
+``` r
+# check concaveness of ICPCL for each log Y_gh term w.r.t. r_gh
+res <- Directed_ZINBSBM_ApproximateICPCL_logY_gh_term_CheckConcave(Y = UKfaculty_adj,
+                                                             ProbObs0Missing0 = RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_SummarizedProbObs0Missing0,
+                                                             Z = RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_SummarizedZ,
+                                                             alpha=1, beta1=20,beta2=180, betaq1=1,betaq2=1)
+par(mfrow=c(5,5),mai = c(0.15, 0.15, 0.15, 0.05),mgp = c(2,0.25,0))
+plot(seq(0.001,20,0.001),res[1,1,],type = "l", main = "Block 1,1",xlab = "",ylab = "")
+plot(seq(0.001,20,0.001),res[1,2,],type = "l", main = "Block 1,2",xlab = "",ylab = "")
+plot(seq(0.001,20,0.001),res[1,3,],type = "l", main = "Block 1,3",xlab = "",ylab = "")
+plot(seq(0.001,20,0.001),res[1,4,],type = "l", main = "Block 1,4",xlab = "",ylab = "")
+plot(seq(0.001,20,0.001),res[1,5,],type = "l", main = "Block 1,5",xlab = "",ylab = "")
+plot(seq(0.001,20,0.001),res[2,1,],type = "l", main = "Block 2,1",xlab = "",ylab = "")
+plot(seq(0.001,20,0.001),res[2,2,],type = "l", main = "Block 2,2",xlab = "",ylab = "")
+plot(seq(0.001,20,0.001),res[2,3,],type = "l", main = "Block 2,3",xlab = "",ylab = "")
+plot(seq(0.001,20,0.001),res[2,4,],type = "l", main = "Block 2,4",xlab = "",ylab = "")
+plot(seq(0.001,20,0.001),res[2,5,],type = "l", main = "Block 2,5",xlab = "",ylab = "")
+plot(seq(0.001,20,0.001),res[3,1,],type = "l", main = "Block 3,1",xlab = "",ylab = "")
+plot(seq(0.001,20,0.001),res[3,2,],type = "l", main = "Block 3,2",xlab = "",ylab = "")
+plot(seq(0.001,20,0.001),res[3,3,],type = "l", main = "Block 3,3",xlab = "",ylab = "")
+plot(seq(0.001,20,0.001),res[3,4,],type = "l", main = "Block 3,4",xlab = "",ylab = "")
+plot(seq(0.001,20,0.001),res[3,5,],type = "l", main = "Block 3,5",xlab = "",ylab = "")
+plot(seq(0.001,20,0.001),res[4,1,],type = "l", main = "Block 4,1",xlab = "",ylab = "")
+plot(seq(0.001,20,0.001),res[4,2,],type = "l", main = "Block 4,2",xlab = "",ylab = "")
+plot(seq(0.001,20,0.001),res[4,3,],type = "l", main = "Block 4,3",xlab = "",ylab = "")
+plot(seq(0.001,20,0.001),res[4,4,],type = "l", main = "Block 4,4",xlab = "",ylab = "")
+plot(seq(0.001,20,0.001),res[4,5,],type = "l", main = "Block 4,5",xlab = "",ylab = "")
+plot(seq(0.001,20,0.001),res[5,1,],type = "l", main = "Block 5,1",xlab = "",ylab = "")
+plot(seq(0.001,20,0.001),res[5,2,],type = "l", main = "Block 5,2",xlab = "",ylab = "")
+plot(seq(0.001,20,0.001),res[5,3,],type = "l", main = "Block 5,3",xlab = "",ylab = "")
+plot(seq(0.001,20,0.001),res[5,4,],type = "l", main = "Block 5,4",xlab = "",ylab = "")
+plot(seq(0.001,20,0.001),res[5,5,],type = "l", main = "Block 5,5",xlab = "",ylab = "")
+```
