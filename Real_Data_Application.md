@@ -1497,7 +1497,7 @@ We apply all the processes above for each round of each fixed $K$ and finally ob
 
 The corresponding minimized expected posterior loss table is shown as:
 
-| minVIloss | K2       | K3    | K4       | K5        | K6           | K7  	     | K8       |
+| minExPosVIloss | K2       | K3    | K4       | K5        | K6           | K7  	     | K8       |
 | :---: |:---: |:---: |:---: |:---: |:---: |:---: |:---: |
 | Round 1 |$0.0621$ |$\textcolor{blue}{0.3450}$|$0.0363$|$0.0687$|$0.0770$|$0.0473$|$0.0795$|
 | Round 2 |$0.0582$|$\textcolor{blue}{0.3518}$|$\textcolor{blue}{0.3516}$|$0.1135	$|$0.0436$|$\textcolor{blue}{2.69e\text{-}13}$|$0.1353$|
@@ -1509,3 +1509,26 @@ The corresponding minimized expected posterior loss table is shown as:
 | Round 8 |$\textcolor{blue}{0.0106}$|$\textcolor{red}{0.1112}$|$\textcolor{blue}{0.3330}$|$\textcolor{blue}{4.52e\text{-}05}$|$0.1053$|$0.0312$|$0.0442$|
 | Round 9 |$0.0599$|$0.1335$|$\textcolor{blue}{0.0045}$|$0.1766$|$\textcolor{red}{0.0778}$|$0.1962$|$0.0422$|
 | Round 10 |$0.0607$|$0.0381$|$\textcolor{red}{0.1531}$|$0.0308$|$\textcolor{blue}{0.3075}$|$0.1057$|$0.0449$|
+
+
+Recall here that we propose in this real data application to post process all the outputs by first discarding those implementation outputs whose expected posterior loss is significantly higher or lower than other implementations.
+The blue colors shown in the two tables above are the outputs we propose to no longer consider.
+We can observe that all those blue rounds provide the minimized expected posterior loss which are significantly different from other rounds for the same fixed $K$.
+Moreover, the corresponding ICPCL values in blue are all comparable or worse than the values of other rounds.
+By discarding those blue rounds, we still have $\geq 5$ rounds left for each fixed $K$ case.
+The red colors correspond to those rounds which provide the highest ICPCL values within the same fixed $K$ rounds.
+After the post processing, the boxplots of the ICPCL values shown as Figure $11$ can be recovered by the code shown below.
+
+``` r
+par(mfrow=c(1,1),mai = c(0.25, 0.3, 0.25, 0.1),mgp=c(1,0.25,0))
+boxplot(c(-6396.096, -6454.013, -6450.135, -6446.579, -6373.261, -6386.550, -6437.208, -6428.155, -6428.155),
+        c(-6431.902, -6380.615, -6348.968, -6377.889, -6401.935),
+        c(-6414.270, -6304.791, -6459.649, -6291.410, -6238.031),
+        c(-6294.696, -6401.470, -6500.255, -6087.947, -6244.250, -6298.549, -6433.268, -6294.832),
+        c(-6400.087, -6889.146, -7031.210, -6549.627, -6295.793, -6798.479, -6695.855, -6701.610, -6259.197),
+        c(-6585.189, -6583.900, -6469.524, -6710.810, -6290.709, -6517.335, -6499.246, -6679.074),
+        c(-7724.104, -6853.329, -6730.280, -7823.358, -7085.496, -7340.897, -7248.848, -6996.099, -7007.193, -6570.362),xlab = "",ylab = "", main = "",cex.axis = 0.6)
+title(xlab = "",ylab = "ICPCL", main = "ICPCL Boxplot for each K = 2,3,...,8", mgp=c(0.9,1,0),cex.main=0.8,cex.lab = 0.6)
+axis(1, at=c(1:7), labels = c("K2","K3","K4","K5","K6","K7","K8"),cex.axis=0.75)
+par(mfrow=c(1,1),mai = c(1.02, 0.82, 0.82, 0.42),mgp=c(3,1,0))
+```
