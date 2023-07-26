@@ -1260,6 +1260,8 @@ RDA_UKfaculty_ZINBSBM_Fixed_K8_Prior_p_Beta_20_180_T20000_10_time # Time differe
 In the case of that the memory of the laptop is enough to load all the data, the practitioners can consider not to store each implementation above and then remove the data in order to save the memory for the next implementation.
 Otherwise, it's suggested to do so if practitioners prefer recovering all the work above.
 
+## The Summarizing Processes of the RDA
+
 Though the summarizing processes are almost the same as those of the simulation study ZINB-SBM cases, we briefly go through the processes again in this section.
 Since the processes are also similar for all the implementations in RDA, we take the best round implementation shown in Section $5$ of the paper as an example here, that is, the $K=5$ round $4$ case.
 Once we obatined the outputs from the PCMwG function, we can first apply the label switching on the clustering and those clustering dependent parameters.
@@ -1479,3 +1481,18 @@ We apply all the processes above for each round of each fixed $K$ and finally ob
 |Round 8   | $-6364.818^-$ | $-6348.968^+$ | $-6238.089^-$ | $-6457.362^-$ | $-6701.610$ | $-6517.335$ | $-6996.099$|
 |Round 9   | $-6428.155$ | $-6377.889$ | $-6276.172^-$ | $-6433.268$ | $-6259.197^+$ | $-6499.246$ | $-7007.193$|
 |Round 10  | $-6428.155$ | $-6401.935$ | $-6238.031^+$ | $-6294.832$ | $-6510.474^-$ | $-6679.074$ | $-6570.362$|
+
+The corresponding minimized expected posterior loss table is shown as:
+
+| minVIloss | K2       | K3    | K4       | K5        | K6           | K7  	     | K8       |
+| :---: |:---: |:---: |:---: |:---: |:---: |:---: |:---: |
+Round 1 | $ 0.0621 $ | $ \textcolor{blue}{0.3450}  $ | $ 0.0363  $ | $ 0.0687   $ | $ 0.0770 	 $ | $ 0.0473 $ | $ 0.0795$ |
+Round 2 | $ 0.0582 $ | $ \textcolor{blue}{0.3518}  $ | $ \textcolor{blue}{0.3516}  $ | $ 0.1135	 $ | $ 0.0436   $ | $ \textcolor{blue}{2.69e-13} $ | $0.1353$ |
+Round 3 | $ 0.0575  $ | $ \textcolor{blue}{0.3490}  $ | $ \textcolor{blue}{0.3934} $ | $ 0.0404 $ | $ 0.0973  $ | $ \textcolor{blue}{0.2482} $ | $ \textcolor{red}{0.1141}$ |
+Round 4 | $ 0.0639 $ | $ 0.0900  $ | $ 0.0507  $ | $ \textcolor{red}{0.0359} $ | $ 0.1225  $ | $ 0.0515 $ | $ 0.1031$ |
+Round 5 | $ \textcolor{red}{0.0553} $ | $ \textcolor{blue}{0.3284}  $ | $ \textcolor{blue}{0.0025}  $ | $ \textcolor{blue}{0.4050} $ | $ 0.0705 $ | $ 0.0729 $ | $ 0.1525$ |
+Round 6 | $ 0.0615 $ | $ \textcolor{blue}{0.3194}  $ | $ 0.0917  $ | $ 0.1034 $ | $ 0.1369 $ | $ 0.0523 $ | $ 0.1057$ |
+Round 7 | $ 0.0623 $ | $ 0.0267  $ | $ 0.0786   $ | $ 0.0700 $ | $ 0.0417 $ | $ \textcolor{red}{0.0765} $ | $ 0.0666$ |
+Round 8 | $ \textcolor{blue}{0.0106} $ | $ \textcolor{red}{0.1112}  $ | $ \textcolor{blue}{0.3330}   $ | $ \textcolor{blue}{4.52e-05} $ | $ 0.1053 $ | $ 0.0312 $ | $ 0.0442$ |
+Round 9 | $ 0.0599 $ | $ 0.1335  $ | $ \textcolor{blue}{0.0045}  	$ | $ 0.1766 $ | $ \textcolor{red}{0.0778} $ | $ 0.1962 $ | $ 0.0422$ |
+Round 10 | $ 0.0607 $ | $ 0.0381  $ | $ \textcolor{red}{0.1531}   $ | $ 0.0308 $ | $ \textcolor{blue}{0.3075} $ | $ 0.1057 $ | $ 0.0449$ |
