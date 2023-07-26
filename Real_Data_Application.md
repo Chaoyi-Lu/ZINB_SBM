@@ -57,6 +57,24 @@ var(c(UKfaculty_adj[upper.tri(UKfaculty_adj)],
       c(UKfaculty_adj[lower.tri(UKfaculty_adj)])))
 ```
 
+The adjacency matrix plots shown as Figure $10$ in Section $5$ of the paper can be recovered by the following code.
+
+``` r
+par(mfrow=c(1,3),mai = c(0.5, 0.05, 0.25, 0.05),mgp=c(0.1,0.1,0))
+image(t(UKfaculty_adj),axes = FALSE,main = "Adjacency Matrix Y")
+
+image(t(UKfaculty_adj)[order(Real_data_application_UKfaculty_Z%*%1:4),rev(order(Real_data_application_UKfaculty_Z%*%1:4))],axes = FALSE,main = TeX(r'($Y|$ Affiliation $z^*$)',bold=TRUE))
+group_counts <- (as.numeric(table(Real_data_application_UKfaculty_Z%*%1:4)))
+abline(v = -1/(2*(nrow(UKfaculty_adj)-1)) + cumsum(group_counts/sum(group_counts))*(1+2/(2*(nrow(UKfaculty_adj)-1))))
+abline(h = 1-(-1/(2*(nrow(UKfaculty_adj)-1)) + cumsum(group_counts/sum(group_counts))*(1+2/(2*(nrow(UKfaculty_adj)-1)))))
+
+image(t(1*(UKfaculty_adj!=0))[order(Real_data_application_UKfaculty_Z%*%1:4),rev(order(Real_data_application_UKfaculty_Z%*%1:4))],axes = FALSE,main = TeX(r'($Y\neq 0|$ Affiliation $z^*$)',bold=TRUE))
+group_counts <- (as.numeric(table(Real_data_application_UKfaculty_Z%*%1:4)))
+abline(v = -1/(2*(nrow(UKfaculty_adj)-1)) + cumsum(group_counts/sum(group_counts))*(1+2/(2*(nrow(UKfaculty_adj)-1))))
+abline(h = 1-(-1/(2*(nrow(UKfaculty_adj)-1)) + cumsum(group_counts/sum(group_counts))*(1+2/(2*(nrow(UKfaculty_adj)-1)))))
+par(mfrow=c(1,1),mai = c(1.02, 0.82, 0.82, 0.42),mgp = c(3,1,0))
+```
+
 ## The Implementations of the RDA
 
 Recall here that we apply the partially collapsed Metropolis within Gibbs algorithm for the inference of the ZINB-SBM on the `UKfaculty` real network.
@@ -1377,16 +1395,6 @@ table(output$decision,Real_data_application_UKfaculty_Z%*%c(1:4),dnn = c("",""))
 output$EPL # VI posterior loss: 0.03585164
 ```
 
-The summarized clustering can be visualized via the adjacency matrix plot based on such clustering, that is,
-
-``` r
-## Check the summarized clustering
-image(t(UKfaculty_adj)[order(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_SummarizedZ%*%c(1:5)),rev(order(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_SummarizedZ%*%c(1:5)))])
-group_counts <- (as.numeric(table(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_SummarizedZ%*%c(1:5))))
-abline(v = -1/(2*(nrow(UKfaculty_adj)-1)) + cumsum(group_counts/sum(group_counts))*(1+2/(2*(nrow(UKfaculty_adj)-1))))
-abline(h = 1-(-1/(2*(nrow(UKfaculty_adj)-1)) + cumsum(group_counts/sum(group_counts))*(1+2/(2*(nrow(UKfaculty_adj)-1)))))
-```
-
 The acceptance rate of each $r_{gh}$ M-H step can be checked by:
 
 ``` r
@@ -1417,15 +1425,20 @@ RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Summarizednu <-
   RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Summarizednu/10001
 ```
 
-The summarized $\tilde{\boldsymbol{\nu}}$ can be visualized based on the summarized clustering:
+The summarized clustering and the summarized $\tilde{\boldsymbol{\nu}}$ can be visualized as shown in Figure $13$ of the paper and such a figure can be recovered by:
 
 ``` r
-## Check the plot of summarized nu which corresponds to the proportion of the times the corresponding y_ij is classified as missing zero
-image(t(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Summarizednu)[order(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_SummarizedZ%*%c(1:5)),
-                                                                                  rev(order(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_SummarizedZ%*%c(1:5)))])
+par(mfrow=c(1,2),mai = c(0.25, 0.05, 0.275, 0.05), mgp=c(1.25,0.35,0))
+image(t(UKfaculty_adj)[order(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_SummarizedZ%*%c(1:5)),rev(order(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_SummarizedZ%*%c(1:5)))],axes = FALSE, main = TeX(r'($Y|$ Summarized $\widetilde{z}$)',bold=TRUE))
 group_counts <- (as.numeric(table(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_SummarizedZ%*%c(1:5))))
 abline(v = -1/(2*(nrow(UKfaculty_adj)-1)) + cumsum(group_counts/sum(group_counts))*(1+2/(2*(nrow(UKfaculty_adj)-1))))
 abline(h = 1-(-1/(2*(nrow(UKfaculty_adj)-1)) + cumsum(group_counts/sum(group_counts))*(1+2/(2*(nrow(UKfaculty_adj)-1)))))
+
+image(t(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Summarizednu)[order(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_SummarizedZ%*%c(1:5)),rev(order(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_SummarizedZ%*%c(1:5)))],axes = FALSE, main = TeX(r'(Summarized $\widetilde{\nu}|$ Summarized $\widetilde{z}$)',bold=TRUE))
+group_counts <- (as.numeric(table(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_SummarizedZ%*%c(1:5))))
+abline(v = -1/(2*(nrow(UKfaculty_adj)-1)) + cumsum(group_counts/sum(group_counts))*(1+2/(2*(nrow(UKfaculty_adj)-1))))
+abline(h = 1-(-1/(2*(nrow(UKfaculty_adj)-1)) + cumsum(group_counts/sum(group_counts))*(1+2/(2*(nrow(UKfaculty_adj)-1)))))
+par(mfrow=c(1,1),mai = c(1.02, 0.82, 0.82, 0.42),mgp=c(3,1,0))
 ```
 
 Once we obtained the summarized $\tilde{\boldsymbol{\nu}}$ and $\tilde{\boldsymbol{z}}$, we can approximate the summarized $\widetilde{\boldsymbol{P_{m0}}}$ as:
@@ -1486,13 +1499,13 @@ The corresponding minimized expected posterior loss table is shown as:
 
 | minVIloss | K2       | K3    | K4       | K5        | K6           | K7  	     | K8       |
 | :---: |:---: |:---: |:---: |:---: |:---: |:---: |:---: |
-Round 1 |$0.0621$ |$\textcolor{blue}{0.3450}$|$0.0363$|$0.0687$|$0.0770$|$0.0473$|$0.0795$|
-Round 2 |$0.0582$|$\textcolor{blue}{0.3518}$|$\textcolor{blue}{0.3516}$|$0.1135	$|$0.0436$|$\textcolor{blue}{2.69e\text{-}13}$|$0.1353$|
-Round 3 |$0.0575$|$\textcolor{blue}{0.3490}$|$\textcolor{blue}{0.3934}$|$0.0404$|$0.0973$|$\textcolor{blue}{0.2482}$|$\textcolor{red}{0.1141}$|
-Round 4 |$0.0639$|$0.0900$|$0.0507$|$\textcolor{red}{0.0359}$|$0.1225$|$0.0515$|$0.1031$|
-Round 5 |$\textcolor{red}{0.0553}$|$\textcolor{blue}{0.3284}$|$\textcolor{blue}{0.0025}$|$\textcolor{blue}{0.4050}$|$0.0705$|$0.0729$|$0.1525$|
-Round 6 |$0.0615$|$\textcolor{blue}{0.3194}$|$0.0917$|$0.1034$|$0.1369$|$0.0523$|$0.1057$|
-Round 7 |$0.0623$|$0.0267$|$0.0786$|$0.0700$|$0.0417$|$\textcolor{red}{0.0765}$|$0.0666$|
-Round 8 |$\textcolor{blue}{0.0106}$|$\textcolor{red}{0.1112}$|$\textcolor{blue}{0.3330}$|$\textcolor{blue}{4.52e\text{-}05}$|$0.1053$|$0.0312$|$0.0442$|
-Round 9 |$0.0599$|$0.1335$|$\textcolor{blue}{0.0045}$|$0.1766$|$\textcolor{red}{0.0778}$|$0.1962$|$0.0422$|
-Round 10 |$0.0607$|$0.0381$|$\textcolor{red}{0.1531}$|$0.0308$|$\textcolor{blue}{0.3075}$|$0.1057$|$0.0449$|
+| Round 1 |$0.0621$ |$\textcolor{blue}{0.3450}$|$0.0363$|$0.0687$|$0.0770$|$0.0473$|$0.0795$|
+| Round 2 |$0.0582$|$\textcolor{blue}{0.3518}$|$\textcolor{blue}{0.3516}$|$0.1135	$|$0.0436$|$\textcolor{blue}{2.69e\text{-}13}$|$0.1353$|
+| Round 3 |$0.0575$|$\textcolor{blue}{0.3490}$|$\textcolor{blue}{0.3934}$|$0.0404$|$0.0973$|$\textcolor{blue}{0.2482}$|$\textcolor{red}{0.1141}$|
+| Round 4 |$0.0639$|$0.0900$|$0.0507$|$\textcolor{red}{0.0359}$|$0.1225$|$0.0515$|$0.1031$|
+| Round 5 |$\textcolor{red}{0.0553}$|$\textcolor{blue}{0.3284}$|$\textcolor{blue}{0.0025}$|$\textcolor{blue}{0.4050}$|$0.0705$|$0.0729$|$0.1525$|
+| Round 6 |$0.0615$|$\textcolor{blue}{0.3194}$|$0.0917$|$0.1034$|$0.1369$|$0.0523$|$0.1057$|
+| Round 7 |$0.0623$|$0.0267$|$0.0786$|$0.0700$|$0.0417$|$\textcolor{red}{0.0765}$|$0.0666$|
+| Round 8 |$\textcolor{blue}{0.0106}$|$\textcolor{red}{0.1112}$|$\textcolor{blue}{0.3330}$|$\textcolor{blue}{4.52e\text{-}05}$|$0.1053$|$0.0312$|$0.0442$|
+| Round 9 |$0.0599$|$0.1335$|$\textcolor{blue}{0.0045}$|$0.1766$|$\textcolor{red}{0.0778}$|$0.1962$|$0.0422$|
+| Round 10 |$0.0607$|$0.0381$|$\textcolor{red}{0.1531}$|$0.0308$|$\textcolor{blue}{0.3075}$|$0.1057$|$0.0449$|
