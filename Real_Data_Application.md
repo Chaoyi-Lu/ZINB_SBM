@@ -1486,7 +1486,7 @@ The corresponding minimized expected posterior loss table is shown as:
 
 | minVIloss | K2       | K3    | K4       | K5        | K6           | K7  	     | K8       |
 | :---: |:---: |:---: |:---: |:---: |:---: |:---: |:---: |
-Round 1 | $ 0.0621 $ | $ \textcolor{blue}{0.3450}  $ | $ 0.0363  $ | $ 0.0687   $ | $ 0.0770 	 $ | $ 0.0473 $ | $ 0.0795$ |
+Round 1 | $0.0621$ | $ \textcolor{blue}{0.3450}  $ | $ 0.0363  $ | $ 0.0687   $ | $ 0.0770 	 $ | $ 0.0473 $ | $ 0.0795$ |
 Round 2 | $ 0.0582 $ | $ \textcolor{blue}{0.3518}  $ | $ \textcolor{blue}{0.3516}  $ | $ 0.1135	 $ | $ 0.0436   $ | $ \textcolor{blue}{2.69e-13} $ | $0.1353$ |
 Round 3 | $ 0.0575  $ | $ \textcolor{blue}{0.3490}  $ | $ \textcolor{blue}{0.3934} $ | $ 0.0404 $ | $ 0.0973  $ | $ \textcolor{blue}{0.2482} $ | $ \textcolor{red}{0.1141}$ |
 Round 4 | $ 0.0639 $ | $ 0.0900  $ | $ 0.0507  $ | $ \textcolor{red}{0.0359} $ | $ 0.1225  $ | $ 0.0515 $ | $ 0.1031$ |
