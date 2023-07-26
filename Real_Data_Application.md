@@ -1532,3 +1532,95 @@ title(xlab = "",ylab = "ICPCL", main = "ICPCL Boxplot for each K = 2,3,...,8", m
 axis(1, at=c(1:7), labels = c("K2","K3","K4","K5","K6","K7","K8"),cex.axis=0.75)
 par(mfrow=c(1,1),mai = c(1.02, 0.82, 0.82, 0.42),mgp=c(3,1,0))
 ```
+
+Compared to other rounds of $K=5$ case, our best pick, $K=5$ round $4$ case, seems to be a "lucky" round. 
+However, based on the irreducibility property of the MCMC sampler, there is no doubt that any implementations would finally reach and to stay around the converged clustering states returned by the $K=5$ round $4$ case if we are able to implement the algorithm for long enough, because the $K=5$ round $4$ case returns the ICPCL value which is significantly better than all other cases.
+While, in practice, we never know how many iterations are enough or whether the posterior chains would stuck around the local posterior mode.
+The mixing problem or bad initial state problem or other possible problem might make the posterior chain take very long time to reach the stationary distribution which is believed to be around the global posterior mode.
+These motivate us to apply the multiple implementations in this real data application.
+
+The results show that the multiple implementations successfully help us find the $K=5$ round $4$ case whose summarized clustering almost perfectly recovers the affiliation of the real UKfaculty network and also reveals some surther underlying clustering structure which is not observed.
+Moreover, our ZINB-SBM model also successfully provides good inference and interpretation of the missing zero structure of such a real network as discussed in Section $5$ of the paper.
+
+By treating the $K=5$ round $4$ case as the best case in our experiments, we apply further inference conditional on the summarized clustering as:
+
+``` r
+# # Further inference of R,Q,Pi conditional on the summarized z
+# RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Further20000InferCondZ_s <-
+#   Directed_ZINBSBM_PCMwG_FixedZ(Y = UKfaculty_adj,
+#                                 K = 5, T = 20000, eps_R = 0.175,beta1 = 20, beta2 = 180,
+#                                 Z_0 = RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_SummarizedZ)
+```
+
+The further $20,000$-iteration inference outputs are already loaded at the start of this section and we can summarize those clustering depedent parameters as well the the mean and variance of the Negative-Binomial distribution assumed for the edge weights by the following code.
+
+``` r
+## Summarize Pi
+RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_SummarizedPi <-
+  apply(array(unlist(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Further20000InferCondZ_s$Pi),
+              dim = c(nrow(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Further20000InferCondZ_s$Pi[[1]]),
+                      ncol(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Further20000InferCondZ_s$Pi[[1]]),
+                      length(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Further20000InferCondZ_s$Pi)))[,,10001:20001],1,mean)
+RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_SummarizedPi
+
+# ## Summarize R
+RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_SummarizedR <-
+  apply(array(unlist(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Further20000InferCondZ_s$R),
+              dim = c(nrow(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Further20000InferCondZ_s$R[[1]]),
+                      ncol(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Further20000InferCondZ_s$R[[1]]),
+                      length(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Further20000InferCondZ_s$R)))[,,10001:20001],1:2,mean)
+RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_SummarizedR
+# RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_PosteriorMeanR # Compare with posterior mean R
+# RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_ICPCLandOptR$R # Compare with the optimized R used for ICPCL
+# # acceptance rate for R in the further inference conditional on Z_s
+# Reduce(`+`, RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Further20000InferCondZ_s$Acceptance_count_R[10001:20001])/10001
+
+## Summarize Q
+RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_SummarizedQ <-
+  apply(array(unlist(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Further20000InferCondZ_s$Q),
+              dim = c(nrow(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Further20000InferCondZ_s$Q[[1]]),
+                      ncol(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Further20000InferCondZ_s$Q[[1]]),
+                      length(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Further20000InferCondZ_s$Q)))[,,10001:20001],1:2,mean)
+RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_SummarizedQ
+
+# Summarized mean 
+RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_SummarizedR*
+  (1-RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_SummarizedQ)/
+  RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_SummarizedQ
+# Summarized Var
+RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_SummarizedR*
+  (1-RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_SummarizedQ)/
+  RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_SummarizedQ^2
+```
+
+The posterior clustering rand index plot, the posterior density plot of $\boldsymbol{\Pi}|\tilde{\boldsymbol{z}}$ as well as the posterior trace plot and posterior density plot of $p$ shown as Figure $12$ can be recovered by:
+
+``` r
+par(mfrow=c(2,2),mai = c(0.25, 0.25, 0.25, 0.05), mgp=c(1,0.25,0),cex.main=0.8,cex.lab = 0.8)
+# Posterior clustering rand index plot
+# require("fossil")
+# RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LSZ_RI <- c()
+# for (t in 1:20001){
+#   RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LSZ_RI <-
+#     c(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LSZ_RI,
+#       rand.index(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS$Z[[t]]%*%c(1:ncol(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS$Z[[t]])),
+#                  Real_data_application_UKfaculty_Z%*%c(1:4)))
+# }
+plot(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LSZ_RI,ylim = c(0.5,1),type = "l",xlab = "",ylab = "", main = "Posterior Clustering Rand Index",cex.axis = 0.8)
+
+# Posterior Pi density plots
+plot(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredPi[1,],bw=0.008),col = 2, xlim=c(0,0.55),ylim=c(0,17), ylab = "",xlab="", main = TeX(r'(Posterior Density of $\pi_k$|\widetilde{\textbf{z}})'))
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredPi[2,],bw=0.008),col = 3)
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredPi[3,],bw=0.008),col = 4)
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredPi[4,],bw=0.008),col = 5)
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredPi[5,],bw=0.008),col = 6)
+legend("topright", legend=c(TeX(r'($\pi_1$)'),TeX(r'($\pi_2$)'),TeX(r'($\pi_3$)'),TeX(r'($\pi_4$)'),TeX(r'($\pi_5$)')),
+       col=2:6, lty = 1, cex=0.7)
+
+# Posterior p trace plot
+plot(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4$p[10001:20001], type = "l", main = "p Mixing without Burn-in",xlab = "",ylab = "", font.main = 1)
+
+# Posterior p density plots
+hist(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4$p[10001:20001],ylab = "",xlab="", main = "Posterior Density of p", font.main = 1)
+par(mfrow=c(1,1),mai = c(1.02, 0.82, 0.82, 0.42),mgp=c(3,1,0))
+```
