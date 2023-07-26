@@ -1480,7 +1480,7 @@ We apply all the processes above for each round of each fixed $K$ and finally ob
 |Round 7   | $-6437.208$ | $-6380.615$ | $-6291.410$ | $-6298.549$ | $-6695.855$ | $\textcolor{red}{-6290.709}$ | $-7248.848$|
 |Round 8   | $\textcolor{blue}{-6364.818}$ | $\textcolor{red}{-6348.968}$ | $\textcolor{blue}{-6238.089}$ | $\textcolor{blue}{-6457.362}$ | $-6701.610$ | $-6517.335$ | $-6996.099$|
 |Round 9   | $-6428.155$ | $-6377.889$ | $\textcolor{blue}{-6276.172}$ | $-6433.268$ | $\textcolor{red}{-6259.197}$ | $-6499.246$ | $-7007.193$|
-|Round 10  | $-6428.155$ | $-6401.935$ | $-6238.031^+$ | $-6294.832$ | $\textcolor{blue}{-6510.474}$ | $-6679.074$ | $-6570.362$|
+|Round 10  | $-6428.155$ | $-6401.935$ | $\textcolor{red}{-6238.031}$ | $-6294.832$ | $\textcolor{blue}{-6510.474}$ | $-6679.074$ | $-6570.362$|
 
 The corresponding minimized expected posterior loss table is shown as:
 
