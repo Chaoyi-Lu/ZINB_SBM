@@ -469,7 +469,7 @@ The concaveness plots Figure $3$ shown in Section $4.1$ of the paper can be reco
 
 ``` r
 # Check the concaveness for each Y_gh term of the ICPCL w.r.t. r_gh
-res <- Directed_AZINBSBMRghQghp_ApproximatedICL_CheckConcave(Y = SS1_ZINBSBM_N75_K3$Y,
+res <- Directed_ZINBSBM_ApproximateICPCL_logY_gh_term_CheckConcave(Y = SS1_ZINBSBM_N75_K3$Y,
                                                              ProbObs0Missing0 = SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedProbObs0Missing0,
                                                              Z = SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ,
                                                              alpha=1, beta1=1,beta2=9, betaq1=1,betaq2=1,rUB = 6)
