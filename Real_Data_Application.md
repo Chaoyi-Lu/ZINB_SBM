@@ -1467,33 +1467,15 @@ RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_ICPCLandOptR$value #
 
 We apply all the processes above for each round of each fixed $K$ and finally obtain the ICPCL values for all the implementations as the table shown below.
 
-\begin{table}[H]
-\centering
-\scalebox{0.9}{
-\begin{tabular}[t]{|c|c c c c c c c|}
-\hline
- ICPCL    & K2       & K3         & K4       & K5        & K6           & K7  	     & K8       \\
-\hline
-Round 1   & -6396.096 & \textcolor{blue}{-6453.414} & -6414.270 & -6294.696 & -6400.087 & -6585.189 & -7724.104 \\
-\hline
-Round 2   & -6454.013 & \textcolor{blue}{-6444.560} &\textcolor{blue}{-6217.934} & -6401.470 & -6889.146 & \textcolor{blue}{-7212.347} & -6853.329\\
-\hline
-Round 3   & -6450.135 & \textcolor{blue}{-6423.273} & \textcolor{blue}{-6505.771} & -6500.255 & -7031.210 & \textcolor{blue}{-6744.229} & \textcolor{red}{-6730.280}\\
-\hline
-Round 4   & -6446.579 & -6431.902 & -6304.791  &\textcolor{red}{-6087.947} & -6549.627 & -6583.900 & -7823.358\\
-\hline
-Round 5   & \textcolor{red}{-6373.261} & \textcolor{blue}{-6501.593} & \textcolor{blue}{-7022.227} & \textcolor{blue}{-6296.962} & -6295.793 & -6469.524 & -7085.496\\
-\hline
-Round 6   & -6386.550 & \textcolor{blue}{-6440.589} & -6459.649 & -6244.250 & -6798.479 & -6710.810 & -7340.897\\
-\hline
-Round 7   & -6437.208 & -6380.615 & -6291.410 & -6298.549 & -6695.855 & \textcolor{red}{-6290.709} & -7248.848\\
-\hline
-Round 8   & \textcolor{blue}{-6364.818} & \textcolor{red}{-6348.968} & \textcolor{blue}{-6238.089} & \textcolor{blue}{-6457.362} & -6701.610 & -6517.335 & -6996.099\\
-\hline
-Round 9   & -6428.155 & -6377.889 & \textcolor{blue}{-6276.172} & -6433.268 & \textcolor{red}{-6259.197} & -6499.246 & -7007.193\\
-\hline
-Round 10   & -6428.155 & -6401.935 & \textcolor{red}{-6238.031} & -6294.832 & \textcolor{blue}{-6510.474} & -6679.074 & -6570.362\\
-\hline
-\end{tabular}
-}
-\end{table}
+| ICPCL | K2       | K3    | K4       | K5        | K6           | K7  	     | K8       |
+| :---: |:---: |:---: |:---: |:---: |:---: |:---: |:---: |
+|Round 1   | -6396.096 | \textcolor{blue}{-6453.414} | -6414.270 | -6294.696 | -6400.087 | -6585.189 | -7724.104 |
+|Round 2   | -6454.013 | \textcolor{blue}{-6444.560} |\textcolor{blue}{-6217.934} | -6401.470 | -6889.146 | \textcolor{blue}{-7212.347} | -6853.329|
+|Round 3   | -6450.135 | \textcolor{blue}{-6423.273} | \textcolor{blue}{-6505.771} | -6500.255 | -7031.210 | \textcolor{blue}{-6744.229} | \textcolor{red}{-6730.280}|
+|Round 4   | -6446.579 | -6431.902 | -6304.791  |\textcolor{red}{-6087.947} | -6549.627 | -6583.900 | -7823.358\\
+|Round 5   | \textcolor{red}{-6373.261} | \textcolor{blue}{-6501.593} | \textcolor{blue}{-7022.227} | \textcolor{blue}{-6296.962} | -6295.793 | -6469.524 | -7085.496|
+|Round 6   | -6386.550 | \textcolor{blue}{-6440.589} | -6459.649 | -6244.250 | -6798.479 | -6710.810 | -7340.897\\
+|Round 7   | -6437.208 | -6380.615 | -6291.410 | -6298.549 | -6695.855 | \textcolor{red}{-6290.709} | -7248.848\\
+|Round 8   | \textcolor{blue}{-6364.818} | \textcolor{red}{-6348.968} | \textcolor{blue}{-6238.089} | \textcolor{blue}{-6457.362} | -6701.610 | -6517.335 | -6996.099|
+|Round 9   | -6428.155 | -6377.889 | \textcolor{blue}{-6276.172} | -6433.268 | \textcolor{red}{-6259.197} | -6499.246 | -7007.193|
+|Round 10   | -6428.155 | -6401.935 | \textcolor{red}{-6238.031} | -6294.832 | \textcolor{blue}{-6510.474} | -6679.074 | -6570.362|
