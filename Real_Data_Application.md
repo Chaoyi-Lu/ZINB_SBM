@@ -1487,12 +1487,12 @@ The corresponding minimized expected posterior loss table is shown as:
 | minVIloss | K2       | K3    | K4       | K5        | K6           | K7  	     | K8       |
 | :---: |:---: |:---: |:---: |:---: |:---: |:---: |:---: |
 Round 1 |$0.0621$ |$\textcolor{blue}{0.3450}$|$0.0363$|$0.0687$|$0.0770$|$0.0473$|$0.0795$|
-Round 2 |$0.0582$|$\textcolor{blue}{0.3518}$|$\textcolor{blue}{0.3516}$|$0.1135	$|$0.0436$|$\textcolor{blue}{2.69e-13}$|$0.1353$|
+Round 2 |$0.0582$|$\textcolor{blue}{0.3518}$|$\textcolor{blue}{0.3516}$|$0.1135	$|$0.0436$|$\textcolor{blue}{2.69e\text{-}13}$|$0.1353$|
 Round 3 |$0.0575$|$\textcolor{blue}{0.3490}$|$\textcolor{blue}{0.3934}$|$0.0404$|$0.0973$|$\textcolor{blue}{0.2482}$|$\textcolor{red}{0.1141}$|
 Round 4 |$0.0639$|$0.0900$|$0.0507$|$\textcolor{red}{0.0359}$|$0.1225$|$0.0515$|$0.1031$|
 Round 5 |$\textcolor{red}{0.0553}$|$\textcolor{blue}{0.3284}$|$\textcolor{blue}{0.0025}$|$\textcolor{blue}{0.4050}$|$0.0705$|$0.0729$|$0.1525$|
 Round 6 |$0.0615$|$\textcolor{blue}{0.3194}$|$0.0917$|$0.1034$|$0.1369$|$0.0523$|$0.1057$|
 Round 7 |$0.0623$|$0.0267$|$0.0786$|$0.0700$|$0.0417$|$\textcolor{red}{0.0765}$|$0.0666$|
-Round 8 |$\textcolor{blue}{0.0106}$|$\textcolor{red}{0.1112}$|$\textcolor{blue}{0.3330}$|$\textcolor{blue}{4.52e-05}$|$0.1053$|$0.0312$|$0.0442$|
+Round 8 |$\textcolor{blue}{0.0106}$|$\textcolor{red}{0.1112}$|$\textcolor{blue}{0.3330}$|$\textcolor{blue}{4.52e\text{-}05}$|$0.1053$|$0.0312$|$0.0442$|
 Round 9 |$0.0599$|$0.1335$|$\textcolor{blue}{0.0045}$|$0.1766$|$\textcolor{red}{0.0778}$|$0.1962$|$0.0422$|
 Round 10 |$0.0607$|$0.0381$|$\textcolor{red}{0.1531}$|$0.0308$|$\textcolor{blue}{0.3075}$|$0.1057$|$0.0449$|
