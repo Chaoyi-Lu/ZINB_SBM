@@ -6,7 +6,7 @@ Both simulation studies fit both ZINB-SBM and ZIP-SBM to the artificial datasets
 
 The source function code for the implementations of the inference of both models is included in the file [`Functions_for_ZINB_SBM.R`].
 The explanations of the code are written as comments beside the code.
-Note here that the practitioners need to load the source functions everytime after cleaning the enviroment.
+Note here that the practitioners need to load the source functions everytime after cleaning the environment.
 
 ``` r
 rm(list=ls()) # remove all in the enviroment
