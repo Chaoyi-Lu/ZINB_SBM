@@ -266,7 +266,9 @@ SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1$Acceptance_count_R <- c()
 gc() # Free unused R memory
 ```
 
-After the label switching, we can check the mixing of the clustering posterior samples by evaluating the rand index between each iteration's $\boldsymbol{Z}^{(t)}$ and the true clustering $\boldsymbol{Z}^*$.
+After the label switching, the label-switched posterior samples of those clustering dependent variables are stored at `SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_LS`, that is, $\boldsymbol{Z},\boldsymbol{\Pi},\boldsymbol{R},\boldsymbol{Q}$ and the `Acceptance_count_R` we defined in the function `Directed_ZINBSBM_PCMwG()`.
+The posterior samples of clustering depedent parameters, $\boldsymbol{X},\boldsymbol{\nu},p$ are still stored at `SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1`.
+The mixing of the clustering posterior samples can be checked by evaluating the rand index between each iteration's $\boldsymbol{Z}^{(t)}$ and the true clustering $\boldsymbol{Z}^*$.
 
 ``` r
 ## check rand index for each iteration
