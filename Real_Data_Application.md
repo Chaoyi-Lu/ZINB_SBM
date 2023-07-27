@@ -1833,11 +1833,16 @@ legend("topright", legend=c("5,1","5,2","5,3", "5,4","5,5"),
        col=c(1:5), lty = 1, cex=0.4)
 ```
 
-We finally end up with providing the summarized clustering of the best round of $K=7$ case shown below.
+We finally end this real data application with providing the summarized clustering of the best round $7$ of $K=7$ cases shown below.
 
-|   | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
+|  Affiliation\$\boldsymbol{z}$ | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
 | :---: |:---: |:---: |:---: |:---: |:---: |:---: |:---: |
 | **1** | 18 | 0 | 0 | 0 | 0 | 0 | 1 |
 | **2** | 1  | 18 | 0 | 0 | 6 | 5 | 3 |
 | **3** | 0 | 0 | 12 | 15 | 0 | 0 | 0 |
 | **4** | 0 | 2 | 0 | 0 | 0 | 0 | 0 |
+
+Such a clustering also provides a very nice recovery of the true affiliations as well as further splitting of the "Central group" and the "Surrounding group" for both affiliation $2$ and affiliation $3$.
+It also includes the two underlying clusters (cluster no. $5$ and no. $7$ above) which are provided by our best $K=5$ round $4$ case's summarized clustering shown in the paper.
+However, as we discussed at the end of the RDA Section $5$ of the paper, though such a clustering is also interpretable and is shown to provide a good clustering, the model complexity brings the ICPCL value being $-6290.709$ which is significantly worse than that of the $K=5$ round $4$ case which gives $-6087.947$.
+Thus it's clear that the $K=7$ round $7$ clustering shown above is not the best pick, but it might be worthwhile to also be considered when analysing the UKfaculty real network.
