@@ -1836,7 +1836,7 @@ legend("topright", legend=c("5,1","5,2","5,3", "5,4","5,5"),
 We finally end up with providing the summarized clustering of the best round of $K=7$ case shown below.
 
 |   | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
-|   |:---: |:---: |:---: |:---: |:---: |:---: |:---: |
+| :---: |:---: |:---: |:---: |:---: |:---: |:---: |:---: |
 | 1 | 18 | 0 | 0 | 0 | 0 | 0 | 1 |
 | 2 | 1  | 18 | 0 | 0 | 6 | 5 | 3 |
 | 3 | 0 | 0 | 12 | 15 | 0 | 0 | 0 |
