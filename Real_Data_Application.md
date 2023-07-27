@@ -1510,13 +1510,13 @@ The corresponding minimized expected posterior loss table is shown as:
 | Round 10 |$0.0607$|$0.0381$|$\textcolor{red}{0.1531}$|$0.0308$|$\textcolor{blue}{0.3075}$|$0.1057$|$0.0449$|
 
 
-Recall here that we propose in this real data application to post process all the outputs by first discarding those implementation outputs whose expected posterior loss is significantly higher or lower than other rounds for the same fixed $K$ implementations.
+Recall here that we propose in this real data application to post-process all the outputs by first discarding those implementation outputs whose expected posterior loss is significantly higher or lower than other implementations.
 The blue colors shown in the two tables above are the outputs we propose to no longer consider.
-We can observe that all those blue rounds provide the minimized expected posterior loss which are significantly different from other rounds for the same fixed $K$.
-Moreover, the corresponding ICPCL values in blue are all comparable or worse than the values of other rounds.
+We can observe that all those blue rounds provide the minimized expected posterior loss which are significantly different from other implementations.
+Moreover, if we focus on the same fixed $K$ cases, those ICPCL values in blue are all comparable or worse than the highest values of other rounds which we propose to consider.
 By discarding those blue rounds, we still have $\geq 5$ rounds left for each fixed $K$ case.
-The red colors correspond to those rounds which provide the highest ICPCL values within the same fixed $K$ rounds.
-After the post processing, the boxplots of the ICPCL values shown as Figure $11$ can be recovered by the code shown below.
+The red colors correspond to those rounds we consider which provide the highest ICPCL values within the same fixed $K$ rounds.
+After the post-processing, the boxplots of the ICPCL values shown as Figure $11$ can be recovered by the code shown below.
 
 ``` r
 par(mfrow=c(1,1),mai = c(0.25, 0.3, 0.25, 0.1),mgp=c(1,0.25,0))
@@ -1534,8 +1534,8 @@ par(mfrow=c(1,1),mai = c(1.02, 0.82, 0.82, 0.42),mgp=c(3,1,0))
 
 Compared to other rounds of $K=5$ case, our best pick, $K=5$ round $4$ case, seems to be a "lucky" round. 
 However, based on the irreducibility property of the MCMC sampler, there is no doubt that any implementations would finally reach and to stay around the converged clustering states returned by the $K=5$ round $4$ case if we are able to implement the algorithm for long enough, because the $K=5$ round $4$ case returns the ICPCL value which is significantly better than all other cases.
-While, in practice, we never know how many iterations are enough or whether the posterior chains would stuck around the local posterior mode.
-The mixing problem or bad initial state problem or other possible problem might make the posterior chain take very long time to reach the stationary distribution which is believed to be around the global posterior mode.
+While, in practice, we never know how many iterations are enough for the posterior chains to reach such stationary distribution or whether the posterior chains would stuck around some local posterior mode.
+The mixing problem or bad initial state problem and so on might make the posterior chains take very long time to reach the stationary distribution which is believed to be around the global posterior mode.
 These motivate us to apply the multiple implementations in this real data application.
 
 The results show that the multiple implementations successfully help us find the $K=5$ round $4$ case whose summarized clustering almost perfectly recovers the affiliation of the real UKfaculty network and also reveals some surther underlying clustering structure which is not observed.
@@ -1551,7 +1551,7 @@ By treating the $K=5$ round $4$ case as the best case in our experiments, we app
 #                                 Z_0 = RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_SummarizedZ)
 ```
 
-The further $20,000$-iteration inference outputs are already loaded at the start of this section and we can summarize those clustering depedent parameters as well the the mean and variance of the Negative-Binomial distribution assumed for the edge weights by the following code.
+The further $20,000$-iteration inference outputs are already loaded at the beginning of this section and we can summarize those clustering dependent parameters as well the the mean and variance of the Negative-Binomial distribution assumed for the edge weights by the following code.
 
 ``` r
 ## Summarize Pi
@@ -1631,7 +1631,7 @@ par(mfrow=c(1,1),mai = c(1.02, 0.82, 0.82, 0.42),mgp=c(3,1,0))
 
 ## Extra Summary Statistics and Plots
 
-Similar as we illustrated in simulation studies, we can also obtain some further summary statistics which are not included in the paper and compare them with the ones we provided in the paper.
+Similar as we illustrated in simulation studies, we can also obtain some further summary statistics which are not included in the paper and compare them with the ones we provide in the paper.
 Based on the posterior samples, we can obtain the posterior mean of $\boldsymbol{\Pi}, \boldsymbol{Q}$ and compare them with summarized $\tilde{\boldsymbol{\Pi}}, \tilde{\boldsymbol{Q}}$:
 
 ``` r
@@ -1666,8 +1666,8 @@ RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_PosteriorMeanp_CondZ
 RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Summarizedp # Compare with summarized p
 ```
 
-Based on posterior mean of $\boldsymbol{R}$ and $\boldsymbol{Q}$, we can also approximate the mean and variance of the Negative-Binomial distribution assumed for the edge weights shown as below.
-If we compare with the mean and variance approximated by the summarized parameters, we can observe that they are close to each other.
+Based on posterior mean of $\boldsymbol{R}$ and $\boldsymbol{Q}$, we can alternatively approximate the mean and variance of the Negative-Binomial distribution assumed for the edge weights shown as below.
+If we compare with the mean and variance approximated by the summarized parameters shown in Section $5$ of the paper, we can observe that they are close to each other.
 
 ``` r
 # Check distribution mean based on PosteriorMeanR and PosteriorMeanQ
@@ -1832,3 +1832,12 @@ lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Inferr
 legend("topright", legend=c("5,1","5,2","5,3", "5,4","5,5"),
        col=c(1:5), lty = 1, cex=0.4)
 ```
+
+We finally end up with providing the summarized clustering of the best round of $K=7$ case shown below.
+
+|   | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
+|   |:---: |:---: |:---: |:---: |:---: |:---: |:---: |
+| 1 | 18 | 0 | 0 | 0 | 0 | 0 | 1 |
+| 2 | 1  | 18 | 0 | 0 | 6 | 5 | 3 |
+| 3 | 0 | 0 | 12 | 15 | 0 | 0 | 0 |
+| 4 | 0 | 2 | 0 | 0 | 0 | 0 | 0 |
