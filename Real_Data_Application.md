@@ -1609,6 +1609,11 @@ par(mfrow=c(2,2),mai = c(0.25, 0.25, 0.25, 0.05), mgp=c(1,0.25,0),cex.main=0.8,c
 plot(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LSZ_RI,ylim = c(0.5,1),type = "l",xlab = "",ylab = "", main = "Posterior Clustering Rand Index",cex.axis = 0.8)
 
 # Posterior Pi density plots
+RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredPi <-
+  array(unlist(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Further20000InferCondZ_s$Pi),
+        dim = c(nrow(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Further20000InferCondZ_s$Pi[[1]]),
+                ncol(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Further20000InferCondZ_s$Pi[[1]]),
+                length(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Further20000InferCondZ_s$Pi)))[,,10001:20001]
 plot(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredPi[1,],bw=0.008),col = 2, xlim=c(0,0.55),ylim=c(0,17), ylab = "",xlab="", main = TeX(r'(Posterior Density of $\pi_k$|\widetilde{\textbf{z}})'))
 lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredPi[2,],bw=0.008),col = 3)
 lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredPi[3,],bw=0.008),col = 4)
@@ -1731,100 +1736,100 @@ plot(seq(0.001,20,0.001),res[5,4,],type = "l", main = "Block 5,4",xlab = "",ylab
 plot(seq(0.001,20,0.001),res[5,5,],type = "l", main = "Block 5,5",xlab = "",ylab = "")
 ```
 
-The posterior density plot of each element of $\boldsymbol{R}$ and $\boldsymbol{Q}$ is similar to those illustrated in simulation study $1$ ZINB-SBM cases and can be checked by the plots one by one provided below.
+The posterior density plot of each element of $\boldsymbol{R}$ and $\boldsymbol{Q}$ conditional on the summarized clustering from the further inference is similar to those illustrated in simulation study $1$ ZINB-SBM cases and can be checked by the plots one by one provided below.
 
 ``` r
-# Posterior density of r_gh
-RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_R <- 
-  array(unlist(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS$R[10001:20001]),
-        dim = c(nrow(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS$R[[1]]),
-                ncol(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS$R[[1]]),
-                length(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS$R)))
+# Posterior density of r_gh|Z_s
+RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredR <-
+  array(unlist(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Further20000InferCondZ_s$R),
+        dim = c(nrow(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Further20000InferCondZ_s$R[[1]]),
+                ncol(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Further20000InferCondZ_s$R[[1]]),
+                length(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Further20000InferCondZ_s$R)))[,,10001:20001]
 
-plot(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_R[1,1,],bw=0.005),col = 1, xlim=c(-0.1,0.5),ylim=c(0,65), ylab = "",xlab="", main = "r_gh outputs density")
-lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_R[1,2,],bw=0.005),col = 2)
-lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_R[1,3,],bw=0.005),col = 3)
-lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_R[1,4,],bw=0.005),col = 4)
-lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_R[1,5,],bw=0.005),col = 5)
+plot(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredR[1,1,],bw=0.005),col = 1, xlim=c(-0.1,0.5),ylim=c(0,65), ylab = "",xlab="", main = "r_gh outputs density")
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredR[1,2,],bw=0.005),col = 2)
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredR[1,3,],bw=0.005),col = 3)
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredR[1,4,],bw=0.005),col = 4)
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredR[1,5,],bw=0.005),col = 5)
 legend("topright", legend=c("1,1","1,2","1,3", "1,4","1,5"),
        col=c(1:5), lty = 1, cex=0.4)
 
-plot(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_R[2,1,],bw=0.005),col = 1, xlim=c(-0.1,0.5),ylim=c(0,65), ylab = "",xlab="", main = "r_gh outputs density")
-lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_R[2,2,],bw=0.005),col = 2)
-lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_R[2,3,],bw=0.005),col = 3)
-lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_R[2,4,],bw=0.005),col = 4)
-lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_R[2,5,],bw=0.005),col = 5)
+plot(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredR[2,1,],bw=0.005),col = 1, xlim=c(-0.1,0.5),ylim=c(0,65), ylab = "",xlab="", main = "r_gh outputs density")
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredR[2,2,],bw=0.005),col = 2)
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredR[2,3,],bw=0.005),col = 3)
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredR[2,4,],bw=0.005),col = 4)
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredR[2,5,],bw=0.005),col = 5)
 legend("topright", legend=c("2,1","2,2","2,3", "2,4","2,5"),
        col=c(1:5), lty = 1, cex=0.4)
 
-plot(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_R[3,1,],bw=0.005),col = 1, xlim=c(-0.1,0.5),ylim=c(0,65), ylab = "",xlab="", main = "r_gh outputs density")
-lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_R[3,2,],bw=0.005),col = 2)
-lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_R[3,3,],bw=0.005),col = 3)
-lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_R[3,4,],bw=0.005),col = 4)
-lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_R[3,5,],bw=0.005),col = 5)
+plot(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredR[3,1,],bw=0.005),col = 1, xlim=c(-0.1,0.5),ylim=c(0,65), ylab = "",xlab="", main = "r_gh outputs density")
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredR[3,2,],bw=0.005),col = 2)
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredR[3,3,],bw=0.005),col = 3)
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredR[3,4,],bw=0.005),col = 4)
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredR[3,5,],bw=0.005),col = 5)
 legend("topright", legend=c("3,1","3,2","3,3", "3,4","3,5"),
        col=c(1:5), lty = 1, cex=0.4)
 
-plot(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_R[4,1,],bw=0.005),col = 1, xlim=c(-0.1,0.5),ylim=c(0,20), ylab = "",xlab="", main = "r_gh outputs density")
-lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_R[4,2,],bw=0.005),col = 2)
-lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_R[4,3,],bw=0.005),col = 3)
-lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_R[4,4,],bw=0.005),col = 4)
-lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_R[4,5,],bw=0.005),col = 5)
+plot(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredR[4,1,],bw=0.005),col = 1, xlim=c(-0.1,0.5),ylim=c(0,20), ylab = "",xlab="", main = "r_gh outputs density")
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredR[4,2,],bw=0.005),col = 2)
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredR[4,3,],bw=0.005),col = 3)
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredR[4,4,],bw=0.005),col = 4)
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredR[4,5,],bw=0.005),col = 5)
 legend("topright", legend=c("4,1","4,2","4,3", "4,4","4,5"),
        col=c(1:5), lty = 1, cex=0.4)
 
-plot(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_R[5,1,],bw=0.03),col = 1, xlim=c(-0.1,3),ylim=c(0,10), ylab = "",xlab="", main = "r_gh outputs density")
-lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_R[5,2,],bw=0.03),col = 2)
-lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_R[5,3,],bw=0.03),col = 3)
-lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_R[5,4,],bw=0.03),col = 4)
-lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_R[5,5,],bw=0.03),col = 5)
+plot(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredR[5,1,],bw=0.03),col = 1, xlim=c(-0.1,3),ylim=c(0,10), ylab = "",xlab="", main = "r_gh outputs density")
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredR[5,2,],bw=0.03),col = 2)
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredR[5,3,],bw=0.03),col = 3)
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredR[5,4,],bw=0.03),col = 4)
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredR[5,5,],bw=0.03),col = 5)
 legend("topright", legend=c("5,1","5,2","5,3", "5,4","5,5"),
        col=c(1:5), lty = 1, cex=0.4)
 
-# Posterior density of q_gh
-RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_Q <- 
-  array(unlist(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS$Q[10001:20001]),
-        dim = c(nrow(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS$Q[[1]]),
-                ncol(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS$Q[[1]]),
-                length(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS$Q)))
+# Posterior density of q_gh|Z_s
+RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredQ <-
+  array(unlist(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Further20000InferCondZ_s$Q),
+        dim = c(nrow(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Further20000InferCondZ_s$Q[[1]]),
+                ncol(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Further20000InferCondZ_s$Q[[1]]),
+                length(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Further20000InferCondZ_s$Q)))[,,10001:20001]
 
-plot(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_Q[1,1,]),col = 1, xlim=c(-0.1,1.1),ylim=c(0,20), ylab = "",xlab="", main = "q_gh outputs density")
-lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_Q[1,2,]),col = 2)
-lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_Q[1,3,]),col = 3)
-lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_Q[1,4,]),col = 4)
-lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_Q[1,5,]),col = 5)
+plot(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredQ[1,1,]),col = 1, xlim=c(-0.1,1.1),ylim=c(0,20), ylab = "",xlab="", main = "q_gh outputs density")
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredQ[1,2,]),col = 2)
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredQ[1,3,]),col = 3)
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredQ[1,4,]),col = 4)
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredQ[1,5,]),col = 5)
 legend("topright", legend=c("1,1","1,2","1,3", "1,4","1,5"),
        col=c(1:5), lty = 1, cex=0.4)
 
-plot(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_Q[2,1,]),col = 1, xlim=c(-0.1,1.1),ylim=c(0,30), ylab = "",xlab="", main = "q_gh outputs density")
-lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_Q[2,2,]),col = 2)
-lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_Q[2,3,]),col = 3)
-lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_Q[2,4,]),col = 4)
-lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_Q[2,5,]),col = 5)
+plot(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredQ[2,1,]),col = 1, xlim=c(-0.1,1.1),ylim=c(0,30), ylab = "",xlab="", main = "q_gh outputs density")
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredQ[2,2,]),col = 2)
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredQ[2,3,]),col = 3)
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredQ[2,4,]),col = 4)
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredQ[2,5,]),col = 5)
 legend("topright", legend=c("2,1","2,2","2,3", "2,4","2,5"),
        col=c(1:5), lty = 1, cex=0.4)
 
-plot(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_Q[3,1,]),col = 1, xlim=c(-0.1,1),ylim=c(0,35), ylab = "",xlab="", main = "q_gh outputs density")
-lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_Q[3,2,]),col = 2)
-lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_Q[3,3,]),col = 3)
-lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_Q[3,4,]),col = 4)
-lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_Q[3,5,]),col = 5)
+plot(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredQ[3,1,]),col = 1, xlim=c(-0.1,1),ylim=c(0,35), ylab = "",xlab="", main = "q_gh outputs density")
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredQ[3,2,]),col = 2)
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredQ[3,3,]),col = 3)
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredQ[3,4,]),col = 4)
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredQ[3,5,]),col = 5)
 legend("topright", legend=c("3,1","3,2","3,3", "3,4","3,5"),
        col=c(1:5), lty = 1, cex=0.4)
 
-plot(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_Q[4,1,]),col = 1, xlim=c(-0.1,1),ylim=c(0,10), ylab = "",xlab="", main = "q_gh outputs density")
-lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_Q[4,2,]),col = 2)
-lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_Q[4,3,]),col = 3)
-lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_Q[4,4,]),col = 4)
-lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_Q[4,5,]),col = 5)
+plot(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredQ[4,1,]),col = 1, xlim=c(-0.1,1),ylim=c(0,10), ylab = "",xlab="", main = "q_gh outputs density")
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredQ[4,2,]),col = 2)
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredQ[4,3,]),col = 3)
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredQ[4,4,]),col = 4)
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredQ[4,5,]),col = 5)
 legend("topright", legend=c("4,1","4,2","4,3", "4,4","4,5"),
        col=c(1:5), lty = 1, cex=0.4)
 
-plot(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_Q[5,1,]),col = 1, xlim=c(-0.1,1),ylim=c(0,15), ylab = "",xlab="", main = "q_gh outputs density")
-lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_Q[5,2,]),col = 2)
-lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_Q[5,3,]),col = 3)
-lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_Q[5,4,]),col = 4)
-lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS_Q[5,5,]),col = 5)
+plot(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredQ[5,1,]),col = 1, xlim=c(-0.1,1),ylim=c(0,15), ylab = "",xlab="", main = "q_gh outputs density")
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredQ[5,2,]),col = 2)
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredQ[5,3,]),col = 3)
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredQ[5,4,]),col = 4)
+lines(density(RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_InferredQ[5,5,]),col = 5)
 legend("topright", legend=c("5,1","5,2","5,3", "5,4","5,5"),
        col=c(1:5), lty = 1, cex=0.4)
 ```
