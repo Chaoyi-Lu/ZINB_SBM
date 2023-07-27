@@ -1318,6 +1318,7 @@ The data contains $4$ variables in the environment.
 `RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS` stores the label-switched posterior samples of the clustering and those clustering dependent parameters as well as the acceptance count for each $r_{gh}$ M-H step, that is, label-switched posterior samples of $\boldsymbol{Z},\boldsymbol{\Pi},\boldsymbol{R},\boldsymbol{Q}$ and the `Acceptance_count_R` defined in the function `Directed_ZINBSBM_PCMwG()`.
 `RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4`stores the posterior samples of clustering indepdent parameters and variables, that is, posterior samples of $\boldsymbol{\nu}, p, \boldsymbol{X}$.
 `RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_time` stores the implementation time and `RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Further20000InferCondZ_s` stores the further $20,000$-iteration inference outputs we obtained in our experiments conditional on the summarized clustering $\tilde{\boldsymbol{Z}}$.
+**Edit: It seems that the data is too big and is not allowed to be uploaded to this repository. Please contact the email for correspondence shown in the paper if required.**
 
 ``` r
 # Load the data containing the posterior chains and further posterior chains conditional on the summarized clustering Z_s
