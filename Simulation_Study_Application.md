@@ -468,7 +468,7 @@ SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_ICPCLandOptR <-
 SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_ICPCLandOptR$value # -6449.478
 ```
 
-The concaveness of the log $\boldsymbol{Y}_{gh}$ term of the ICPCL with respect to the $r_{gh}$ can be checked by the function `Directed_AZINBSBMRghQghp_ApproximatedICL_CheckConcave()` provided in [`Functions_for_ZINB_SBM.R`].
+The concaveness of the log $\boldsymbol{Y}\_{gh}$ term of the ICPCL with respect to the $r_{gh}$ can be checked by the function `Directed_AZINBSBMRghQghp_ApproximatedICL_CheckConcave()` provided in [`Functions_for_ZINB_SBM.R`].
 The concaveness plots Figure $3$ shown in Section $4.1$ of the paper can be recovered by:
 
 ``` r
