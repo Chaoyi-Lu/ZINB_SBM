@@ -77,14 +77,14 @@ par(mfrow=c(1,1),mai = c(1.02, 0.82, 0.82, 0.42),mgp = c(3,1,0))
 
 ## The Implementations of the RDA
 
-Recall here that we apply the partially collapsed Metropolis within Gibbs algorithm for the inference of the ZINB-SBM on the `UKfaculty` real network.
-We consider fixed $K=2$ to $K=8$, and each fixed $K$ case is proposed to be implemented for $10$ times/rounds in order to reduce the effect of the mixing or the bad initial state problem.
-Moreover, since multiple implementations are applied, we also propose to implement each round for $20,000$ iterations which are believed to be long enough to converge according to the performance of the simulation studies.
+Recall here that we apply the partially collapsed Metropolis within Gibbs algorithm for the inference of the ZINB-SBM fit to the `UKfaculty` real network.
+We consider fixed $K=2$ to $K=8$, and each fixed $K$ case is proposed to be implemented for $10$ times/rounds, that is, multiple implementations, in order to reduce the effect of the mixing or the bad initial state problem.
+Moreover, since multiple implementations are applied, we also propose to implement each round for $20,000$ iterations which are believed to be long enough for the posterior chains to converge according to the performance of the simulation studies.
 The prior settings are almost the same as those simulation study ZINB-SBM cases except the $p$ prior which is set to be more concentrated around $0.1$ in order for better calibration of the $p$ posterior chain, that is, $p \sim \text{Beta}(20,180)$.
-Otherwise, the $p$ posterior samples may stuck around the high values which are believed to be around the local posterior mode, and it might take quite long time to move away from the local posterior mode due to the high dimensionality of the ZINB-SBM.
+Otherwise, the $p$ posterior samples may stuck around high values which are believed to be around the local posterior mode, and it might take quite long time to move away from the local posterior mode due to the high dimensionality of the ZINB-SBM.
 The implementations are applied one by one from $K=2$ round $1$ to $K=8$ round $10$ as shown below.
 The reference implementation time is provided, and we don't suggest the readers to implement all of them again because it will take around $7$ days to finish.
-Instead, we provide in this repository the outputs of the best pick we obtained in our experiments shown in the paper as an example later in this section.
+Instead, we provide in this repository the outputs of the best case, the $K=5$ round $4$ case, we obtained in our experiments and showed in the paper as an example later in this section.
 
 ``` r
 # # Real Data Application ZINB-SBM Metropolis within Gibbs algorithm for UKfaculty dataset, K = 2, T = 20000, Round 1 with p prior Beta(20,180)
@@ -1275,7 +1275,7 @@ RDA_UKfaculty_ZINBSBM_Fixed_K8_Prior_p_Beta_20_180_T20000_10_time # Time differe
 # save.image("RDA_UKfaculty_ZINBSBM_Fixed_K8_Prior_p_Beta_20_180_T20000_R10.RData")
 ```
 
-In the case of that the memory of the laptop is enough to load all the data, the practitioners can consider not to store each implementation above and then remove the data in order to save the memory for the next implementation.
+In the case of that the memory of the laptop is enough to load all the data, the practitioners can consider not to store each implementation above and then remove the data for the memory saving for the next implementation.
 Otherwise, it's suggested to do so if practitioners prefer recovering all the work above.
 
 ## The Summarizing Processes of the RDA
@@ -1298,7 +1298,6 @@ Once we obatined the outputs from the PCMwG function, we can first apply the lab
 # RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_time # Time difference of 2.271394 hours
 # # save.image("RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_R4.RData")
 
-# # Summarize the outputs
 ## Apply label switching
 RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS <-
   LabelSwitching_SG2003_ZINBSBM(Z = RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4$Z,
@@ -1316,7 +1315,7 @@ gc()
 
 Here we provide the corresponding data in this repository and the data can be loaded by the file `RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_R4.RData` shown below.
 The data contains $4$ variables in the environment.
-`RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS` stores the label-switched posterior samples of the clustering and those clustering dependent parameters as well as the acceptance count for each $r_{gh}$ M-H step, that is, posterior samples of $\boldsymbol{Z},\boldsymbol{\Pi},\boldsymbol{R},\boldsymbol{Q}$ and the `Acceptance_count_R` defined in the function `Directed_ZINBSBM_PCMwG()`.
+`RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS` stores the label-switched posterior samples of the clustering and those clustering dependent parameters as well as the acceptance count for each $r_{gh}$ M-H step, that is, label-switched posterior samples of $\boldsymbol{Z},\boldsymbol{\Pi},\boldsymbol{R},\boldsymbol{Q}$ and the `Acceptance_count_R` defined in the function `Directed_ZINBSBM_PCMwG()`.
 `RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4`stores the posterior samples of clustering indepdent parameters and variables, that is, posterior samples of $\boldsymbol{\nu}, p, \boldsymbol{X}$.
 `RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_time` stores the implementation time and `RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Further20000InferCondZ_s` stores the further $20,000$-iteration inference outputs we obtained in our experiments conditional on the summarized clustering $\tilde{\boldsymbol{Z}}$.
 
