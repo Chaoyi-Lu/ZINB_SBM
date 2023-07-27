@@ -232,7 +232,7 @@ SS1_ZINBSBM_N75_K3_Fixed_K5_T40000_1_time # Time difference of 4.01542 hours
 
 Once we obtained the outputs from each fixed $K$ case, we can apply label switching on the clustering and check the mixing performance of the clustering.
 We can first obtain the summarized missing zero probability $\tilde{p}$, and the summarized $\tilde{\boldsymbol{\nu}}$ the entry of which indicates the proportion of the times for the corresponding $y_{ij}$ being inferred as a missing zero.
-We can also obtain the summarized $\tilde{\boldsymbol{Z}}$ and $\tilde{\boldsymbol{P_{m0}}}$ to evaluate the model selection criterion, integrated classification log-partially-collapsed-likelihood (ICPCL), by maximizing ICPCL with respect to $\boldsymbol{R}$ as we discussed in Section $3.2$ of the paper.
+We can also obtain the summarized $\tilde{\boldsymbol{Z}}$ and $\widetilde{\boldsymbol{P_{m0}}}$ to evaluate the model selection criterion, integrated classification log-partially-collapsed-likelihood (ICPCL), by maximizing ICPCL with respect to $\boldsymbol{R}$ as we discussed in Section $3.2$ of the paper.
 Based on the model selection criterion values, we determine which $K$ case is the best one and apply further summary statistics for the analysis.
 
 As it's shown in the Section $4.1$ of the paper, the $K=3$ case is the best pick and we take this case as an example here.
