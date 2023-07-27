@@ -111,7 +111,7 @@ It can be checked that the label-switched latent parameters are now: $\boldsymbo
 
 $$\boldsymbol{R} = \begin{pmatrix}0.60 & 0.05 & 0.02 \\\0.10 & 2.50 & 0.02 \\\0.05 & 0.05 & 0.10 \end{pmatrix}, \boldsymbol{Q} = \begin{pmatrix}0.15 & 0.25 & 0.15 \\\0.20 & 0.35 & 0.15 \\\ 0.20 & 0.25 & 0.10\end{pmatrix},$$
 
-which argee with the ones we illustrated in the paper.
+which argee with the ones we illustrate in the paper.
 
 Once we obtained the label-switched latent clustering and parameters, we can evaluate the initial mean and variance of the distribution assumed for the non-missing weights between each pair of clusters.
 
