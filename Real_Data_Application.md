@@ -1316,9 +1316,9 @@ gc()
 
 Here we provide the corresponding data in this repository and the data can be loaded by the file `RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_R4.RData` shown below.
 The data contains $4$ variables in the environment.
-`RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS` stores the label-switched posterior samples of the clustering and those clustering dependent parameters as well as the acceptance count for each $r_{gh}$ M-H step, that is, posterior samples of $\boldsymbol{z},\boldsymbol{\Pi},\boldsymbol{R},\boldsymbol{Q}$ and the `Acceptance_count_R` defined in the function `Directed_ZINBSBM_PCMwG()`.
+`RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_LS` stores the label-switched posterior samples of the clustering and those clustering dependent parameters as well as the acceptance count for each $r_{gh}$ M-H step, that is, posterior samples of $\boldsymbol{Z},\boldsymbol{\Pi},\boldsymbol{R},\boldsymbol{Q}$ and the `Acceptance_count_R` defined in the function `Directed_ZINBSBM_PCMwG()`.
 `RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4`stores the posterior samples of clustering indepdent parameters and variables, that is, posterior samples of $\boldsymbol{\nu}, p, \boldsymbol{X}$.
-`RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_time` stores the implementation time and `RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Further20000InferCondZ_s` stores the further $20,000$-iteration inference outputs we obtained in our experiments conditional on the summarized clustering $\tilde{\boldsymbol{z}}$.
+`RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_time` stores the implementation time and `RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_Further20000InferCondZ_s` stores the further $20,000$-iteration inference outputs we obtained in our experiments conditional on the summarized clustering $\tilde{\boldsymbol{Z}}$.
 
 ``` r
 # Load the data containing the posterior chains and further posterior chains conditional on the summarized clustering Z_s
@@ -1441,7 +1441,7 @@ abline(h = 1-(-1/(2*(nrow(UKfaculty_adj)-1)) + cumsum(group_counts/sum(group_cou
 par(mfrow=c(1,1),mai = c(1.02, 0.82, 0.82, 0.42),mgp=c(3,1,0))
 ```
 
-Once we obtained the summarized $\tilde{\boldsymbol{\nu}}$ and $\tilde{\boldsymbol{z}}$, we can approximate the summarized $\widetilde{\boldsymbol{P_{m0}}}$ as:
+Once we obtained the summarized $\tilde{\boldsymbol{\nu}}$ and $\tilde{\boldsymbol{Z}}$, we can approximate the summarized $\widetilde{\boldsymbol{P_{m0}}}$ as:
 
 ``` r
 ## Summarize the P_m0
@@ -1593,7 +1593,7 @@ RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_SummarizedR*
   RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_SummarizedQ^2
 ```
 
-The posterior clustering rand index plot, the posterior density plot of $\boldsymbol{\Pi}|\tilde{\boldsymbol{z}}$ as well as the posterior trace plot and posterior density plot of $p$ shown as Figure $12$ can be recovered by:
+The posterior clustering rand index plot, the posterior density plot of $\boldsymbol{\Pi}|\tilde{\boldsymbol{Z}}$ as well as the posterior trace plot and posterior density plot of $p$ shown as Figure $12$ can be recovered by:
 
 ``` r
 par(mfrow=c(2,2),mai = c(0.25, 0.25, 0.25, 0.05), mgp=c(1,0.25,0),cex.main=0.8,cex.lab = 0.8)
@@ -1649,7 +1649,7 @@ RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_PosteriorMeanQ
 RDA_UKfaculty_ZINBSBM_Fixed_K5_Prior_p_Beta_20_180_T20000_4_SummarizedQ # Compare with summarized Q
 ```
 
-We can also obtain the posterior mean of $p|\tilde{\boldsymbol{z}}$ and compare with the summarized $\tilde{p}$:
+We can also obtain the posterior mean of $p|\tilde{\boldsymbol{Z}}$ and compare with the summarized $\tilde{p}$:
 
 ``` r
 # p Posterior mean conditional on Z_s
