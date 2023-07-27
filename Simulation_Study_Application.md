@@ -9,7 +9,7 @@ The explanations of the code are written as comments beside the code.
 Note here that the practitioners need to load the source functions everytime after cleaning the environment.
 
 ``` r
-rm(list=ls()) # remove all in the enviroment
+rm(list=ls()) # remove all in the environment
 gc() # Free unused memory
 source("Functions_for_ZINB_SBM.R") # load the functions
 ```
