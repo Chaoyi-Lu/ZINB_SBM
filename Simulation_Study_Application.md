@@ -794,6 +794,7 @@ SS1_ZIPSBM_N75_K3_Fixed_K5_T40000_1_time # Time difference of 2.428095 hours
 ```
 
 Similar as ZINB-SBM cases, we also take $K=3$ case as an example below for the summarizing process.
+Note here that the function `LabelSwitching_SG2003_ZIPSBM()` is the label-switching function coded specifically for the ZIP-SBM.
 
 ``` r
 # # Simulation study 1: apply the ZIP-SBM Gibbs sampler for fixed K = 3, N = 75, T = 40000, Round 1 with p prior Beta(1,9)
