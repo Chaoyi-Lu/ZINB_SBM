@@ -1586,7 +1586,7 @@ legend("bottomright", legend=c("ZINB-SBM","ZIP-SBM"),
 par(mfrow=c(1,1),mai = c(1.02, 0.82, 0.82, 0.42),mgp=c(3,1,0))
 ```
 
-The posterior density plots in Figure $8$ based on the code:
+The posterior density plots in Figure $8$ are based on the code:
 
 ``` r
 SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredR <-
@@ -1606,6 +1606,7 @@ SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_InferredLambda <-
                 length(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Lambda)))[,,20001:40001]
 
 par(mfrow=c(2,2),mai = c(0.3, 0.25, 0.2, 0.05), mgp=c(1.25,0.5,0))
+# Posterior density of p
 plot(density(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1$p[20001:40001],bw=0.002),ylim=c(0,35),ylab = "",xlab="", main = TeX(r'(Posterior Density of $p$)'), col = 2, xlim=c(0.09,0.2))
 abline(v=0.15,col = 1,lty=2)
 lines(density(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1$p[20001:40001],bw=0.002), col = 3)
@@ -1614,7 +1615,7 @@ text(0.1425,10, TeX(r'($p^*$)'), pos = 4,col=1)
 par(xpd=FALSE)
 legend("topleft", legend=c("ZINB-SBM","ZIP-SBM"),
        col=2:3, lty = 1, cex=0.6)
-
+# Posterior density of Lambda|Z_s for ZIP-SBM
 plot(density(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_InferredLambda[1,1,]),col = 1, xlim=c(0,2.65),ylim=c(0,30), ylab = "",xlab="", main = TeX(r'(Posterior Density of $\lambda_{gh}$|\widetilde{\textbf{z}})'))
 lines(density(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_InferredLambda[1,2,]),col = 2)
 lines(density(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_InferredLambda[1,3,]),col = 3)
@@ -1626,7 +1627,7 @@ lines(density(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_InferredLambda[3,2,]),col = 8)
 lines(density(SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_InferredLambda[3,3,]),col = "rosybrown")
 legend("topright", legend=c("1,1","1,2","1,3", "2,1","2,2","2,3", "3,1","3,2","3,3"),
        col=c(1:8,"rosybrown"), lty = 1, cex=0.6)
-
+# Posterior density of R|Z_s for ZINB-SBM
 plot(density(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredR[1,1,],bw=1.75),col = 1, xlim=c(-3,41),ylim=c(0,0.175), ylab = "",xlab="", main = TeX(r'(Posterior Density of $r_{gh}$|\widetilde{\textbf{z}})'))
 lines(density(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredR[1,2,],bw=1.75),col = 2)
 lines(density(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredR[1,3,],bw=1.75),col = 3)
@@ -1638,7 +1639,7 @@ lines(density(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredR[3,2,],bw=1.75),col 
 lines(density(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredR[3,3,],bw=1.75),col = "rosybrown")
 legend("topright", legend=c("1,1","1,2","1,3", "2,1","2,2","2,3", "3,1","3,2","3,3"),
        col=c(1:8,"rosybrown"), lty = 1, cex=0.6)
-
+# Posterior density of Q|Z_s for ZINB-SBM
 plot(density(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredQ[1,1,],bw=0.01),col = 1, xlim=c(0.8,1.025),ylim=c(0,40), ylab = "",xlab="", main = TeX(r'(Posterior Density of $q_{gh}$|\widetilde{\textbf{z}})'))
 lines(density(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredQ[1,2,],bw=0.01),col = 2)
 lines(density(SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredQ[1,3,],bw=0.01),col = 3)
@@ -1653,7 +1654,7 @@ legend("topleft", legend=c("1,1","1,2","1,3", "2,1","2,2","2,3", "3,1","3,2","3,
 par(mfrow=c(1,1),mai = c(1.02, 0.82, 0.82, 0.42),mgp=c(3,1,0))
 ```
 
-The comparison of the Poisson distribution with summarized or reference parameters and the Negative-Binomial distribution with summarized parameters shown in Figure $9$ can be recovered by:
+The comparison of the Poisson distribution with summarized or reference parameters for ZIP-SBM and the Negative-Binomial distribution with summarized parameters for ZINB-SBM shown in Figure $9$ can be recovered by:
 
 ``` r
 par(mfrow=c(3,3),mai = c(0.2, 0.2, 0.2, 0.1),mgp=c(0.75,0.25,0))
