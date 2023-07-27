@@ -1510,7 +1510,7 @@ The corresponding minimized expected posterior loss table is shown as:
 | Round 10 |$0.0607$|$0.0381$|$\textcolor{red}{0.1531}$|$0.0308$|$\textcolor{blue}{0.3075}$|$0.1057$|$0.0449$|
 
 
-Recall here that we propose in this real data application to post process all the outputs by first discarding those implementation outputs whose expected posterior loss is significantly higher or lower than other implementations.
+Recall here that we propose in this real data application to post process all the outputs by first discarding those implementation outputs whose expected posterior loss is significantly higher or lower than other rounds for the same fixed $K$ implementations.
 The blue colors shown in the two tables above are the outputs we propose to no longer consider.
 We can observe that all those blue rounds provide the minimized expected posterior loss which are significantly different from other rounds for the same fixed $K$.
 Moreover, the corresponding ICPCL values in blue are all comparable or worse than the values of other rounds.
