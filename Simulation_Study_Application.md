@@ -235,7 +235,7 @@ We can first obtain the summarized missing zero probability $\tilde{p}$, and the
 We can also obtain the summarized $\tilde{\boldsymbol{Z}}$ and $\widetilde{\boldsymbol{P_{m0}}}$ to evaluate the model selection criterion, integrated classification log-partially-collapsed-likelihood (ICPCL), by maximizing ICPCL with respect to $\boldsymbol{R}$ as we discussed in Section $3.2$ of the paper.
 Based on the model selection criterion values, we determine which $K$ case is the best one and apply further summary statistics for the analysis.
 
-As it's shown in the Section $4.1$ of the paper, the $K=3$ case is the best pick and we take this case as an example here.
+As it's shown in Section $4.1$ of the paper, the $K=3$ case is the best pick and we take this case as an example here to illustrate the summarizing processes.
 We start from the label switching process once we obatined the outputs `SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1` from the implementation.
 
 ``` r
