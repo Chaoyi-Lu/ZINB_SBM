@@ -48,7 +48,9 @@ SS1_ZINBSBM_N75_K3 <-
 # write.csv(SS1_ZINBSBM_N75_K3$Z,"SS1_ZINBSBM_N75K3_obsZ.csv", row.names = FALSE)
 ```
 
-The artificial network data we focus on in the paper is included in the files within this repository and can be loaded by:
+The artificial network data we focus on in the paper is included in the files within this repository and can be loaded by the code below.
+Note that the latent clustering variable is mainly in the matrix form, $\boldsymbol{Z}$, in the code. 
+Recall from Section $2.1$ of the paper that the latent clustering variable in the form of $\boldsymbol{Z}$ is a $N \times K$ matrix whose $i$th column is the vector $\boldsymbol{z_i}=(z_{i1},z_{i2},\dots,z_{iK})$ where $z_{ik}=1$ if node $i$ belongs to cluster $k$, and $z_{ik}=0$ otherwise.
 
 ``` r
 # # Load the simulation study 1 artificial dataset
