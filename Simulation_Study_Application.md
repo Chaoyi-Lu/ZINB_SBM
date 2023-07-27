@@ -113,7 +113,7 @@ $$\boldsymbol{R} = \begin{pmatrix}0.60 & 0.05 & 0.02 \\\0.10 & 2.50 & 0.02 \\\0.
 
 which argee with the ones we illustrate in the paper.
 
-Once we obtained the label-switched latent clustering and parameters, we can evaluate the initial mean and variance of the distribution assumed for the non-missing weights between each pair of clusters.
+Once we obtained the label-switched latent clustering and parameters, we can evaluate the initial mean and variance of the Negative-Binomial distribution proposed for the non-missing weights between each pair of clusters.
 
 ``` r
 #  Evaluate the initial mean and variance
@@ -121,7 +121,14 @@ SS1_ZINBSBM_N75_K3_obs_Initialmean <- SS1_ZINBSBM_N75_K3_obs_InitialR*(1-SS1_ZIN
 SS1_ZINBSBM_N75_K3_obs_Initialvar <- SS1_ZINBSBM_N75_K3_obs_InitialR*(1-SS1_ZINBSBM_N75_K3_obs_InitialQ)/SS1_ZINBSBM_N75_K3_obs_InitialQ^2
 ```
 
-We can also evaluate the initial $\boldsymbol{P_{m0}}$ (the probability of the zero interaction being missing zero) assumed for this network.
+The reference probability of missing zero, $p$, is simply the initial setting:
+
+``` r
+# Set initial p
+SS1_ZINBSBM_N75_K3_obs_Initialp <- 0.15
+```
+
+We can also evaluate the initial $\boldsymbol{P_{m0}}$ (the probability of the zero interaction being missing zero) proposed for this network.
 
 ``` r
 # Evaluate the initial P_m0
@@ -134,14 +141,7 @@ for (k1 in 1:3){
 SS1_ZINBSBM_N75_K3_obs_InitialProbObs0Missing0
 ```
 
-The reference probability of missing zero, $p$, is simply the initial setting:
-
-``` r
-# Set initial p
-SS1_ZINBSBM_N75_K3_obs_Initialp <- 0.15
-```
-
-The plots of the adjacency matrix $Y$, the adjacency matrix $Y$ conditional on true clustering $\boldsymbol{Z}^{\*}$, i.e $\boldsymbol{Y}|\boldsymbol{Z}^{*}$, and the indicator of whether $y_{ij}$ is non-zero (dark color) or not (light color) conditional on $\boldsymbol{Z}^{\*}$ shown as Figure $1$ of the paper can be recovered by:
+The plot of the adjacency matrix $Y$, the adjacency matrix $Y$ plotted based on the true clustering $\boldsymbol{Z}^{\*}$ and the indicator of whether each $y_{ij}$ is non-zero (dark color) or not (light color) plotted according to $\boldsymbol{Z}^{\*}$ shown as Figure $1$ of the paper can be recovered by:
 
 ``` r
 par(mfrow=c(1,3),mai = c(0.05, 0.05, 0.2, 0.05),mgp=c(0.1,0.1,0))
@@ -165,7 +165,7 @@ Note that such a function will automatically label switch the initial clustering
 Other steps are exactly the same as the Algorithm $2$ stated in the paper.
 
 The function `Directed_ZINBSBM_PCMwG_FixedZ()` aims to apply further inference conditional on the fixed summarized clustering as we disucssed in the paper.
-Recall here that, within such a function, the inference step of the clustering is removed and instead the clustering is fixed at the summarized clustering we obtained from the outputs of the function `Directed_ZINBSBM_PCMwG()`.
+Recall here that, within such a function, the inference step of the clustering is removed and instead the clustering is fixed to be the summarized clustering we obtained from the outputs of the above function `Directed_ZINBSBM_PCMwG()`.
 
 The PCMwG algorithm for the ZINB-SBM is implemented for $40,000$ iterations for each fixed $K = 2,3,4,5$.
 The $p$ prior setting for the function `Directed_ZINBSBM_PCMwG()` is $p \sim \text{Beta}(1,9)$ which can be changed by inputting prior parameters.
