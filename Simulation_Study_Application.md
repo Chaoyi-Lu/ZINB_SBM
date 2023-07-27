@@ -498,7 +498,7 @@ The further inference is also implemented for the same number of iterations as a
 Note here that the `Z_s` in the code below denotes/means the summarized $\tilde{\boldsymbol{Z}}$.
 
 ``` r
-# Further inference of R,Q,Pi conditional on summarized z
+# Further inference of R,Q,Pi conditional on summarized Z
 SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s <-
   Directed_ZINBSBM_PCMwG_FixedZ(Y = SS1_ZINBSBM_N75_K3$Y,
                                 K = 3, T = 40000, eps_R = 0.175,beta1 = 1, beta2 = 9,
@@ -542,11 +542,11 @@ SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedR
 ```
 
 Note here that we can also compare the summarized $\tilde{\boldsymbol{R}}$ with the posterior mean of $\boldsymbol{R}$ and with the $\boldsymbol{R}$ which optimize the ICPCL as the commentted code above.
-It can be checked that all the three $\boldsymbol{R}$'s we obtained are all most the same as each other.
-This result can be expected because the posterior clustering chain was shown to be very stable for this experiment.
+It can be checked that all the three $\boldsymbol{R}$'s we obtained are very close to each other.
+This result can be expected because the posterior clustering chain was shown to be stable for this experiment.
 We can also check the acceptance rate of the $\boldsymbol{R}$ M-H step for the further inference, and the acceptance rate is also shown to be similar as the one we obtained in the PCMwG implementation without fixing the clustering.
 
-Based on the summarized $\tilde{\boldsymbol{R}}$ and $\tilde{\boldsymbol{Q}}$, we can also obtain the summarized mean and variance of the distribution assumed for the edge weights between each pair of summarized clusters:
+Based on the summarized $\tilde{\boldsymbol{R}}$ and $\tilde{\boldsymbol{Q}}$, we can also obtain the summarized mean and variance of the Negative-Binomial distribution proposed for the edge weights between each pair of summarized clusters:
 
 ```r
 # Summarized mean 
@@ -564,7 +564,12 @@ which can be checked that they agree well with the reference ones provided at th
 The posterior density plot of $p$ as well as the posterior density plot of $\boldsymbol{\Pi},\boldsymbol{R},\boldsymbol{Q}$ conditional on $\tilde{\boldsymbol{Z}}$ shown as Figure $4$ of the paper can be recovered via the code below.
 
 ```r
-# Transform the list to the array
+# Transform the list of the further inferred posterior samples to the array
+SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredPi <-
+  array(unlist(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Pi),
+        dim = c(nrow(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Pi[[1]]),
+                ncol(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Pi[[1]]),
+                length(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$Pi)))[,,20001:40001]
 SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredR <-
   array(unlist(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$R),
         dim = c(nrow(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$R[[1]]),
@@ -616,19 +621,19 @@ lines(density(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredQ[3,2,]),col = 8)
 lines(density(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredQ[3,3,]),col = "rosybrown")
 legend("topright", legend=c("1,1","1,2","1,3", "2,1","2,2","2,3", "3,1","3,2","3,3"),
        col=c(1:8,"rosybrown"), lty = 1, cex=0.6)
-# Add the extra posterior density plot of r_22 conditional on summarized z since it's scale is very different from others
+# Add the extra posterior density plot of r_22 conditional on summarized Z since it's scale is very different from others
 par(new=TRUE,mfcol=c(5,5), mfg=c(4,2),mai=c(0.1,0.1,0.1,0.1),mgp=c(1,0.5,0)) # Add the r_22 posterior density additionally
 plot(density(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredR[2,2,]),col = 5,main = "", ylab = "",xlab="")
 par(mfrow=c(1,1),mai = c(1.02, 0.82, 0.82, 0.42),mgp=c(3,1,0))
 ```
 
-Figure $5$ in the paper shows the summarized $\tilde{\boldsymbol{\nu}}$ plotted according to the summarized $\tilde{\boldsymbol{Z}}$ as well as the comparison of the bar plot of the posterior missing weight samples and the Negative-Binomial distribution with summarized and reference parameters for the interaction from node $2$ to node $1$.
+Figure $5$ in the paper shows the summarized $\tilde{\boldsymbol{\nu}}$ plotted according to the summarized $\tilde{\boldsymbol{Z}}$ and also compares the bar plot of the posterior missing weight samples with the plot of the Negative-Binomial distribution with summarized and reference parameters for the interaction from node $2$ to node $1$.
 The figure can be recovered by the code provided below.
 
 ```r
 par(mfrow=c(1,2),mai = c(0.3, 0.15, 0.2, 0.15), mgp=c(1.25,0.5,0))
 layout(matrix(c(1,2,2), nrow = 1, ncol = 3, byrow = TRUE))
-## Summarized nu plot based on summarized z
+## Summarized nu plot based on summarized Z
 image(t(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Summarizednu)[order(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ%*%c(1:3)),
                                                                      rev(order(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ%*%c(1:3)))],axes = FALSE,main = TeX(r'(Summarized $\widetilde{\nu}$)',bold=TRUE))
 group_counts <- (as.numeric(table(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ%*%c(1:3))))
@@ -659,7 +664,7 @@ par(mfrow=c(1,1), mar = c(5.1, 4.1, 4.1, 2.1))
 Up to this point, we have illustrated all the outputs we show on the paper.
 Here we also provide some extra summary statistics of interest which are not included in the paper but the performance could be expected.
 
-Apart from the summarized parameters, we can also check the posterior mean of $\boldsymbol{\Pi}$ and $\boldsymbol{Q}$, and compare them with the summarized ones.
+Apart from the summarized parameters above, we can also check the posterior mean of $\boldsymbol{\Pi}$ and $\boldsymbol{Q}$, and compare them with the summarized ones.
 
 ```r
 ## Posterior mean Pi
@@ -680,7 +685,7 @@ SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanQ
 SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedQ # Compare with summarized Q
 ```
 
-It can be expected and checked that the posterior mean of them are almost the same as the summarized ones due to the fact that the posterior clustering chain is shown to be very stable.
+It can be expected and checked that the posterior mean of them are almost the same as the summarized ones due to the fact that the posterior clustering chain is shown to be stable.
 This also leads to the evaluation of the mean and variance of the edge weights based on the posterior mean of $\boldsymbol{\Pi}$ and $\boldsymbol{Q}$:
 
 ```r
@@ -694,13 +699,13 @@ SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanR*
   SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanQ^2
 ```
 
-which are also agree well with the summarized ones and reference ones.
+which also agree well with the summarized ones and reference ones.
 
 Recall here that the summarized $\tilde{p}$ is obatined directly by posterior mean, but here we also have the posterior samples of $p$ conditional on the summarized $\tilde{\boldsymbol{Z}}$ from the further inference.
 Thus we can also compare the summarized $\tilde{p}$ with the posterior mean of $p|\tilde{\boldsymbol{Z}}$:
 
 ```r
-# p Posterior mean conditional on summarized z
+# p Posterior mean conditional on summarized Z
 SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanp_CondZ_s <-
   mean(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$p[20001:40001])
 hist(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s$p[20001:40001])
@@ -712,7 +717,7 @@ SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Summarizedp # Compare with summarized p
 
 which are also very close to each other.
 
-Similar well agreement can also be discovered for the statistic $\boldsymbol{P_{m0}}$ evaluated by the posterior mean or the posterior mean conditional on the summarized clustering as well as the summarized $\tilde{\boldsymbol{P_{m0}}}$:
+The good agreement can also be discovered for the statistic $\boldsymbol{P_{m0}}$ evaluated by the posterior mean or the posterior mean conditional on the summarized clustering as well as the summarized $\tilde{\boldsymbol{P_{m0}}}$:
 
 ```r
 # Compare P_m0 evaluated by posterior mean
@@ -731,13 +736,13 @@ SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanp_CondZ_s/
 SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedProbObs0Missing0
 ```
 
-All the well agreements shown above bring stronger confidence of the applications of the further inference conditional on the summarized clustering.
+All the good agreements shown above bring stronger confidence of the applications of the further inference conditional on the summarized clustering.
 
 ### 1.2 SS1 ZIP-SBM Implementations
 
-The implementations of the Gibbs sampler for ZIP-SBM is similar to those of the ZINB-SBM.
+The implementations of the Gibbs sampler for ZIP-SBM are similar to those of the ZINB-SBM.
 Here we leverage the function `Directed_ZIPSBM_Gibbs()` provided in the source code file for the implementations and the function `Directed_ZIPSBM_Gibbs_FixedZ()` is the corresponding Gibbs sampler with the clustering fixed.
-The prior distribution for the parameter $\lambda$ of the Poisson embeding is set as the gamma distribution $\lambda \sim \text{Ga}(1,1)$ and all other settings are the same as those of the ZINB-SBM cases.
+The prior distribution for the parameter $\lambda$ of the Poisson embedding is set as the gamma distribution $\lambda \sim \text{Ga}(1,1)$ and all other settings are the same as those of the ZINB-SBM cases.
 The implementations can be applied by the code:
 
 ```r
@@ -1196,7 +1201,7 @@ SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_ICPCLandOptR <-
                                          alpha=1, beta1=1,beta2=9, betaq1=1,betaq2=1)
 # -8098.871
 
-# Further inference of R,Q,Pi conditional on summarized z
+# Further inference of R,Q,Pi conditional on summarized Z
 SS2_ZINBSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s <-
   Directed_ZINBSBM_PCMwG_FixedZ(Y = SS2_ZIPSBM_N75_K3$Y,
                                              K = 3, T = 40000, eps_R = 0.175,beta1 = 1, beta2 = 9,
@@ -1481,7 +1486,7 @@ SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_ICPCLandOptR <-
 SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_ICPCLandOptR$value # -8120.121
 
 
-# Further inference of Lambda,Pi conditional on summarized z
+# Further inference of Lambda,Pi conditional on summarized Z
 SS2_ZIPSBM_N75_K3_Fixed_K3_T40000_1_Further40000InferCondZ_s <-
   Directed_ZIPSBM_Gibbs_FixedZ(Y = SS2_ZIPSBM_N75_K3$Y,
                                       K = 3, T = 40000,beta1 = 1, beta2 = 9,
