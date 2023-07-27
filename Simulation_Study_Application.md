@@ -79,7 +79,7 @@ sum(SS1_ZINBSBM_N75_K3$nu[SS1_ZINBSBM_N75_K3$Y != 0]==0)
 (sum(SS1_ZINBSBM_N75_K3$nu[SS1_ZINBSBM_N75_K3$Y != 0]==0))/(75*74)
 ```
 
-Then we apply label switching on the latent clustering $\boldsymbol{z}$ and those clustering dependent parameters, $\boldsymbol{\Pi},\boldsymbol{R},\boldsymbol{Q}$, of the simulated network. 
+Then we apply label switching on the latent clustering $\boldsymbol{Z}$ and those clustering dependent parameters, $\boldsymbol{\Pi},\boldsymbol{R},\boldsymbol{Q}$, of the simulated network. 
 The label switching methods for the ZINB-SBM can be implemented by the function `LabelSwitching_SG2003_ZINBSBM()` included in the [`Functions_for_ZINB_SBM.R`].
 Recall here that we treat the label-switched initial clustering and the clustering dependent parameters as the "true" references in the experiments.
 
@@ -141,7 +141,7 @@ The reference probability of missing zero, $p$, is simply the initial setting:
 SS1_ZINBSBM_N75_K3_obs_Initialp <- 0.15
 ```
 
-The plots of the adjacency matrix $Y$, the adjacency matrix $Y$ conditional on true clustering $\boldsymbol{z}^{\*}$, i.e $\boldsymbol{Y}|\boldsymbol{z}^{*}$, and the indicator of whether $y_{ij}$ is non-zero (dark color) or not (light color) conditional on $\boldsymbol{z}^{\*}$ shown as Figure $1$ of the paper can be recovered by:
+The plots of the adjacency matrix $Y$, the adjacency matrix $Y$ conditional on true clustering $\boldsymbol{Z}^{\*}$, i.e $\boldsymbol{Y}|\boldsymbol{Z}^{*}$, and the indicator of whether $y_{ij}$ is non-zero (dark color) or not (light color) conditional on $\boldsymbol{Z}^{\*}$ shown as Figure $1$ of the paper can be recovered by:
 
 ``` r
 par(mfrow=c(1,3),mai = c(0.05, 0.05, 0.2, 0.05),mgp=c(0.1,0.1,0))
@@ -232,7 +232,7 @@ SS1_ZINBSBM_N75_K3_Fixed_K5_T40000_1_time # Time difference of 4.01542 hours
 
 Once we obtained the outputs from each fixed $K$ case, we can apply label switching on the clustering and check the mixing performance of the clustering.
 We can first obtain the summarized missing zero probability $\tilde{p}$, and the summarized $\tilde{\boldsymbol{\nu}}$ the entry of which indicates the proportion of the times for the corresponding $y_{ij}$ being inferred as a missing zero.
-We can also obtain the summarized $\tilde{\boldsymbol{z}}$ and $\tilde{\boldsymbol{P_{m0}}}$ to evaluate the model selection criterion, integrated classification log-partially-collapsed-likelihood (ICPCL), by maximizing ICPCL with respect to $\boldsymbol{R}$ as we discussed in Section $3.2$ of the paper.
+We can also obtain the summarized $\tilde{\boldsymbol{Z}}$ and $\tilde{\boldsymbol{P_{m0}}}$ to evaluate the model selection criterion, integrated classification log-partially-collapsed-likelihood (ICPCL), by maximizing ICPCL with respect to $\boldsymbol{R}$ as we discussed in Section $3.2$ of the paper.
 Based on the model selection criterion values, we determine which $K$ case is the best one and apply further summary statistics for the analysis.
 
 As it's shown in the Section $4.1$ of the paper, the $K=3$ case is the best pick and we take this case as an example here.
@@ -266,7 +266,7 @@ SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1$Acceptance_count_R <- c()
 gc() # Free unused R memory
 ```
 
-After the label switching, we can check the mixing of the clustering posterior samples by evaluating the rand index between each iteration's $\boldsymbol{z}^{(t)}$ and the true clustering $\boldsymbol{z}^*$.
+After the label switching, we can check the mixing of the clustering posterior samples by evaluating the rand index between each iteration's $\boldsymbol{Z}^{(t)}$ and the true clustering $\boldsymbol{Z}^*$.
 
 ``` r
 ## check rand index for each iteration
@@ -403,7 +403,7 @@ However, in the case of that the summarized clustering is not the same as the ma
 # # SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ <- cbind(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedZ,0)
 ```
 
-Once we obtained the summarized clustering $\tilde{\boldsymbol{z}}$, we can then obtain the summarized $\widetilde{\boldsymbol{P_{m0}}}$.
+Once we obtained the summarized clustering $\tilde{\boldsymbol{Z}}$, we can then obtain the summarized $\widetilde{\boldsymbol{P_{m0}}}$.
 We first summarize the posterior $\boldsymbol{\nu}$ chain by applying the posterior mean.
 
 ``` r
@@ -439,7 +439,7 @@ for (k1 in 1:3){
 SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedProbObs0Missing0
 ```
 
-Once we obtained the summarized $\widetilde{\boldsymbol{P_{m0}}}$ and $\tilde{\boldsymbol{z}}$, we can approximate the ICPCL by the function `Directed_ZINBSBM_ApproximateICPCL_OptR` provided in the file [`Functions_for_ZINB_SBM.R`].
+Once we obtained the summarized $\widetilde{\boldsymbol{P_{m0}}}$ and $\tilde{\boldsymbol{Z}}$, we can approximate the ICPCL by the function `Directed_ZINBSBM_ApproximateICPCL_OptR` provided in the file [`Functions_for_ZINB_SBM.R`].
 Such a function applies a greedy algorithm to search for an optimized $\boldsymbol{R}$ which maximize each partially collapsed $\boldsymbol{Y}_{gh}$ term of the ICPCL criterion as we discussed in Section $3.2$ of the paper.
 The prior settings for the ICPCL are the same as those applied for the inference and the initial state of $\boldsymbol{R}$ for the greedy search is the posterior mean of $\boldsymbol{R}$ which can be obtained by:
 
@@ -491,9 +491,9 @@ par(mfrow=c(1,1),mai = c(1.02, 0.82, 0.82, 0.42))
 We apply the same process for all the fixed $K = 2,3,4,5$ cases and obtain the ICPCL table shown as Table $1$ in Section $4.1$ of the paper.
 Since the code for other $K$ cases are similar as above, we propose not to provide more details here.
 
-Once we picked the best $K$ case, we can apply further inference conditional on the summarized clustering $\tilde{\boldsymbol{z}}$ in order to summarize those clustering dependent parameters, that is, $\boldsymbol{\Pi},\boldsymbol{R},\boldsymbol{Q}$.
+Once we picked the best $K$ case, we can apply further inference conditional on the summarized clustering $\tilde{\boldsymbol{Z}}$ in order to summarize those clustering dependent parameters, that is, $\boldsymbol{\Pi},\boldsymbol{R},\boldsymbol{Q}$.
 The further inference is also implemented for the same number of iterations as above, that is, $40,000$ iterations and all other settings are also the same.
-Note here that the `Z_s` in the code below denotes/means the summarized $\tilde{\boldsymbol{z}}$.
+Note here that the `Z_s` in the code below denotes/means the summarized $\tilde{\boldsymbol{Z}}$.
 
 ``` r
 # Further inference of R,Q,Pi conditional on summarized z
@@ -559,7 +559,7 @@ SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_SummarizedR*
 
 which can be checked that they agree well with the reference ones provided at the beginning of this section.
 
-The posterior density plot of $p$ as well as the posterior density plot of $\boldsymbol{\Pi},\boldsymbol{R},\boldsymbol{Q}$ conditional on $\tilde{\boldsymbol{z}}$ shown as Figure $4$ of the paper can be recovered via the code below.
+The posterior density plot of $p$ as well as the posterior density plot of $\boldsymbol{\Pi},\boldsymbol{R},\boldsymbol{Q}$ conditional on $\tilde{\boldsymbol{Z}}$ shown as Figure $4$ of the paper can be recovered via the code below.
 
 ```r
 # Transform the list to the array
@@ -620,7 +620,7 @@ plot(density(SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_InferredR[2,2,]),col = 5,main 
 par(mfrow=c(1,1),mai = c(1.02, 0.82, 0.82, 0.42),mgp=c(3,1,0))
 ```
 
-Figure $5$ in the paper shows the summarized $\tilde{\boldsymbol{\nu}}$ plotted according to the summarized $\tilde{\boldsymbol{z}}$ as well as the comparison of the bar plot of the posterior missing weight samples and the Negative-Binomial distribution with summarized and reference parameters for the interaction from node $2$ to node $1$.
+Figure $5$ in the paper shows the summarized $\tilde{\boldsymbol{\nu}}$ plotted according to the summarized $\tilde{\boldsymbol{Z}}$ as well as the comparison of the bar plot of the posterior missing weight samples and the Negative-Binomial distribution with summarized and reference parameters for the interaction from node $2$ to node $1$.
 The figure can be recovered by the code provided below.
 
 ```r
@@ -694,8 +694,8 @@ SS1_ZINBSBM_N75_K3_Fixed_K3_T40000_1_PosteriorMeanR*
 
 which are also agree well with the summarized ones and reference ones.
 
-Recall here that the summarized $\tilde{p}$ is obatined directly by posterior mean, but here we also have the posterior samples of $p$ conditional on the summarized $\tilde{\boldsymbol{z}}$ from the further inference.
-Thus we can also compare the summarized $\tilde{p}$ with the posterior mean of $p|\tilde{\boldsymbol{z}}$:
+Recall here that the summarized $\tilde{p}$ is obatined directly by posterior mean, but here we also have the posterior samples of $p$ conditional on the summarized $\tilde{\boldsymbol{Z}}$ from the further inference.
+Thus we can also compare the summarized $\tilde{p}$ with the posterior mean of $p|\tilde{\boldsymbol{Z}}$:
 
 ```r
 # p Posterior mean conditional on summarized z
@@ -988,7 +988,7 @@ SS2_ZIPSBM_N75_K3_obs_InitialLambda <- res$Lambda[[1]]
 SS2_ZIPSBM_N75_K3_obs_InitialPi <- res$Pi[[1]]
 ```
 
-which brings the label switched initial $\boldsymbol{\Pi}$ and $\boldsymbol{z}$:
+which brings the label switched initial $\boldsymbol{\Pi}$ and $\boldsymbol{Z}$:
 
 $$\boldsymbol{\Pi} = \left(0.3, 0.3, 0.4\right), \boldsymbol{\lambda} = \begin{pmatrix} 2.5 & 0.5 & 1.1\\\0.9 & 2.0 & 0.7\\\0.3 & 0.1 &2.0\end{pmatrix}$$
 
