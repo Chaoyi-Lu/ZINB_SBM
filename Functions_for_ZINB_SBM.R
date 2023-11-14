@@ -193,7 +193,7 @@ Directed_ZINBSBM_PCMwG <- function(Y,K,T, alpha=1, beta1=1,beta2=1, betaq1=1,bet
           sum(dnbinom(X_new[Z_new%*%c(1:K)==g,Z_new%*%c(1:K)==h][diag(1,N,N)[Z_new%*%c(1:K)==g,Z_new%*%c(1:K)==h]==0],R_list[[t]][g,h],Q_new[g,h],log = TRUE)) +
           log(R_list[[t]][g,h]+eps_R - max(0,R_list[[t]][g,h]-eps_R)) - log(R_new[g,h]+eps_R - max(0,R_new[g,h]-eps_R)) # log bounded uniform proposal ratio
         alpha_ratio_R <- min(log(1),alpha_ratio_right_R)
-        if (log(runif(1)) < alpha_ratio_R){ # accept or not
+        if (log(runif(1)) <= alpha_ratio_R){ # accept or not
           Acceptance_count_R_list[[t+1]][g,h] <- Acceptance_count_R_list[[t+1]][g,h] + 1
         }else{
           R_new[g,h] <- R_list[[t]][g,h] # if not accept, stay at current state
@@ -354,7 +354,7 @@ Directed_ZINBSBM_PCMwG_FixedZ <- function(Y,K,T, alpha=1, beta1=1,beta2=1, betaq
           sum(dnbinom(X_new[Z_new%*%c(1:K)==g,Z_new%*%c(1:K)==h][diag(1,N,N)[Z_new%*%c(1:K)==g,Z_new%*%c(1:K)==h]==0],R_list[[t]][g,h],Q_new[g,h],log = TRUE)) +
           log(R_list[[t]][g,h]+eps_R - max(0,R_list[[t]][g,h]-eps_R)) - log(R_new[g,h]+eps_R - max(0,R_new[g,h]-eps_R))
         alpha_ratio_R <- min(log(1),alpha_ratio_right_R)
-        if (log(runif(1)) < alpha_ratio_R){
+        if (log(runif(1)) <= alpha_ratio_R){
           Acceptance_count_R_list[[t+1]][g,h] <- Acceptance_count_R_list[[t+1]][g,h] + 1
         }else{
           R_new[g,h] <- R_list[[t]][g,h]
