@@ -61,7 +61,7 @@ The adjacency matrix plots shown as Figure $10$ in Section $5$ of the paper can 
 
 ``` r
 par(mfrow=c(1,3),mai = c(0.5, 0.05, 0.25, 0.05),mgp=c(0.1,0.1,0))
-image(t(UKfaculty_adj),axes = FALSE,main = "Adjacency Matrix Y")
+image(t(UKfaculty_adj)[1:81,81:1],axes = FALSE,main = "Adjacency Matrix Y")
 
 image(t(UKfaculty_adj)[order(Real_data_application_UKfaculty_Z%*%1:4),rev(order(Real_data_application_UKfaculty_Z%*%1:4))],axes = FALSE,main = TeX(r'($Y|$ Affiliation $z^*$)',bold=TRUE))
 group_counts <- (as.numeric(table(Real_data_application_UKfaculty_Z%*%1:4)))
