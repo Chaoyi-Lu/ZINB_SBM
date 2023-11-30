@@ -145,7 +145,7 @@ The plot of the adjacency matrix $Y$, the adjacency matrix $Y$ plotted based on 
 
 ``` r
 par(mfrow=c(1,3),mai = c(0.05, 0.05, 0.2, 0.05),mgp=c(0.1,0.1,0))
-image(t(SS1_ZINBSBM_N75_K3$Y),axes = FALSE,xlab = "",ylab = "",main = "Adjacency Matrix Y")
+image(t(SS1_ZINBSBM_N75_K3$Y)[1:75,75:1],axes = FALSE,xlab = "",ylab = "",main = "Adjacency Matrix Y")
 image(t(SS1_ZINBSBM_N75_K3$Y)[order(SS1_ZINBSBM_N75_K3_LSZ%*%c(1:3)),rev(order(SS1_ZINBSBM_N75_K3_LSZ%*%c(1:3)))],axes = FALSE,xlab = "",ylab = "",main = TeX(r'($Y|$ True $z^*$)',bold = TRUE))
 group_counts <- (as.numeric(table(SS1_ZINBSBM_N75_K3_LSZ%*%c(1:3))))
 abline(v = -1/(2*(nrow(SS1_ZINBSBM_N75_K3$Y)-1)) + cumsum(group_counts/sum(group_counts))*(1+2/(2*(nrow(SS1_ZINBSBM_N75_K3$Y)-1))))
@@ -1549,7 +1549,7 @@ The Figure $6$ which shows the plots of the observed adjacency matrix $\boldsymb
 
 ``` r
 par(mfrow=c(1,3),mai = c(0.05, 0.05, 0.2, 0.05),mgp=c(0.1,0.1,0))
-image(t(SS2_ZIPSBM_N75_K3$Y),axes = FALSE,xlab = "",ylab = "",main = "Adjacency Matrix Y")
+image(t(SS2_ZIPSBM_N75_K3$Y)[1:75,75:1],axes = FALSE,xlab = "",ylab = "",main = "Adjacency Matrix Y")
 image(t(SS2_ZIPSBM_N75_K3$Y)[order(SS2_ZIPSBM_N75_K3_LSZ%*%c(1:3)),rev(order(SS2_ZIPSBM_N75_K3_LSZ%*%c(1:3)))],axes = FALSE,xlab = "",ylab = "",main = TeX(r'($Y|$ True $z^*$)',bold = TRUE))
 group_counts <- (as.numeric(table(SS2_ZIPSBM_N75_K3_LSZ%*%c(1:3))))
 abline(v = -1/(2*(nrow(SS2_ZIPSBM_N75_K3$Y)-1)) + cumsum(group_counts/sum(group_counts))*(1+2/(2*(nrow(SS2_ZIPSBM_N75_K3$Y)-1))))
